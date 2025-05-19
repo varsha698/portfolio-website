@@ -5,21 +5,37 @@ import ProjectModal from "./ProjectModal";
 import { getTechIcon } from "./TechIcons";
 
 const projects = [
-  { 
-    name: "StyleSync - Fashion Collaboration App", 
-    desc: "A full-stack fashion platform offering AI-powered outfit recommendations and AR try-on features, built with React.js, Node.js, Express.js, and MongoDB.",
-    link: "", 
-    code: "", 
-    techstackused: "React.js, Node.js, Express.js, MongoDB, Firebase",
-    techstackicons: ["reactjs", "nodejs", "expressjs", "mongodb", "firebase"]
+  {
+    name: "Cloud Infrastructure Automation (DevOps Project)",
+    desc: "Provisioned AWS EC2 infrastructure with Terraform, automated setup and Flask deployment using Ansible, and built CI/CD pipelines with GitHub Actions and Docker.",
+    link: "https://github.com/varsha698/DevOps_Project.git",
+    code: "https://github.com/varsha698/DevOps_Project.git",
+    techstackused: "Terraform, Ansible, Flask, Docker, GitHub Actions, AWS EC2",
+    techstackicons: ["terraform", "ansible", "flask", "docker", "github", "aws"]
   },
-  { 
-    name: "PantryPal - Mobile App", 
-    desc: "Developing a mobile app that assists low-income families with meal planning and food assistance, using secure data management and machine learning for meal suggestions.",
-    link: "", 
-    code: "", 
-    techstackused: "Flutter, Firebase, Python (Machine Learning)",
-    techstackicons: ["flutter", "firebase", "python"]
+  {
+    name: "Sentiment Analysis Model",
+    desc: "Built a sentiment classifier for IMDb reviews using PyTorch and a feedforward neural network with text preprocessing and cross-entropy training.",
+    link: "https://github.com/varsha698/nlp_project2025.git",
+    code: "https://github.com/varsha698/nlp_project2025.git",
+    techstackused: "Python, PyTorch, NLP",
+    techstackicons: ["python", "pytorch"]
+  },
+  {
+    name: "PantryPal – Mobile App",
+    desc: "Developing a Flutter app to help low-income families with meal planning and pantry tracking. Integrated recipe recommendation and CI/CD pipeline.",
+    link: "https://github.com/varsha698/PantryPalApp.git",
+    code: "https://github.com/varsha698/PantryPalApp.git",
+    techstackused: "Flutter, Firebase, GitHub Actions",
+    techstackicons: ["flutter", "firebase", "github"]
+  },
+  {
+    name: "Personal Portfolio Website",
+    desc: "A fully responsive portfolio website built with React and Tailwind, featuring animated project modals, tech stacks, and GitHub integration.",
+    link: "https://varsha698.github.io/portfolio-website/",
+    code: "https://github.com/varsha698/portfolio-website.git",
+    techstackused: "React.js, Tailwind CSS, Framer Motion, Vite, GitHub Pages",
+    techstackicons: ["reactjs", "tailwindcss", "vite", "github"]
   }
 ];
 
@@ -62,7 +78,6 @@ const Projects = () => {
               <h3 className="text-xl font-semibold text-amber-400 mb-2 relative z-10">{project.name}</h3>
               <p className="text-gray-300 mb-4 relative z-10">{project.desc}</p>
 
-              {/* Tech stack icons */}
               <div className="flex flex-wrap gap-3 mt-auto relative z-10">
                 {project.techstackicons.map((tech, i) => (
                   <motion.div key={i} whileHover={{ scale: 1.2, rotate: [0, 5, -5, 0] }} transition={{ duration: 0.3 }} className="text-2xl text-amber-500">

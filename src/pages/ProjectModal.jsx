@@ -1,69 +1,108 @@
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
-import ReactMarkdown from "react-markdown";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
-const ProjectModal = ({ project, onClose }) => {
-  console.log("ProjectModal", project);
-  const [readmeContent, setReadmeContent] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    if (!project?.code) return;
-    
-    const fetchReadme = async () => {
-      setIsLoading(true);
-      setError(null);
-      
-      try {
-        // Convert GitHub URL to API URL format
-        const repoUrl = project.code;
-        const apiUrl = repoUrl.replace('github.com', 'api.github.com/repos') + '/readme';
-        
-        const response = await fetch(apiUrl);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch README: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        // The content is base64 encoded, so we need to decode it
-        if (data.content && data.encoding === 'base64') {
-          // Properly decode base64 content with UTF-8 support for emojis
-          const base64 = data.content.replace(/\n/g, '');
-          const binary = atob(base64);
-          const bytes = new Uint8Array(binary.length);
-          
-          for (let i = 0; i < binary.length; i++) {
-            bytes[i] = binary.charCodeAt(i);
-          }
-          
-          // Convert bytes to UTF-8 string
-          const decodedContent = new TextDecoder('utf-8').decode(bytes);
-          
-          // Ensure Markdown line breaks are properly preserved
-          // This ensures ReactMarkdown renders newlines correctly
-          setReadmeContent(decodedContent);
-        } else {
-          throw new Error('Unexpected response format from GitHub API');
-        }
-      } catch (err) {
-        setError(err.message);
-        console.error('Error fetching README:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchReadme();
-  }, [project]);
-  
-  if (!project) return null;
-  
+// Accordion Component
+const Accordion = ({ title, children }) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <motion.div 
+    <div className="border border-amber-700/30 rounded-md">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex justify-between items-center px-4 py-2 text-amber-300 font-semibold bg-black/40 hover:bg-black/60 transition"
+      >
+        <span>{title}</span>
+        <span>{isOpen ? "▲" : "▼"}</span>
+      </button>
+      <motion.div
+        initial={{ height: 0, opacity: 0 }}
+        animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="overflow-hidden px-4 py-2"
+      >
+        {isOpen && children}
+      </motion.div>
+    </div>
+  );
+};
+
+// Static README data per project
+const projectReadmes = {
+  "Cloud Infrastructure Automation (DevOps Project)": {
+    features: [
+      "Terraform for infrastructure-as-code",
+      "Ansible for configuration management",
+      "Flask web app containerized with Docker",
+      "CI/CD pipeline with GitHub Actions",
+      "Hosted on AWS EC2"
+    ],
+    techstack: "Terraform, Ansible, Flask, Docker, GitHub Actions, AWS EC2",
+    setup: `git clone https://github.com/varsha698/DevOps_Project.git
+cd DevOps_Project
+terraform init
+terraform apply`,
+    output: "Once deployed, your Flask app will run on the EC2 instance at the configured public IP address."
+  },
+  "Sentiment Analysis Model": {
+    features: [
+      "Built with PyTorch and a feedforward neural network",
+      "Uses IMDb movie reviews dataset",
+      "Performs tokenization and text preprocessing",
+      "Trains on labeled sentiment data",
+      "Uses cross-entropy loss for optimization"
+    ],
+    techstack: "Python, PyTorch, NLP",
+    setup: `git clone https://github.com/varsha698/sentiment-analysis-model.git
+cd sentiment-analysis-model
+pip install -r requirements.txt
+python train.py`,
+    output: "Model classifies reviews as positive or negative with accuracy metrics printed after training."
+  },
+  "PantryPal – Mobile App": {
+    features: [
+      "🧾 Pantry Tracker – Add and manage pantry inventory with expiration dates",
+      "🍲 Smart Recipe Matching – Get recipe suggestions based on available ingredients",
+      "🏷️ Tags & Filters – Filter recipes by dietary needs, time, and budget",
+      "💬 Community Chat & Comments – Discuss tips and suggestions with others",
+      "🛒 Food Resource Directory – Connect to local pantries and assistance programs",
+      "🔁 CI/CD – GitHub Actions integrated for automated testing and deployment"
+    ],
+    techstack: "Flutter, Firebase (Auth, Firestore, Storage), GitHub Actions, Dart, Python (for NLP experiments)",
+    setup: `git clone https://github.com/varsha698/pantrypal.git
+cd pantrypal
+flutter pub get
+flutter run`,
+    output: "Cross-platform app with pantry tracking, recipe suggestions, chat features, and CI/CD workflows for deployment."
+  },
+  "Personal Portfolio Website": {
+    features: [
+      "🌐 Built with React.js and Tailwind CSS for a fast, responsive interface",
+      "🖼️ Smooth animations with Framer Motion",
+      "📂 Dynamic project modal with dropdown README sections",
+      "☀️ Dark/light theme toggle with localStorage",
+      "📱 Fully responsive on all devices"
+    ],
+    techstack: "React.js, Tailwind CSS, Framer Motion, Vite, GitHub Pages",
+    setup: `git clone https://github.com/varsha698/portfolio-website.git
+cd portfolio-website
+npm install
+npm run dev`,
+    output: "A polished developer portfolio to showcase your projects and skills, hosted on GitHub Pages.",
+    design: [
+      "🎨 Clean and minimal layout with dark mode",
+      "💡 Animations for user engagement and interactivity",
+      "📱 Grid and flexbox structure for mobile-first design",
+      "📎 External links and modal popups for project details",
+    ]
+  }
+};
+
+const ProjectModal = ({ project, onClose }) => {
+  if (!project) return null;
+  const readme = projectReadmes[project.name];
+
+  return (
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -73,65 +112,16 @@ const ProjectModal = ({ project, onClose }) => {
         background: "radial-gradient(circle at center, rgba(15, 21, 35, 0.7) 0%, rgba(0, 0, 0, 0.9) 100%)"
       }}
     >
-      {/* Grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Horizontal lines */}
-        {[...Array(10)].map((_, i) => (
-          <div 
-            key={`h-${i}`}
-            className="absolute w-full h-px" 
-            style={{
-              top: `${i * 10}%`,
-              background: 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)',
-              opacity: '0.2'
-            }}
-          />
-        ))}
-        
-        {/* Vertical lines */}
-        {[...Array(10)].map((_, i) => (
-          <div 
-            key={`v-${i}`}
-            className="absolute h-full w-px" 
-            style={{
-              left: `${i * 10}%`,
-              background: 'linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)',
-              opacity: '0.2'
-            }}
-          />
-        ))}
-      </div>
-      
-      <motion.div 
+      <motion.div
         className="relative bg-black/60 backdrop-blur-md p-8 rounded-lg border border-amber-900/50 max-w-4xl w-full mx-4 overflow-y-auto max-h-[80vh]"
         initial={{ scale: 0.9, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.9, y: 20 }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Ambient glow */}
-        <div className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-purple-500 opacity-10 blur-3xl -z-10"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full bg-orange-500 opacity-10 blur-3xl -z-10"></div>
-        
-        {/* Animated border corners */}
-        <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-amber-400"></div>
-        <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-amber-400"></div>
-        {/* <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-amber-400"></div>
-        <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-amber-400"></div> */}
-        
-        {/* Shine effect */}
-        {/* <div 
-          className="absolute inset-0"
-          style={{
-            background: "linear-gradient(45deg, transparent 45%, rgba(255, 153, 102, 0.1) 50%, transparent 55%)",
-            animation: "shine 3s infinite",
-            zIndex: -1
-          }}
-        ></div> */}
-        
-        {/* Close button */}
-        <motion.button 
-          onClick={onClose} 
+        {/* Close Button */}
+        <motion.button
+          onClick={onClose}
           className="absolute top-4 right-4 text-amber-400 hover:text-amber-300 focus:outline-none"
           whileHover={{ scale: 1.2, rotate: 90 }}
           transition={{ duration: 0.3 }}
@@ -140,22 +130,19 @@ const ProjectModal = ({ project, onClose }) => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </motion.button>
-        
-        {/* Title with text gradient and glow */}
-        <motion.h2 
+
+        {/* Header */}
+        <motion.h2
           className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mb-6"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.4 }}
-          style={{
-            textShadow: "0 0 15px rgba(255, 153, 102, 0.5)"
-          }}
+          style={{ textShadow: "0 0 15px rgba(255, 153, 102, 0.5)" }}
         >
           {project.name}
         </motion.h2>
-        
-        {/* Description */}
-        <motion.p 
+
+        <motion.p
           className="text-gray-300 mb-6 leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -163,8 +150,7 @@ const ProjectModal = ({ project, onClose }) => {
         >
           {project.desc}
         </motion.p>
-        
-        {/* Tech stack */}
+
         <motion.div
           className="mb-8"
           initial={{ opacity: 0 }}
@@ -174,96 +160,77 @@ const ProjectModal = ({ project, onClose }) => {
           <h3 className="text-lg font-semibold text-amber-300 mb-2">Tech Stack:</h3>
           <p className="text-gray-400">{project.techstackused || "Various technologies"}</p>
         </motion.div>
-        
-        {/* README Content Section */}
-        {project.code && (
+
+        {/* Dynamic README Accordion Sections */}
+        {readme && (
           <motion.div
-            className="mt-8 border-t border-amber-900/50 pt-6"
+            className="mt-8 border-t border-amber-900/50 pt-6 space-y-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.4 }}
           >
             <h3 className="text-lg font-semibold text-amber-300 mb-4">For Nerds:</h3>
-            
-            {isLoading && (
-              <div className="flex items-center justify-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-amber-400"></div>
-                <span className="ml-3 text-amber-300">Loading project details...</span>
-              </div>
-            )}
-            
-            {error && (
-              <div className="bg-red-900/20 border border-red-800 p-4 rounded-md text-red-300">
-                <p>Could not load README: {error}</p>
-              </div>
-            )}
-            
-            {!isLoading && !error && readmeContent && (
-              <div className="markdown-content bg-black/30 rounded-md p-4 text-gray-300 prose prose-invert prose-sm max-w-none overflow-x-auto">
-                <div className="prose prose-invert max-w-none"
-                  style={{ overflowY: "auto" }}>
-                  <ReactMarkdown>{readmeContent}</ReactMarkdown>
-                </div>
-              </div>
+
+            <Accordion title="🚀 Features">
+              <ul className="list-disc ml-5 text-sm text-gray-300 space-y-1">
+                {readme.features.map((f, i) => <li key={i}>{f}</li>)}
+              </ul>
+            </Accordion>
+
+            <Accordion title="🧰 Tech Stack">
+              <p className="text-sm text-gray-300">{readme.techstack}</p>
+            </Accordion>
+
+            <Accordion title="📂 Setup">
+              <pre className="bg-gray-800 text-green-400 p-3 rounded-md overflow-x-auto text-sm whitespace-pre-wrap">{readme.setup}</pre>
+            </Accordion>
+
+            <Accordion title="✅ Output">
+              <p className="text-sm text-gray-300">{readme.output}</p>
+            </Accordion>
+
+            {readme.design && (
+              <Accordion title="🎨 Design Decisions">
+                <ul className="list-disc ml-5 text-sm text-gray-300 space-y-1">
+                  {readme.design.map((item, i) => <li key={i}>{item}</li>)}
+                </ul>
+              </Accordion>
             )}
           </motion.div>
         )}
-        
-        {/* Action links */}
-        <motion.div 
+
+        {/* Links */}
+        <motion.div
           className="flex flex-wrap gap-4 justify-center mt-8"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.4 }}
         >
           {project.link && (
-            <motion.a 
-              href={project.link} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="px-6 py-3 bg-transparent text-amber-400 rounded-lg font-bold border border-amber-400 hover:bg-amber-500/10 transition-all duration-300"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 0 15px rgba(255, 153, 102, 0.3)"
-              }}
-              style={{
-                textShadow: "0 0 5px rgba(255, 153, 102, 0.5)"
-              }}
+            <motion.a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 text-amber-400 rounded-lg font-bold border border-amber-400 hover:bg-amber-500/10 transition-all duration-300"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(255, 153, 102, 0.3)" }}
+              style={{ textShadow: "0 0 5px rgba(255, 153, 102, 0.5)" }}
             >
               View Live Demo
             </motion.a>
           )}
-          
           {project.code && (
-            <motion.a 
-              href={project.code} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="px-6 py-3 bg-transparent text-amber-400 rounded-lg font-bold border border-amber-400 hover:bg-amber-500/10 transition-all duration-300"
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 0 15px rgba(255, 153, 102, 0.3)"
-              }}
-              style={{
-                textShadow: "0 0 5px rgba(255, 153, 102, 0.5)"
-              }}
+            <motion.a
+              href={project.code}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 text-amber-400 rounded-lg font-bold border border-amber-400 hover:bg-amber-500/10 transition-all duration-300"
+              whileHover={{ scale: 1.05, boxShadow: "0 0 15px rgba(255, 153, 102, 0.3)" }}
+              style={{ textShadow: "0 0 5px rgba(255, 153, 102, 0.5)" }}
             >
               View Source Code
             </motion.a>
           )}
         </motion.div>
-        
-        {/* Code pattern background effect */}
-        {/* <div 
-          className="absolute inset-0 opacity-5 pointer-events-none"
-          style={{
-            backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 40 L40 20 L45 25 L30 40 L45 55 L40 60z' fill='%23ffb74d' /%3E%3Cpath d='M60 40 L80 20 L75 25 L60 40 L75 55 L80 60z' fill='%23ffb74d' /%3E%3C/svg%3E\")",
-            backgroundSize: "100px 100px",
-            zIndex: -1
-          }}
-        /> */}
-        <div className="absolute inset-0 opacity-5 pointer-events-none"></div>
-
       </motion.div>
     </motion.div>
   );

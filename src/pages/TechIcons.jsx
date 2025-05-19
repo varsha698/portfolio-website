@@ -2,8 +2,8 @@ import React from "react";
 import { SiExpress, SiFirebase, SiTensorflow, SiOpencv } from "react-icons/si";
 import StackIcon from "tech-stack-icons";
 
-// List of technologies that are failing
-const failingIcons = [
+// Icons known to break from `tech-stack-icons`
+const failingIcons = new Set([
   "expressjs",
   "opencv",
   "tesseract-ocr",
@@ -16,36 +16,34 @@ const failingIcons = [
   "multithreading",
   "file-io",
   "ncurses"
-];
+]);
 
-// Fallback Icons
+// Fallback Icons for known cases
 const fallbackIcons = {
   expressjs: <SiExpress />,
   firebase: <SiFirebase />,
   tensorflow: <SiTensorflow />,
-  opencv : <SiOpencv />
+  opencv: <SiOpencv />
 };
 
 // Function to get tech icon with error handling
 export const getTechIcon = (tech) => {
-  // If tech is in failing list, fetch an alternative source
-  if (failingIcons.includes(tech.toLowerCase())) {
-    console.log("Failing icon:", tech);
-    return (
-      fallbackIcons[tech] || <span>{tech}</span>
-      // <img
-      //   src={`https://img.shields.io/badge/${tech.replace(/ /g, "%20")}-blue?style=flat-square`}
-      //   alt={tech}
-      //   style={{ width: "24px", height: "24px" }}
-      // />
-    );
+  const key = tech.toLowerCase();
+
+  if (failingIcons.has(key)) {
+    if (process.env.NODE_ENV === 'development') {
+      console.warn("Using fallback icon for:", key);
+    }
+    return fallbackIcons[key] || <span className="text-sm text-gray-400">{tech}</span>;
   }
 
   try {
     const icon = <StackIcon name={tech} style={{ fontSize: '1.5rem', width: '24px', height: '24px' }} />;
-    return React.isValidElement(icon) ? icon : fallbackIcons[tech] || <span>{tech}</span>;
+    return React.isValidElement(icon)
+      ? icon
+      : fallbackIcons[key] || <span className="text-sm text-gray-400">{tech}</span>;
   } catch (error) {
-    console.log("Error fetching icon for:", tech);
-    return fallbackIcons[tech] || <span>{tech}</span>;
+    console.error("Error fetching icon for:", tech, error);
+    return fallbackIcons[key] || <span className="text-sm text-gray-400">{tech}</span>;
   }
 };
