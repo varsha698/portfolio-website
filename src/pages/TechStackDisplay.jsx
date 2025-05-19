@@ -7,22 +7,22 @@ const techCategories = [
   { 
     category: "Frontend", 
     theme: "neural",
-    techs: ["React", "Vite", "HTML5", "CSS3", "JavaScript", "Material UI"] 
+    techs: ["Flutter", "HTML", "CSS", "JavaScript", "Figma"] 
   },
   { 
     category: "Backend", 
     theme: "terminal",
-    techs: ["Node.js", "Express", "Flask", "PHP"] 
+    techs: ["Flask", "Terraform", "Ansible", "Docker"] 
   },
   { 
-    category: "Database", 
+    category: "Database & Cloud", 
     theme: "vortex",
-    techs: ["MongoDB", "MySQL", "Firebase"] 
+    techs: ["Firebase", "SQL", "AWS EC2"] 
   },
   { 
     category: "AI/Automation", 
     theme: "ai",
-    techs: ["Python", "OpenCV", "TensorFlow", "Deep Learning", "Selenium", "Web Scraping"] 
+    techs: ["Python", "PyTorch", "TensorFlow", "Natural Language Processing"] 
   }
 ];
 
@@ -41,22 +41,23 @@ const TechIcon = ({ tech, theme }) => {
   
   // Mapping of tech names to tech-stack-icons identifiers
   const techIconsMap = {
-    "React": "reactjs",
-    "ReactJS": "reactjs",
-    "Vite": "vitejs",
-    "HTML5": "html5",
-    "CSS3": "css3",
+    "Flutter": "flutter",
+    "HTML": "html5",
+    "CSS": "css3",
     "JavaScript": "js",
-    "JS": "js",
-    "Node.js": "nodejs",
-    "NodeJS": "nodejs",
-    "MongoDB": "mongodb",
+    "Figma": "figma",
+    "Flask": "flask",
+    "Terraform": "terraform",
+    "Ansible": "ansible",
+    "Docker": "docker",
+    "Firebase": "firebase",
+    "SQL": "mysql", // generic SQL, mapping to MySQL icon
+    "AWS EC2": "aws",
     "Python": "python",
-    "Material UI": "materialui",
-    "C++": "c++",
-    "PHP": "php",
-    "MySQL": "mysql"
-  };
+    "PyTorch": "pytorch",
+    "TensorFlow": "tensorflow",
+    "Natural Language Processing": "" // fallback: no common icon
+  };  
   
   // Check if we have a matching icon in tech-stack-icons
   const iconKey = techIconsMap[tech];
