@@ -2,13 +2,13 @@ import { motion } from "framer-motion";
 
 const certificates = [
   {
-    certificate: "AWS Certified Solutions Architect (Incoming)",
-    provider: "Amazon Web Services",
-    issuedate: "Expected: JUL 2025",
-    desc: "Preparing for AWS Certified Solutions Architect Associate exam.",
-    image: "", // optional: you can add image later
-    url: "https://aws.amazon.com/certification/certified-solutions-architect-associate/"
-  }
+    certificate: "Google Cybersecurity Professional Certificate V2",
+    provider: "Google (via Coursera)",
+    issuedate: "18 May 2025",
+    desc: "Completed 8-course certification covering security best practices, threat detection, risk management, and incident response.",
+    //image: "GoogleCybersecurityProfessionalCertificateV2_Badge20250518-27-k82hcp_page-0001.jpg",
+    url: "https://www.credly.com/badges/ed51ce48-72c1-40bf-9aeb-faebd2924e2b/public_url"
+  },
 ];
 
 const Certificate = () => {
