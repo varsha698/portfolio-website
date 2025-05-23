@@ -1,36 +1,47 @@
-import {
-  SiFlutter, SiHtml5, SiCss3, SiJavascript, SiFigma,
-  SiFlask, SiTerraform, SiAnsible, SiDocker, SiFirebase,
-  SiMysql, SiPython, SiPytorch, SiTensorflow, SiServer, SiCode
-} from "react-icons/si";
+import React from "react";
+import TechIcon from "./TechIcons";
 
-const fallbackIcons = {
-  Flutter: <SiFlutter />,
-  HTML: <SiHtml5 />,
-  CSS: <SiCss3 />,
-  JavaScript: <SiJavascript />,
-  Figma: <SiFigma />,
-  Flask: <SiFlask />,
-  Terraform: <SiTerraform />,
-  Ansible: <SiAnsible />,
-  Docker: <SiDocker />,
-  Firebase: <SiFirebase />,
-  SQL: <SiMysql />,
-  "AWS EC2": <SiServer />, // 👈 replaced invalid import
-  Python: <SiPython />,
-  PyTorch: <SiPytorch />,
-  TensorFlow: <SiTensorflow />
-};
+const techCategories = [
+  {
+    category: "Frontend",
+    theme: "neural",
+    techs: ["Flutter", "HTML", "CSS", "JavaScript", "Figma"]
+  },
+  {
+    category: "Backend",
+    theme: "terminal",
+    techs: ["Flask", "Terraform", "Ansible", "Docker"]
+  },
+  {
+    category: "Database & Cloud",
+    theme: "vortex",
+    techs: ["Firebase", "SQL", "AWS EC2"]
+  },
+  {
+    category: "AI/Automation",
+    theme: "ai",
+    techs: ["Python", "PyTorch", "TensorFlow", "Natural Language Processing"]
+  }
+];
 
-const TechIcon = ({ tech, theme }) => {
-  const icon = fallbackIcons[tech] || <SiCode />;
-
+const TechStackDisplay = () => {
   return (
-    <div className="flex flex-col items-center w-14 h-14">
-      <div className="text-2xl text-white">{icon}</div>
-      <span className="text-xs text-gray-300 mt-1 text-center">{tech}</span>
+    <div className="p-10 text-white bg-black min-h-screen">
+      <h1 className="text-3xl font-bold text-center mb-10">Tech Stack Showcase</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {techCategories.map(({ category, techs }) => (
+          <div key={category} className="border border-gray-700 p-6 rounded-xl bg-gray-900 bg-opacity-30">
+            <h2 className="text-xl font-semibold mb-4">{category}</h2>
+            <div className="flex flex-wrap gap-4">
+              {techs.map((tech) => (
+                <TechIcon key={tech} tech={tech} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default TechIcon;
+export default TechStackDisplay;
