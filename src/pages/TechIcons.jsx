@@ -1,49 +1,36 @@
-import React from "react";
-import { SiExpress, SiFirebase, SiTensorflow, SiOpencv } from "react-icons/si";
-import StackIcon from "tech-stack-icons";
+import {
+  SiFlutter, SiHtml5, SiCss3, SiJavascript, SiFigma,
+  SiFlask, SiTerraform, SiAnsible, SiDocker, SiFirebase,
+  SiMysql, SiAmazonaws, SiPython, SiPytorch, SiTensorflow, SiCode
+} from "react-icons/si";
 
-// Icons known to break from `tech-stack-icons`
-const failingIcons = new Set([
-  "expressjs",
-  "opencv",
-  "tesseract-ocr",
-  "tensorflow",
-  "deep-learning",
-  "image-processing",
-  "pygame",
-  "selenium",
-  "web-scraping",
-  "multithreading",
-  "file-io",
-  "ncurses"
-]);
-
-// Fallback Icons for known cases
 const fallbackIcons = {
-  expressjs: <SiExpress />,
-  firebase: <SiFirebase />,
-  tensorflow: <SiTensorflow />,
-  opencv: <SiOpencv />
+  Flutter: <SiFlutter />,
+  HTML: <SiHtml5 />,
+  CSS: <SiCss3 />,
+  JavaScript: <SiJavascript />,
+  Figma: <SiFigma />,
+  Flask: <SiFlask />,
+  Terraform: <SiTerraform />,
+  Ansible: <SiAnsible />,
+  Docker: <SiDocker />,
+  Firebase: <SiFirebase />,
+  SQL: <SiMysql />,
+  "AWS EC2": <SiAmazonaws />,
+  Python: <SiPython />,
+  PyTorch: <SiPytorch />,
+  TensorFlow: <SiTensorflow />
 };
 
-// Function to get tech icon with error handling
-export const getTechIcon = (tech) => {
-  const key = tech.toLowerCase();
+const TechIcon = ({ tech, theme }) => {
+  const icon = fallbackIcons[tech] || <SiCode />;
 
-  if (failingIcons.has(key)) {
-    if (process.env.NODE_ENV === 'development') {
-      console.warn("Using fallback icon for:", key);
-    }
-    return fallbackIcons[key] || <span className="text-sm text-gray-400">{tech}</span>;
-  }
-
-  try {
-    const icon = <StackIcon name={tech} style={{ fontSize: '1.5rem', width: '24px', height: '24px' }} />;
-    return React.isValidElement(icon)
-      ? icon
-      : fallbackIcons[key] || <span className="text-sm text-gray-400">{tech}</span>;
-  } catch (error) {
-    console.error("Error fetching icon for:", tech, error);
-    return fallbackIcons[key] || <span className="text-sm text-gray-400">{tech}</span>;
-  }
+  return (
+    <div className="flex flex-col items-center w-14 h-14">
+      <div className="text-2xl text-white">{icon}</div>
+      <span className="text-xs text-gray-300 mt-1 text-center">{tech}</span>
+    </div>
+  );
 };
+
+export default TechIcon;
