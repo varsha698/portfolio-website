@@ -1,7 +1,7 @@
 import {
   SiFlutter, SiHtml5, SiCss3, SiJavascript, SiFigma,
   SiFlask, SiTerraform, SiAnsible, SiDocker, SiFirebase,
-  SiMysql, SiAmazonaws, SiPython, SiPytorch, SiTensorflow, SiCode
+  SiMysql, SiPython, SiPytorch, SiTensorflow, SiServer, SiCode
 } from "react-icons/si";
 
 const fallbackIcons = {
@@ -16,7 +16,7 @@ const fallbackIcons = {
   Docker: <SiDocker />,
   Firebase: <SiFirebase />,
   SQL: <SiMysql />,
-  "AWS EC2": <SiAmazonaws />,
+  "AWS EC2": <SiServer />, // 👈 replaced invalid import
   Python: <SiPython />,
   PyTorch: <SiPytorch />,
   TensorFlow: <SiTensorflow />
