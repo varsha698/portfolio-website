@@ -1,13 +1,9 @@
-import ReactDOM from "react-dom/client";
 import { HashRouter } from "react-router-dom";
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import { ThemeProvider } from "./context/ThemeContext";
-import "./index.css";
-
+import "./index.css"; // Make sure this is imported before the App
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <ThemeProvider>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </ThemeProvider>
+  <HashRouter>
+    <App />
+  </HashRouter>
 );

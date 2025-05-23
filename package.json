@@ -1,5 +1,5 @@
 {
-  "homepage": "https://varsha698.github.io/portfolio-website",
+  "homepage": "https://vmoyd.github.io/portfolio-app",
   "name": "portfolio-app",
   "private": true,
   "version": "1.0.0",
@@ -19,10 +19,10 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.1.5",
     "split-type": "^0.3.4",
     "styled-components": "^6.1.15",
+    "tech-stack-icons": "^2.1.0",
     "vite-plugin-static-copy": "^2.2.0"
   },
   "devDependencies": {

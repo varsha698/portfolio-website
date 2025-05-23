@@ -1,47 +1,51 @@
 import React from "react";
-import TechIcon from "./TechIcons";
+import { SiExpress, SiFirebase, SiTensorflow, SiOpencv } from "react-icons/si";
+import StackIcon from "tech-stack-icons";
 
-const techCategories = [
-  {
-    category: "Frontend",
-    theme: "neural",
-    techs: ["Flutter", "HTML", "CSS", "JavaScript", "Figma"]
-  },
-  {
-    category: "Backend",
-    theme: "terminal",
-    techs: ["Flask", "Terraform", "Ansible", "Docker"]
-  },
-  {
-    category: "Database & Cloud",
-    theme: "vortex",
-    techs: ["Firebase", "SQL", "AWS EC2"]
-  },
-  {
-    category: "AI/Automation",
-    theme: "ai",
-    techs: ["Python", "PyTorch", "TensorFlow", "Natural Language Processing"]
-  }
+// List of technologies that are failing
+const failingIcons = [
+  "expressjs",
+  "opencv",
+  "tesseract-ocr",
+  "tensorflow",
+  "deep-learning",
+  "image-processing",
+  "pygame",
+  "selenium",
+  "web-scraping",
+  "multithreading",
+  "file-io",
+  "ncurses"
 ];
 
-const TechStackDisplay = () => {
-  return (
-    <div className="p-10 text-white bg-black min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-10">Tech Stack Showcase</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {techCategories.map(({ category, techs }) => (
-          <div key={category} className="border border-gray-700 p-6 rounded-xl bg-gray-900 bg-opacity-30">
-            <h2 className="text-xl font-semibold mb-4">{category}</h2>
-            <div className="flex flex-wrap gap-4">
-              {techs.map((tech) => (
-                <TechIcon key={tech} tech={tech} />
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+// Fallback Icons
+const fallbackIcons = {
+  expressjs: <SiExpress />,
+  firebase: <SiFirebase />,
+  tensorflow: <SiTensorflow />,
+  opencv : <SiOpencv />
 };
 
-export default TechStackDisplay;
+// Function to get tech icon with error handling
+export const getTechIcon = (tech) => {
+  // If tech is in failing list, fetch an alternative source
+  if (failingIcons.includes(tech.toLowerCase())) {
+    console.log("Failing icon:", tech);
+    return (
+      fallbackIcons[tech] || <span>{tech}</span>
+      // <img
+      //   src={`https://img.shields.io/badge/${tech.replace(/ /g, "%20")}-blue?style=flat-square`}
+      //   alt={tech}
+      //   style={{ width: "24px", height: "24px" }}
+      // />
+    );
+  }
+
+  try {
+    const icon = <StackIcon name={tech} style={{ fontSize: '1.5rem', width: '24px', height: '24px' }} />;
+    return React.isValidElement(icon) ? icon : fallbackIcons[tech] || <span>{tech}</span>;
+  } catch (error) {
+    console.log("Error fetching icon for:", tech);
+    return fallbackIcons[tech] || <span>{tech}</span>;
+  }
+};
