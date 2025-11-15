@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root variables */
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  color: rgba(0, 0, 0, 0.87);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Root App Container */
+#root {
+  width: 100%;
+}
+
+/* Global Layout Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #fff;
+  color: #213547;
+  width: 100%;
+}
+
+.dark body {
+  background-color: #000;
+  color: #e0e0e0;
+}
+
+/* Typography Defaults */
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+/* Link Styles */
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #747bff;
+}
+
+/* Button Styles */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+.dark button {
+  background-color: #222;
+}
+
+/* Glassmorphism Card */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+.dark .glass {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Neon Glow Hover Text */
+.neon-text {
+  color: rgb(255, 204, 102);
+  transition: 0.3s;
+}
+.neon-text:hover {
+  color: rgb(255, 204, 102);
+  text-shadow: 0 0 10px #fff, 0 0 20px #bbb5aa,
+               0 0 40px rgb(255, 204, 102),
+               0 0 80px rgb(255, 204, 102),
+               0 0 120px rgb(255, 204, 102),
+               0 0 200px rgb(255, 204, 102),
+               0 0 300px rgb(255, 204, 102),
+               0 0 400px rgb(255, 204, 102);
+}
+
+/* Scanline Effect (used in Header/Footer) */
+.bg-scanline {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.5) 2px,
+    rgba(0, 0, 0, 0.5) 4px
+  );
+}
