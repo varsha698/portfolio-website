@@ -7,7 +7,7 @@ const publications = [
     conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
     status: "Under Review",
-    url: "/portfolio-app/ICICT_Mental_Health_and_Robotics.pdf",
+    url: "/portfolio-website/ICICT_Mental_Health_and_Robotics.pdf",
     abstract: "Research paper on the intersection of mental health and robotics technology, currently under review.",
   },
 ];

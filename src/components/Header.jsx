@@ -42,7 +42,7 @@ const Header = () => {
       <div className="relative">
         <Link to="/" aria-label="Home">
           <img
-            src="/portfolio-app/VD.png"
+            src="/portfolio-website/VD.png"
             alt="Varshini Bhavanam Portfolio Logo"
             className="h-12 cursor-pointer hover:scale-105 transition-transform duration-300"
             onError={(e) => {
@@ -67,7 +67,7 @@ const Header = () => {
           </Link>
         ))}
         <a
-          href="/portfolio-app/Varshini_Bhavanam_Resume.pdf"
+          href="/portfolio-website/Varshini_Bhavanam_Resume.pdf"
           download="Varshini_Bhavanam_Resume.pdf"
           className="ml-4 text-amber-400 hover:text-amber-300 transition text-lg flex items-center gap-1 px-3 py-1 border border-amber-400/50 rounded hover:bg-amber-400/10"
           aria-label="Download Resume"
@@ -99,7 +99,7 @@ const Header = () => {
         </div>
         <div className="px-4 py-2 border-t flex items-center justify-between border-amber-900 bg-black">
           <a
-            href="/portfolio-app/Varshini_Bhavanam_Resume.pdf"
+            href="/portfolio-website/Varshini_Bhavanam_Resume.pdf"
             download="Varshini_Bhavanam_Resume.pdf"
             className="text-amber-400 hover:text-amber-300 transition text-sm flex items-center gap-2 px-3 py-1 border border-amber-400/50 rounded hover:bg-amber-400/10"
             aria-label="Download Resume"

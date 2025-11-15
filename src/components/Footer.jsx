@@ -54,7 +54,7 @@ const Footer = () => {
       {/* Resume Download */}
       <div className="mb-4">
         <a
-          href="/portfolio-app/Varshini_Bhavanam_Resume.pdf"
+          href="/portfolio-website/Varshini_Bhavanam_Resume.pdf"
           download="Varshini_Bhavanam_Resume.pdf"
           className="inline-flex items-center gap-2 px-4 py-2 text-amber-400 border border-amber-400/50 rounded-lg hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 text-sm font-semibold relative group"
         >
