@@ -2,13 +2,22 @@ import { motion } from "framer-motion";
 
 const publications = [
   {
+    title: "Digital Interventions for Depression and Anxiety: A Systematic Synthesis of Chatbots, App-Based CBT, and Immersive VR/XR",
+    authors: "Varshini Bhavanam, Dr. Arshia Khan, and co-authors",
+    conference: "HEALTHINF 2026 (International Conference on Health Informatics)",
+    year: "2026",
+    status: "Accepted",
+    url: null, // Add PDF path when available
+    abstract: "A systematic synthesis of digital interventions including chatbots, app-based cognitive behavioral therapy, and immersive virtual/extended reality technologies for depression and anxiety treatment. Accepted as Short Paper.",
+  },
+  {
     title: "Mental Health and Robotics",
-    authors: "Varshini Bhavanam, Ayesha Noshin and Dr. Arshia Khan", // Update with co-authors if applicable
+    authors: "Varshini Bhavanam, Ayesha Noshin and Dr. Arshia Khan",
     conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
-    status: "Under Review",
+    status: "Accepted",
     url: "/portfolio-website/ICICT_Mental_Health_and_Robotics.pdf",
-    abstract: "Research paper on the intersection of mental health and robotics technology, currently under review.",
+    abstract: "Research paper on the intersection of mental health and robotics technology, currently accepted.",
   },
 ];
 
@@ -113,7 +122,7 @@ const Publications = () => {
                 <p className="text-sm mb-4 italic text-gray-300">{pub.abstract}</p>
               )}
 
-              {pub.url && (
+              {pub.url ? (
                 <a
                   href={pub.url}
                   target="_blank"
@@ -122,6 +131,8 @@ const Publications = () => {
                 >
                   {pub.url.endsWith('.pdf') ? 'Download PDF →' : 'View Paper →'}
                 </a>
+              ) : (
+                <p className="text-sm text-gray-500 italic">PDF available soon</p>
               )}
             </motion.div>
           ))}
