@@ -11,13 +11,13 @@ const publications = [
     abstract: "A systematic synthesis of digital interventions including chatbots, app-based cognitive behavioral therapy, and immersive virtual/extended reality technologies for depression and anxiety treatment. Accepted as Short Paper.",
   },
   {
-    title: "Mental Health and Robotics",
+    title: "Humanoid and Socially Assistive Robots in Mental Health Care: A PRISMA Guided Systematic Review of Therapeutic and Emotional Outcomes (2021–2025)",
     authors: "Varshini Bhavanam, Ayesha Noshin and Dr. Arshia Khan",
     conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
     status: "Accepted",
     url: "/portfolio-website/ICICT_Mental_Health_and_Robotics.pdf",
-    abstract: "Research paper on the intersection of mental health and robotics technology, currently accepted.",
+    abstract: "A PRISMA-guided systematic review examining the therapeutic and emotional outcomes of humanoid and socially assistive robots in mental health care, covering research from 2021 to 2025.",
   },
 ];
 
