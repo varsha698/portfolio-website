@@ -16,7 +16,7 @@ const publications = [
     conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
     status: "Accepted",
-    url: "/portfolio-website/ICICT_Mental_Health_and_Robotics.pdf",
+    url: "/ICICT_Mental_Health_and_Robotics.pdf",
     abstract: "A PRISMA-guided systematic review examining the therapeutic and emotional outcomes of humanoid and socially assistive robots in mental health care, covering research from 2021 to 2025.",
   },
 ];
