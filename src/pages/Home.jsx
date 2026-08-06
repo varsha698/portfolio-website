@@ -1,10 +1,83 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { FaArrowRight, FaGithub, FaLinkedin, FaDownload } from "react-icons/fa";
-import { lazy, Suspense } from "react";
+import {
+  FaArrowRight,
+  FaGithub,
+  FaLinkedin,
+  FaDownload,
+  FaBookOpen,
+  FaBriefcase,
+  FaTerminal,
+} from "react-icons/fa";
+import { useEffect, useState, lazy, Suspense } from "react";
+import PropTypes from "prop-types";
+import TerminalWidget from "../components/TerminalWidget";
+import LocalTime from "../components/LocalTime";
+import GithubActivity from "../components/GithubActivity";
 
-// Lazy-load the heavy tech-stack-icons bundle so the hero paints fast
+// Lazy — these pull in the heavy tech-stack-icons bundle
+const TechMarquee = lazy(() => import("../components/TechMarquee"));
 const TechStackShowcase = lazy(() => import("./TechStackDisplay"));
+
+// ── Typewriter tagline ──────────────────────────────────────
+const ROLES = [
+  "full-stack web",
+  "AI/ML engineer",
+  "DevOps automation",
+  "research + publications",
+  "shipping to real users",
+];
+
+const Typewriter = () => {
+  const [idx, setIdx] = useState(0);
+  const [text, setText] = useState("");
+  const [phase, setPhase] = useState("typing"); // typing | pausing | erasing
+
+  useEffect(() => {
+    const target = ROLES[idx];
+    let t;
+    if (phase === "typing") {
+      if (text.length < target.length) {
+        t = setTimeout(() => setText(target.slice(0, text.length + 1)), 60);
+      } else {
+        t = setTimeout(() => setPhase("pausing"), 1400);
+      }
+    } else if (phase === "pausing") {
+      t = setTimeout(() => setPhase("erasing"), 800);
+    } else if (phase === "erasing") {
+      if (text.length > 0) {
+        t = setTimeout(() => setText(target.slice(0, text.length - 1)), 30);
+      } else {
+        setIdx((i) => (i + 1) % ROLES.length);
+        setPhase("typing");
+      }
+    }
+    return () => clearTimeout(t);
+  }, [text, phase, idx]);
+
+  return (
+    <span className="text-amber-300">
+      {text}
+      <span className="inline-block w-[2px] h-5 md:h-6 align-middle ml-1 bg-amber-400 animate-pulse" />
+    </span>
+  );
+};
+
+// ── Bento tile wrapper ──────────────────────────────────────
+const Tile = ({ className = "", children, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 12 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.15 }}
+    transition={{ duration: 0.5, delay }}
+    className={
+      "relative p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors " +
+      className
+    }
+  >
+    {children}
+  </motion.div>
+);
 
 const Home = () => {
   return (
@@ -15,40 +88,26 @@ const Home = () => {
         background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
       }}
     >
-      {/* Grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`h-${i}`}
-            className="absolute w-full h-px"
-            style={{
-              top: `${i * 5}%`,
-              background:
-                "linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`v-${i}`}
-            className="absolute h-full w-px"
-            style={{
-              left: `${i * 5}%`,
-              background:
-                "linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-      </div>
-
       {/* Ambient glow */}
       <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-orange-500 opacity-10 blur-3xl pointer-events-none"></div>
 
-      {/* HERO — fits above the fold */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 md:px-8 text-center">
+      {/* HERO */}
+      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 md:px-8 text-center pt-16 pb-8">
+        {/* Available-for pill */}
+        <motion.div
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-xs font-mono"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+          </span>
+          available for internships · summer 2026
+        </motion.div>
+
         <motion.h1
           className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
           initial={{ opacity: 0, y: -12 }}
@@ -63,12 +122,12 @@ const Home = () => {
         </motion.h1>
 
         <motion.p
-          className="mt-4 text-lg md:text-xl text-amber-300/90 max-w-2xl"
+          className="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl min-h-[1.75rem]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          Software engineer — full-stack web, AI/ML, and DevOps.
+          Software engineer — <Typewriter />
         </motion.p>
 
         <motion.p
@@ -115,7 +174,7 @@ const Home = () => {
         </motion.div>
 
         <motion.div
-          className="mt-8 flex items-center gap-6"
+          className="mt-6 flex items-center gap-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
@@ -139,9 +198,117 @@ const Home = () => {
             <FaLinkedin />
           </a>
         </motion.div>
+
+        {/* ⌘K hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.6 }}
+          className="mt-8 text-xs text-gray-500 font-mono"
+        >
+          press{" "}
+          <kbd className="border border-gray-700 rounded px-1.5 py-0.5 mx-1">
+            ⌘K
+          </kbd>{" "}
+          /{" "}
+          <kbd className="border border-gray-700 rounded px-1.5 py-0.5 mx-1">
+            ctrl K
+          </kbd>{" "}
+          to search
+        </motion.div>
       </div>
 
-      {/* Tech stack — below the fold, scroll to see */}
+      {/* TECH MARQUEE */}
+      <div className="relative z-10 mb-16">
+        <Suspense fallback={<div className="h-16" />}>
+          <TechMarquee />
+        </Suspense>
+      </div>
+
+      {/* BENTO GRID */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
+          {/* Terminal — big */}
+          <Tile className="md:col-span-4">
+            <TerminalWidget />
+          </Tile>
+
+          {/* Local time */}
+          <Tile className="md:col-span-2" delay={0.05}>
+            <LocalTime />
+          </Tile>
+
+          {/* Stats — publications */}
+          <Tile className="md:col-span-2" delay={0.1}>
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
+                <FaBookOpen /> Publications
+              </div>
+              <div className="font-mono text-4xl font-bold text-amber-300">2</div>
+              <p className="text-sm text-gray-400 mt-1">
+                HEALTHINF 2026 · ICICT 2025
+              </p>
+              <Link
+                to="/publications"
+                className="mt-3 text-xs text-amber-400 hover:text-amber-300 font-mono transition"
+              >
+                read papers →
+              </Link>
+            </div>
+          </Tile>
+
+          {/* Stats — projects */}
+          <Tile className="md:col-span-2" delay={0.15}>
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
+                <FaBriefcase /> Projects shipped
+              </div>
+              <div className="font-mono text-4xl font-bold text-amber-300">
+                32<span className="text-2xl">+</span>
+              </div>
+              <p className="text-sm text-gray-400 mt-1">
+                professional + personal
+              </p>
+              <Link
+                to="/projects"
+                className="mt-3 text-xs text-amber-400 hover:text-amber-300 font-mono transition"
+              >
+                see all →
+              </Link>
+            </div>
+          </Tile>
+
+          {/* Currently building */}
+          <Tile className="md:col-span-2" delay={0.2}>
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
+                <FaTerminal /> Currently
+              </div>
+              <ul className="text-sm text-gray-300 space-y-1.5">
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Shipping Rails 8 &amp; Next 16 for Xecutive Development
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Prototyping a local-LLM writing studio
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Finishing my CS degree at UMN Duluth
+                </li>
+              </ul>
+            </div>
+          </Tile>
+
+          {/* GitHub activity — wide */}
+          <Tile className="md:col-span-6" delay={0.25}>
+            <GithubActivity />
+          </Tile>
+        </div>
+      </div>
+
+      {/* Full tech-stack breakdown */}
       <div className="relative z-10 w-full pb-16">
         <Suspense
           fallback={
@@ -155,6 +322,12 @@ const Home = () => {
       </div>
     </section>
   );
+};
+
+Tile.propTypes = {
+  className: PropTypes.string,
+  children: PropTypes.node,
+  delay: PropTypes.number,
 };
 
 export default Home;
