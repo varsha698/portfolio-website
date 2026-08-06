@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide the system cursor while the custom cursor is active.
+   Inputs keep their text caret (that's a separate concept). */
+html.hide-native-cursor,
+html.hide-native-cursor * {
+  cursor: none !important;
+}
+
 /* Root variables */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
