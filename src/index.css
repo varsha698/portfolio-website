@@ -2,120 +2,128 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Root variables */
 :root {
-  color-scheme: dark;
-  --bg: #0a0a0b;
-  --surface: #111114;
-  --raised: #16161a;
-  --border: #1e1e24;
-  --border-strong: #2a2a33;
-  --fg: #e6e6e6;
-  --muted: #7a7a85;
-  --faint: #4a4a52;
-  --accent: #7ee787;
-  --accent-dim: #4a9c52;
-  --link: #79c0ff;
-  --warn: #ffa657;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light;
+  color: rgba(0, 0, 0, 0.87);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
 }
 
+.dark {
+  color-scheme: dark;
+}
+
+/* Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Root App Container */
+#root {
+  width: 100%;
+}
+
+/* Global Layout Reset */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-  background: var(--bg);
-}
-
 body {
   margin: 0;
+  min-width: 320px;
   min-height: 100vh;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-#root {
+  background-color: #fff;
+  color: #213547;
   width: 100%;
-  min-height: 100vh;
 }
 
-::selection {
-  background: rgba(126, 231, 135, 0.25);
-  color: #ffffff;
+.dark body {
+  background-color: #000;
+  color: #e0e0e0;
 }
 
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 8px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #3a3a45;
+/* Typography Defaults */
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
+/* Link Styles */
 a {
-  color: var(--link);
-  text-decoration: none;
-  transition: color 0.15s ease;
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
 }
 a:hover {
-  color: var(--accent);
+  color: #747bff;
 }
 
+/* Button Styles */
 button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
   font-family: inherit;
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--fg);
+  background-color: #1a1a1a;
+  color: white;
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.25s;
 }
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+button:hover {
+  border-color: #646cff;
 }
-
-.mono {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
-
-.prompt::before {
-  content: '$ ';
-  color: var(--accent);
-}
-.comment {
-  color: var(--muted);
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-}
-.comment::before {
-  content: '// ';
-  color: var(--faint);
+.dark button {
+  background-color: #222;
 }
 
-.blink {
-  animation: blink 1s step-end infinite;
+/* Glassmorphism Card */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
 }
-@keyframes blink {
-  50% { opacity: 0; }
+.dark .glass {
+  background: rgba(0, 0, 0, 0.4);
 }
 
-.hairline {
-  background: linear-gradient(90deg, transparent, var(--border-strong) 20%, var(--border-strong) 80%, transparent);
-  height: 1px;
-  width: 100%;
+/* Neon Glow Hover Text */
+.neon-text {
+  color: rgb(255, 204, 102);
+  transition: 0.3s;
+}
+.neon-text:hover {
+  color: rgb(255, 204, 102);
+  text-shadow: 0 0 10px #fff, 0 0 20px #bbb5aa,
+               0 0 40px rgb(255, 204, 102),
+               0 0 80px rgb(255, 204, 102),
+               0 0 120px rgb(255, 204, 102),
+               0 0 200px rgb(255, 204, 102),
+               0 0 300px rgb(255, 204, 102),
+               0 0 400px rgb(255, 204, 102);
+}
+
+/* Scanline Effect (used in Header/Footer) */
+.bg-scanline {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.5) 2px,
+    rgba(0, 0, 0, 0.5) 4px
+  );
 }

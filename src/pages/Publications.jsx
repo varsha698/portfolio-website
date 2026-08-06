@@ -1,119 +1,156 @@
 import { motion } from "framer-motion";
-import { FaFilePdf, FaExternalLinkAlt } from "react-icons/fa";
 
 const publications = [
   {
-    title:
-      "Digital Interventions for Depression and Anxiety: A Systematic Synthesis of Chatbots, App-Based CBT, and Immersive VR/XR",
-    authors: "Varshini Bhavanam, Dr. Arshia Khan, et al.",
-    venue: "HEALTHINF 2026",
-    venueFull: "International Conference on Health Informatics",
-    type: "Short Paper",
-    status: "accepted",
+    title: "Digital Interventions for Depression and Anxiety: A Systematic Synthesis of Chatbots, App-Based CBT, and Immersive VR/XR",
+    authors: "Varshini Bhavanam, Dr. Arshia Khan, and co-authors",
+    conference: "HEALTHINF 2026 (International Conference on Health Informatics)",
     year: "2026",
-    url: null,
-    abstract:
-      "A systematic synthesis of digital interventions including chatbots, app-based cognitive behavioral therapy, and immersive virtual/extended reality technologies for depression and anxiety treatment.",
+    status: "Accepted",
+    url: null, // Add PDF path when available
+    abstract: "A systematic synthesis of digital interventions including chatbots, app-based cognitive behavioral therapy, and immersive virtual/extended reality technologies for depression and anxiety treatment. Accepted as Short Paper.",
   },
   {
-    title:
-      "Humanoid and Socially Assistive Robots in Mental Health Care: A PRISMA Guided Systematic Review of Therapeutic and Emotional Outcomes (2021–2025)",
-    authors: "Varshini Bhavanam, Ayesha Noshin, Dr. Arshia Khan",
-    venue: "ICICT 2025",
-    venueFull: "International Conference on Information and Communication Technology",
-    type: "Systematic Review",
-    status: "accepted",
+    title: "Humanoid and Socially Assistive Robots in Mental Health Care: A PRISMA Guided Systematic Review of Therapeutic and Emotional Outcomes (2021–2025)",
+    authors: "Varshini Bhavanam, Ayesha Noshin and Dr. Arshia Khan",
+    conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
+    status: "Accepted",
     url: "/ICICT_Mental_Health_and_Robotics.pdf",
-    abstract:
-      "A PRISMA-guided systematic review of therapeutic and emotional outcomes of humanoid and socially assistive robots in mental-health care, covering research from 2021 to 2025.",
+    abstract: "A PRISMA-guided systematic review examining the therapeutic and emotional outcomes of humanoid and socially assistive robots in mental health care, covering research from 2021 to 2025.",
   },
 ];
 
-const statusColor = {
-  accepted: "text-accent border-accent-dim",
-  published: "text-accent border-accent-dim",
-  "under review": "text-accent-warn border-accent-warn/50",
-  submitted: "text-fg-muted border-border-strong",
-};
-
 const Publications = () => {
   return (
-    <section className="page">
-      <p className="section-label">publications</p>
-      <h1 className="section-title text-3xl md:text-4xl">
-        <span className="hash">#</span>publications
-      </h1>
-      <p className="text-fg-muted mt-3 max-w-2xl">
-        Peer-reviewed research on digital and robotic interventions for mental health,
-        with Dr. Arshia Khan (UMN Duluth).
-      </p>
-
-      <div className="hairline my-10" />
-
-      <div className="space-y-5">
-        {publications.map((p, i) => (
-          <motion.article
-            key={p.title}
-            initial={{ opacity: 0, y: 8 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.35, delay: i * 0.05 }}
-            className="card p-6"
-          >
-            <div className="flex flex-wrap items-center gap-2 mb-3">
-              <span className="mono text-xs text-accent">{p.venue}</span>
-              <span className="text-fg-faint">·</span>
-              <span className="mono text-xs text-fg-muted">{p.type}</span>
-              <span className="text-fg-faint">·</span>
-              <span className="mono text-xs text-fg-muted">{p.year}</span>
-              <span
-                className={`ml-auto mono text-[11px] uppercase tracking-wider px-2 py-0.5 border rounded ${
-                  statusColor[p.status] || "text-fg-muted border-border"
-                }`}
-              >
-                {p.status}
-              </span>
-            </div>
-
-            <h2 className="text-fg font-medium leading-snug">{p.title}</h2>
-
-            <p className="mono text-sm text-fg-muted mt-2">{p.authors}</p>
-            <p className="text-xs text-fg-faint mt-1">{p.venueFull}</p>
-
-            <p className="text-sm text-fg-muted mt-4 leading-relaxed">
-              {p.abstract}
-            </p>
-
-            <div className="mt-5">
-              {p.url ? (
-                <a
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn"
-                >
-                  {p.url.endsWith(".pdf") ? (
-                    <>
-                      <FaFilePdf /> download pdf
-                    </>
-                  ) : (
-                    <>
-                      <FaExternalLinkAlt className="text-xs" /> view paper
-                    </>
-                  )}
-                </a>
-              ) : (
-                <p className="mono text-sm text-fg-muted">
-                  <span className="comment">pdf available soon</span>
-                </p>
-              )}
-            </div>
-          </motion.article>
+    <section
+      id="publications"
+      className="min-h-screen flex flex-col items-center justify-center overflow-hidden relative transition-colors duration-300 bg-black"
+      style={{
+        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
+        position: "relative",
+        padding: "6rem 2rem",
+      }}
+    >
+      {/* Background grid */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={`h-${i}`}
+            className="absolute w-full h-px"
+            style={{
+              top: `${i * 5}%`,
+              background: "linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
+              opacity: "0.3",
+            }}
+          />
+        ))}
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={`v-${i}`}
+            className="absolute h-full w-px"
+            style={{
+              left: `${i * 5}%`,
+              background: "linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
+              opacity: "0.3",
+            }}
+          />
         ))}
       </div>
+
+      <motion.h1
+        className="text-4xl md:text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        style={{
+          textShadow: "0 0 15px rgba(255, 153, 102, 0.7), 0 0 30px rgba(255, 153, 102, 0.5)",
+          marginBottom: "2rem",
+          marginTop: "2rem",
+        }}
+      >
+        Publications
+      </motion.h1>
+
+      {/* Publications List */}
+      {publications.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl mx-auto z-10">
+          {publications.map((pub, index) => (
+            <motion.div
+              key={index}
+              className="relative p-6 backdrop-blur-md rounded-lg border overflow-hidden hover:shadow-lg transition-all duration-300 bg-black/60 border-amber-900/50 hover:shadow-amber-500/30"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              whileHover={{ scale: 1.02 }}
+            >
+              {/* Status Badge */}
+              <div className="absolute top-4 right-4">
+                <span
+                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                    pub.status === "Published"
+                      ? "bg-green-500/20 text-green-400 border border-green-500/50"
+                      : pub.status === "Accepted"
+                      ? "bg-blue-500/20 text-blue-400 border border-blue-500/50"
+                      : pub.status === "Under Review"
+                      ? "bg-purple-500/20 text-purple-400 border border-purple-500/50"
+                      : "bg-amber-500/20 text-amber-400 border border-amber-500/50"
+                  }`}
+                >
+                  {pub.status}
+                </span>
+              </div>
+
+              <h3 className="text-xl font-semibold mb-2 pr-20 text-amber-400">
+                {pub.title}
+              </h3>
+              
+              <p className="text-gray-400 text-sm mb-2">
+                <strong>Authors:</strong> {pub.authors}
+              </p>
+              
+              <p className="text-gray-300 mb-2">
+                <strong>Conference:</strong> {pub.conference}
+                {pub.location && `, ${pub.location}`}
+              </p>
+              
+              <p className="text-sm mb-3 text-gray-400">
+                <strong>Year:</strong> {pub.year}
+              </p>
+
+              {pub.abstract && (
+                <p className="text-sm mb-4 italic text-gray-300">{pub.abstract}</p>
+              )}
+
+              {pub.url ? (
+                <a
+                  href={pub.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block text-amber-400 hover:text-amber-300 text-sm font-semibold transition"
+                >
+                  {pub.url.endsWith('.pdf') ? 'Download PDF →' : 'View Paper →'}
+                </a>
+              ) : (
+                <p className="text-sm text-gray-500 italic">PDF available soon</p>
+              )}
+            </motion.div>
+          ))}
+        </div>
+      ) : (
+        <motion.div
+          className="text-center mt-12 text-gray-400"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+        >
+          <p className="text-lg">Publications will be displayed here.</p>
+          <p className="text-sm mt-2">Add your conference papers to the publications array in Publications.jsx</p>
+        </motion.div>
+      )}
     </section>
   );
 };
 
 export default Publications;
+
