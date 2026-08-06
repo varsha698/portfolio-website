@@ -1,138 +1,176 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import ProjectModal from "./ProjectModal"; 
-import { getTechIcon } from "./TechIcons";
+import { FaGithub, FaExternalLinkAlt } from "react-icons/fa";
+import ProjectModal from "./ProjectModal";
 
 const projects = [
   {
-    name: "AI Quiz Generator Website",
-    desc: "Built an AI Quiz Generator Website with Angular frontend and C# Web API backend, leveraging Groq API for NLP-based quiz generation. Designed RESTful endpoints using Swagger, implemented responsive UI, containerized with Docker, and automated CI/CD workflows using GitHub Actions.",
-    link: "#",
-    code: "#",
-    techstackused: "Angular, C#, ASP.NET Core, Docker, GitHub Actions, Swagger, Groq API",
-    techstackicons: ["angular", "docker", "github"]
+    name: "AI Model Stock Analysis",
+    desc: "XGBoost + LSTM ensemble producing trading signals and portfolio-risk scores. FastAPI backend, Next.js 14 frontend, SQLite, Dockerized, Fly.io.",
+    tags: ["python", "fastapi", "next.js", "xgboost", "lstm", "docker"],
+    category: "ai / ml",
+    repo: "https://github.com/varsha698/AI-Model-Stock-Analysis",
+    demo: null,
+  },
+  {
+    name: "ai-doc-editor",
+    desc: "Local-LLM (LLaMA3 / Mistral) writing studio. Async FastAPI, RAG with ChromaDB, LoRA fine-tuning harness. Next.js 15 + Tiptap frontend, pgvector.",
+    tags: ["next.js", "fastapi", "chromadb", "pytorch", "postgres"],
+    category: "ai / ml",
+    repo: "https://github.com/varsha698/ai-doc-editor",
+    demo: null,
+  },
+  {
+    name: "Quiz Generator (QuizMaster)",
+    desc: "AI-powered quiz generator: Angular 20 + Node/Express + MongoDB + Groq LLM + Tesseract.js OCR. PWA-enabled.",
+    tags: ["angular", "node", "mongodb", "groq", "pwa"],
+    category: "full-stack",
+    repo: "https://github.com/varsha698/Quiz-Generator",
+    demo: null,
+  },
+  {
+    name: "Winter Weather Lab",
+    desc: "NOAA / NWS Streamlit app with a RandomForest winter-storm severity predictor.",
+    tags: ["python", "streamlit", "sklearn"],
+    category: "ai / ml",
+    repo: "https://github.com/varsha698/-Winter-Weather-Lab",
+    demo: null,
+  },
+  {
+    name: "Sales Analytics Project",
+    desc: "pandas/numpy sales-KPI pipeline exporting CSVs for Tableau. Business-analyst portfolio piece.",
+    tags: ["python", "pandas", "tableau"],
+    category: "data",
+    repo: "https://github.com/varsha698/Sales-Analytics-Project",
+    demo: null,
+  },
+  {
+    name: "PantryPal",
+    desc: "Flutter + Firebase food-security app: pantry tracker, recipe matching, community feed. 3-person team.",
+    tags: ["flutter", "firebase", "dart"],
+    category: "mobile",
+    repo: "https://github.com/varsha698/PantryPalApp",
+    demo: null,
+  },
+  {
+    name: "Personal Admin Assistant",
+    desc: "Native iOS life-admin app. SwiftUI + SwiftData + CloudKit; Tasks, Commitments, DailyBrief, ActionReceipt models; EventKit sync.",
+    tags: ["swift", "swiftui", "cloudkit"],
+    category: "mobile",
+    repo: null,
+    demo: null,
+  },
+  {
+    name: "Cloud Infrastructure Automation",
+    desc: "Terraform-provisioned AWS EC2 + Ansible-configured environments, Flask app in Docker, CI/CD via GitHub Actions.",
+    tags: ["terraform", "ansible", "aws", "docker", "flask"],
+    category: "devops",
+    repo: "https://github.com/varsha698/DevOps_Project",
+    demo: null,
   },
   {
     name: "Sentiment Analysis Model",
-    desc: "Developed a sentiment classifier for IMDB reviews using PyTorch and a feedforward neural network. Preprocessed text, vectorized input, and trained the model with cross-entropy loss and Adam optimizer.",
-    link: "https://github.com/varsha698/nlp_project2025.git",
-    code: "https://github.com/varsha698/nlp_project2025.git",
-    techstackused: "Python, PyTorch, MLP",
-    techstackicons: ["python", "pytorch"]
+    desc: "IMDB review sentiment classifier: PyTorch MLP + TF-IDF vectorization; cross-entropy + Adam.",
+    tags: ["python", "pytorch", "nlp"],
+    category: "ai / ml",
+    repo: "https://github.com/benjaminponto/nlp_project2025",
+    demo: null,
   },
   {
-    name: "Cloud Infrastructure Automation (DevOps Project)",
-    desc: "Provisioned AWS EC2 infrastructure using Terraform and secured access via SSH keys. Automated environment setup and Flask deployment using Ansible. Built CI/CD pipeline with GitHub Actions to lint, test, and push Dockerized apps on commit.",
-    link: "https://github.com/varsha698/DevOps_Project.git",
-    code: "https://github.com/varsha698/DevOps_Project.git",
-    techstackused: "Terraform, Ansible, Flask, Docker, GitHub Actions, AWS EC2",
-    techstackicons: ["terraform", "ansible", "flask", "docker", "github", "aws"]
+    name: "dev-journal",
+    desc: "Meta-tool: stdlib collect.py → journal.json → self-redeploying GitHub Pages activity timeline.",
+    tags: ["python", "github-pages"],
+    category: "tooling",
+    repo: "https://github.com/varsha698/dev-journal",
+    demo: null,
   },
   {
-    name: "PantryPal – Mobile App",
-    desc: "Developing a Flutter app to support low-income families with affordable meal planning. Built recipe recommendations using ingredient tags and pantry tracking. Set up CI/CD using GitHub Actions for testing, linting, and build validation.",
-    link: "https://github.com/varsha698/PantryPalApp.git",
-    code: "https://github.com/varsha698/PantryPalApp.git",
-    techstackused: "Flutter, Firebase, GitHub Actions",
-    techstackicons: ["flutter", "firebase", "github"]
+    name: "Portfolio Website",
+    desc: "This site. React 19 + Vite 6 + Tailwind. Hash routing, deployed on Cloudflare Pages.",
+    tags: ["react", "vite", "tailwind"],
+    category: "web",
+    repo: "https://github.com/varsha698/portfolio-website",
+    demo: "https://varshinibhavanam.com",
   },
-  {
-    name: "Personal Portfolio Website",
-    desc: "A fully responsive portfolio website built with React and Tailwind, featuring animated project modals, tech stacks, and GitHub integration.",
-    link: "https://varsha698.github.io/portfolio-website/",
-    code: "https://github.com/varsha698/portfolio-website.git",
-    techstackused: "React.js, Tailwind CSS, Framer Motion, Vite, GitHub Pages",
-    techstackicons: ["reactjs", "tailwindcss", "vite", "github"]
-  }
 ];
 
-const shineKeyframes = `
-  @keyframes shine {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
-  }
-`;
+const categories = ["all", "ai / ml", "full-stack", "web", "mobile", "devops", "data", "tooling"];
 
 const Projects = () => {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const navigate = useNavigate();
+  const [selected, setSelected] = useState(null);
+  const [filter, setFilter] = useState("all");
 
-  const navigateToContact = () => {
-    navigate('/contact');
-  };
+  const filtered = filter === "all"
+    ? projects
+    : projects.filter((p) => p.category === filter);
 
   return (
-    <section 
-      id="projects" 
-      className="min-h-screen flex flex-col items-center justify-center overflow-hidden relative transition-colors duration-300 bg-black"
-      style={{ 
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
-        position: "relative", 
-        padding: "6rem 2rem" 
-      }}
-    >
-      <style dangerouslySetInnerHTML={{ __html: shineKeyframes }} />
+    <section className="page">
+      <p className="section-label">projects</p>
+      <h1 className="section-title text-3xl md:text-4xl">
+        <span className="hash">#</span>projects
+      </h1>
+      <p className="text-fg-muted mt-3 max-w-2xl">
+        A selection of things I&apos;ve shipped. Click a card for details.
+      </p>
 
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={`h-${i}`} 
-            className="absolute w-full h-px" 
-            style={{ 
-              top: `${i * 5}%`, 
-              background: 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)',
-              opacity: '0.3'
-            }} 
-          />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={`v-${i}`} 
-            className="absolute h-full w-px" 
-            style={{ 
-              left: `${i * 5}%`, 
-              background: 'linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)',
-              opacity: '0.3'
-            }} 
-          />
+      <div className="mt-8 flex flex-wrap gap-2 font-mono text-sm">
+        {categories.map((c) => (
+          <button
+            key={c}
+            onClick={() => setFilter(c)}
+            className={`px-3 py-1.5 rounded border transition-colors ${
+              filter === c
+                ? "border-accent-dim text-accent bg-bg-raised"
+                : "border-border text-fg-muted hover:text-fg hover:border-border-strong"
+            }`}
+          >
+            {c}
+          </button>
         ))}
       </div>
 
-      <motion.h1 
-        className="text-4xl md:text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          textShadow: "0 0 15px rgba(255, 153, 102, 0.7), 0 0 30px rgba(255, 153, 102, 0.5)",
-          marginBottom: "2rem",
-          marginTop: "2rem"
-        }}
-      >
-        Projects
-      </motion.h1>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto z-10">
-        {projects.map((project, index) => (
-          <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} onClick={() => setSelectedProject(project)} className="relative cursor-pointer group transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30 hover:border-amber-500/50">
-            <div className="relative p-6 backdrop-blur-md rounded-lg border overflow-hidden h-full transition-colors duration-300 bg-black/60 border-amber-900/50">
-              <h3 className="text-xl font-semibold mb-2 relative z-10 text-amber-400">{project.name}</h3>
-              <p className="mb-4 relative z-10 text-gray-300">{project.desc}</p>
-
-              <div className="flex flex-wrap gap-3 mt-auto relative z-10">
-                {project.techstackicons.map((tech, i) => (
-                  <motion.div key={i} whileHover={{ scale: 1.2, rotate: [0, 5, -5, 0] }} transition={{ duration: 0.3 }} className="text-2xl text-amber-500">
-                    {getTechIcon(tech)}
-                  </motion.div>
-                ))}
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filtered.map((p, i) => (
+          <motion.button
+            key={p.name}
+            onClick={() => setSelected(p)}
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.3, delay: (i % 6) * 0.03 }}
+            className="card p-5 text-left group"
+          >
+            <div className="flex items-start justify-between gap-2 mb-2">
+              <span className="mono text-[11px] text-fg-muted uppercase tracking-wider">
+                {p.category}
+              </span>
+              <div className="flex items-center gap-2 text-fg-faint text-xs">
+                {p.repo && <FaGithub />}
+                {p.demo && <FaExternalLinkAlt />}
               </div>
             </div>
-          </motion.div>
+            <h3 className="mono text-fg font-medium group-hover:text-accent transition-colors">
+              {p.name}
+            </h3>
+            <p className="text-sm text-fg-muted mt-2 leading-relaxed line-clamp-3">
+              {p.desc}
+            </p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {p.tags.slice(0, 4).map((t) => (
+                <span key={t} className="tag">{t}</span>
+              ))}
+              {p.tags.length > 4 && (
+                <span className="tag">+{p.tags.length - 4}</span>
+              )}
+            </div>
+          </motion.button>
         ))}
       </div>
 
-      {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />}
+      {selected && (
+        <ProjectModal project={selected} onClose={() => setSelected(null)} />
+      )}
     </section>
   );
 };

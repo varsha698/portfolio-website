@@ -1,139 +1,139 @@
-// Header.jsx
 import { useState, useEffect } from "react";
-import { FaBars, FaTimes, FaDownload } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { FaBars, FaTimes, FaDownload, FaGithub } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
+
+const links = [
+  { label: "home", path: "/" },
+  { label: "about", path: "/about" },
+  { label: "projects", path: "/projects" },
+  { label: "publications", path: "/publications" },
+  { label: "certificates", path: "/certificates" },
+  { label: "contact", path: "/contact" },
+];
 
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  const links = ["Home", "About", "Projects", "Certificates", "Publications", "Contact"];
+  const location = useLocation();
 
   useEffect(() => {
     let ticking = false;
-    const handleScroll = () => {
+    const onScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 10);
+          setScrolled(window.scrollY > 4);
           ticking = false;
         });
         ticking = true;
       }
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  const current = links.find((l) => l.path === location.pathname)?.label || "home";
+
   return (
-    <header className={`fixed top-0 w-full px-4 md:px-8 py-4 flex items-center justify-between z-50 transition-all duration-300 ${
-      scrolled 
-        ? "bg-black/80 backdrop-blur-md shadow-[0_4px_20px_rgba(255,153,102,0.15)]" 
-        : "bg-black/40 backdrop-blur-sm"
-    }`}>
-      <div className="absolute bottom-0 left-0 h-px w-full overflow-hidden">
-        <motion.div
-          className="h-px w-full bg-gradient-to-r from-transparent via-amber-400 to-transparent"
-          animate={{ x: ["-100%", "100%"] }}
-          transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-        />
-      </div>
-
-      <div className="relative">
-        <Link to="/" aria-label="Home">
-          <img
-            src="/portfolio-website/VD.png"
-            alt="Varshini Bhavanam Portfolio Logo"
-            className="h-12 cursor-pointer hover:scale-105 transition-transform duration-300"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.style.display = 'none';
-            }}
-          />
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+        scrolled ? "bg-bg/85 backdrop-blur-md border-b border-border" : "bg-bg/60 backdrop-blur-sm border-b border-transparent"
+      }`}
+    >
+      <div className="max-w-content mx-auto px-5 md:px-8 h-14 flex items-center justify-between">
+        <Link to="/" aria-label="Home" className="font-mono text-sm text-fg hover:text-accent transition-colors">
+          <span className="text-accent">vb</span>
+          <span className="text-fg-muted">@</span>
+          <span className="text-fg">portfolio</span>
+          <span className="text-fg-muted">:</span>
+          <span className="text-accent-link">~/{current}</span>
+          <span className="text-accent">$</span>
+          <span className="blink text-fg-muted">_</span>
         </Link>
-        <div className="absolute -inset-1 bg-amber-500 opacity-20 blur-md rounded-full -z-10"></div>
-      </div>
 
-      <nav className="hidden md:flex gap-6 items-center">
-        {links.map((link) => (
-          <Link
-            key={link}
-            to={link.toLowerCase() === "home" ? "/" : `/${link.toLowerCase()}`}
-            className="text-lg relative group text-gray-300"
-          >
-            <span className="relative z-10 hover:text-amber-400">{link}</span>
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-amber-400 group-hover:w-full transition-all duration-300"></span>
-            <span className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-20 bg-amber-400 blur-sm rounded transition-opacity duration-300"></span>
-          </Link>
-        ))}
-        <a
-          href="/portfolio-website/Varshini_Bhavanam_Resume.pdf"
-          download="Varshini_Bhavanam_Resume.pdf"
-          className="ml-4 text-amber-400 hover:text-amber-300 transition text-lg flex items-center gap-1 px-3 py-1 border border-amber-400/50 rounded hover:bg-amber-400/10"
-          aria-label="Download Resume"
-        >
-          <FaDownload className="text-sm" />
-          <span className="text-sm font-semibold hidden md:inline">Resume</span>
-        </a>
-      </nav>
-
-      <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-2xl md:hidden relative text-gray-200" aria-label="Toggle menu">
-        <span className="absolute -inset-2 bg-amber-500 opacity-0 hover:opacity-20 blur-md rounded-full transition-opacity duration-300"></span>
-        {isMenuOpen ? <FaTimes className="relative z-10" /> : <FaBars className="relative z-10" />}
-      </button>
-
-      <div className={`absolute top-full right-4 w-56 mt-2 backdrop-blur-md border rounded-lg shadow-lg md:hidden transition-all duration-300 overflow-hidden bg-gray-900/90 border-amber-900/50 ${
-        isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
-      }`}>
-        <div className="py-2">
-          {links.map((link) => (
-            <Link
-              key={link}
-              to={link.toLowerCase() === "home" ? "/" : `/${link.toLowerCase()}`}
-              onClick={() => setIsMenuOpen(false)}
-              className="block px-4 py-3 transition-colors text-gray-300 hover:bg-amber-900/30 hover:text-amber-400"
-            >
-              {link}
-            </Link>
-          ))}
-        </div>
-        <div className="px-4 py-2 border-t flex items-center justify-between border-amber-900 bg-black">
+        <nav className="hidden md:flex items-center gap-1 font-mono text-sm">
+          {links.map((l) => {
+            const active = location.pathname === l.path;
+            return (
+              <Link
+                key={l.path}
+                to={l.path}
+                className={`px-3 py-1.5 rounded transition-colors ${
+                  active
+                    ? "text-accent bg-bg-raised"
+                    : "text-fg-muted hover:text-fg hover:bg-bg-surface"
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
+          <span className="w-px h-4 bg-border mx-2" aria-hidden="true" />
           <a
-            href="/portfolio-website/Varshini_Bhavanam_Resume.pdf"
-            download="Varshini_Bhavanam_Resume.pdf"
-            className="text-amber-400 hover:text-amber-300 transition text-sm flex items-center gap-2 px-3 py-1 border border-amber-400/50 rounded hover:bg-amber-400/10"
-            aria-label="Download Resume"
+            href="https://github.com/varsha698"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="p-2 text-fg-muted hover:text-accent transition-colors"
           >
-            <FaDownload />
-            <span>Resume</span>
+            <FaGithub />
           </a>
-        </div>
+          <a
+            href="/Varshini_Bhavanam_Resume.pdf"
+            download
+            className="ml-1 btn"
+            aria-label="Download resume"
+          >
+            <FaDownload className="text-xs" />
+            <span>resume.pdf</span>
+          </a>
+        </nav>
+
+        <button
+          onClick={() => setIsOpen((v) => !v)}
+          className="md:hidden p-2 text-fg-muted hover:text-accent border border-transparent"
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </button>
       </div>
 
-      <div className="absolute inset-0 pointer-events-none bg-scanline opacity-5"></div>
+      <div
+        className={`md:hidden overflow-hidden transition-[max-height] duration-200 border-t border-border ${
+          isOpen ? "max-h-96" : "max-h-0"
+        }`}
+      >
+        <nav className="flex flex-col font-mono text-sm bg-bg-surface">
+          {links.map((l) => {
+            const active = location.pathname === l.path;
+            return (
+              <Link
+                key={l.path}
+                to={l.path}
+                className={`px-5 py-3 border-b border-border ${
+                  active ? "text-accent" : "text-fg-muted"
+                }`}
+              >
+                <span className="text-faint mr-2">›</span>
+                {l.label}
+              </Link>
+            );
+          })}
+          <a
+            href="/Varshini_Bhavanam_Resume.pdf"
+            download
+            className="px-5 py-3 text-fg flex items-center gap-2"
+          >
+            <FaDownload className="text-xs" />
+            resume.pdf
+          </a>
+        </nav>
+      </div>
     </header>
   );
 };
 
-const HeaderStyles = () => (
-  <style jsx global>{`
-    .bg-scanline {
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.5) 2px,
-        rgba(0, 0, 0, 0.5) 4px
-      );
-    }
-  `}</style>
-);
-
-const HeaderWithStyles = () => (
-  <>
-    <HeaderStyles />
-    <Header />
-  </>
-);
-
-export default HeaderWithStyles;
+export default Header;
