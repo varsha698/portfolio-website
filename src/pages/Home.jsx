@@ -82,7 +82,7 @@ const Home = () => {
           Cloudflare Pages, and Python email and dispatch pipelines — while
           building LLM tools and machine-learning models on the side. My
           research at UMN Duluth explores digital and robotic interventions for
-          mental health, with two peer-reviewed papers accepted at HEALTHINF
+          mental health, with two peer-reviewed papers published in HEALTHINF
           2026 and ICICT 2025.
         </motion.p>
 
