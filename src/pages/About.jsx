@@ -25,7 +25,7 @@ const timeline = [
   {
     year: "Sep 2024 – May 2025",
     title: "Undergraduate Research Assistant",
-    desc: "UMN Duluth, with Dr. Arshia Khan. Researched digital and robotic interventions for depression, anxiety, and student mental wellness. Prototyped a gamified mobile app; led literature review and IRB documentation. Work resulted in two accepted publications (HEALTHINF 2026 and ICICT 2025).",
+    desc: "UMN Duluth, with Dr. Arshia Khan. Researched digital and robotic interventions for depression, anxiety, and student mental wellness. Prototyped a gamified mobile app; led literature review and IRB documentation. Work resulted in two published papers (HEALTHINF 2026 and ICICT 2025).",
     iconPath: "icons/umd_logo.png",
     path: "https://www.d.umn.edu/",
   },
