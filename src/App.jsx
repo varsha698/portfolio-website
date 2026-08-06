@@ -3,9 +3,11 @@ import { useEffect, Suspense, lazy } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
+import ParticleBackground from "./components/ParticleBackground";
+import CommandPalette from "./components/CommandPalette";
+import CustomCursor from "./components/CustomCursor";
 import "./App.css";
 
-// Code-split heavier routes so the initial bundle stays small
 const About = lazy(() => import("./pages/About"));
 const Projects = lazy(() => import("./pages/Projects"));
 const Certificates = lazy(() => import("./pages/Certificate"));
@@ -20,7 +22,6 @@ const RouteFallback = () => (
 
 const App = () => {
   const location = useLocation();
-
   const isContactPage = location.hash.replace(/\/$/, "") === "#/contact";
 
   useEffect(() => {
@@ -29,6 +30,9 @@ const App = () => {
 
   return (
     <>
+      <ParticleBackground />
+      <CommandPalette />
+      <CustomCursor />
       <Header />
       <main>
         <Suspense fallback={<RouteFallback />}>
