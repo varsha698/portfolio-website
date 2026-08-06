@@ -1,13 +1,19 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const timeline = [
   {
     year: "Dec 2025 (Expected)",
     title: "Bachelor of Science in Computer Science",
-    desc: "University of Minnesota - Duluth. Relevant coursework: Computer Security, Operating Systems, Software Engineering, Natural Language Processing, Mobile User Experience and Design, Automata and Formal Languages, and Sensors and Internet of things.",
+    desc: "University of Minnesota - Duluth. Relevant coursework: Computer Security, Operating Systems, Software Engineering, Natural Language Processing, Mobile User Experience and Design, Automata and Formal Languages, and Sensors and Internet of Things.",
     iconPath: "icons/umd_logo.png",
     path: "https://www.d.umn.edu/",
+  },
+  {
+    year: "2026 – Present",
+    title: "Software Engineer – Xecutive Development LLC",
+    desc: "Contributing across a multi-service operations platform: Rails 8 ERP/CRM, Next.js 16 marketing sites on Cloudflare Pages, Python payment and mailer pipelines, and integrations with Stripe, Airtable, Odoo, and Microsoft Graph.",
+    iconPath: "icons/default.png",
+    path: "https://github.com/Xecutive-Development-LLC",
   },
   {
     year: "Feb 2025 – Apr 2025",
@@ -19,7 +25,7 @@ const timeline = [
   {
     year: "Sep 2024 – May 2025",
     title: "Undergraduate Research Assistant",
-    desc: "University of Minnesota Duluth. Developed a mobile app that uses gamification to support mental wellness among students. Assisted in literature review, app prototyping, and IRB documentation.",
+    desc: "UMN Duluth, with Dr. Arshia Khan. Researched digital and robotic interventions for depression, anxiety, and student mental wellness. Prototyped a gamified mobile app; led literature review and IRB documentation. Work resulted in two accepted publications (HEALTHINF 2026 and ICICT 2025).",
     iconPath: "icons/umd_logo.png",
     path: "https://www.d.umn.edu/",
   },
@@ -33,22 +39,6 @@ const timeline = [
 ];
 
 const About = () => {
-  const [scrollY, setScrollY] = useState(0);
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
     <section
       id="about"
@@ -170,13 +160,6 @@ const About = () => {
         ))}
       </div>
 
-      {/* CSS animations */}
-      <style jsx>{`
-        @keyframes shine {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-      `}</style>
     </section>
   );
 };

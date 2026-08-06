@@ -54,7 +54,7 @@ const Footer = () => {
       {/* Resume Download */}
       <div className="mb-4">
         <a
-          href="/portfolio-website/Varshini_Bhavanam_Resume.pdf"
+          href="/Varshini_Bhavanam_Resume.pdf"
           download="Varshini_Bhavanam_Resume.pdf"
           className="inline-flex items-center gap-2 px-4 py-2 text-amber-400 border border-amber-400/50 rounded-lg hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 text-sm font-semibold relative group"
         >
@@ -66,7 +66,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="relative">
-        <p className="text-sm text-gray-400">© Varshini Bhavanam 2025</p>
+        <p className="text-sm text-gray-400">© Varshini Bhavanam {new Date().getFullYear()}</p>
         <div className="absolute -inset-1 bg-amber-500 opacity-0 hover:opacity-10 blur-md rounded-full -z-10 transition-opacity duration-300"></div>
       </div>
 

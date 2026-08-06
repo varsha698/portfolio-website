@@ -1,27 +1,28 @@
 import { motion } from "framer-motion";
+import PropTypes from "prop-types";
 import StackIcon from "tech-stack-icons";
 
 // Tech stack data
 const techCategories = [
-  { 
-    category: "Frontend", 
+  {
+    category: "Languages",
     theme: "neural",
-    techs: ["React", "Vite", "HTML5", "CSS3", "JavaScript", "Material UI"] 
+    techs: ["Python", "TypeScript", "JavaScript", "Ruby", "Swift"]
   },
-  { 
-    category: "Backend", 
-    theme: "terminal",
-    techs: ["Node.js", "Express", "Flask", "PHP"] 
-  },
-  { 
-    category: "Database", 
+  {
+    category: "Frontend",
     theme: "vortex",
-    techs: ["MongoDB", "MySQL", "Firebase"] 
+    techs: ["React", "Next.js", "Tailwind"]
   },
-  { 
-    category: "AI/Automation", 
+  {
+    category: "Backend & Data",
+    theme: "terminal",
+    techs: ["Rails", "FastAPI", "PostgreSQL", "MongoDB"]
+  },
+  {
+    category: "AI / DevOps",
     theme: "ai",
-    techs: ["Python", "OpenCV", "TensorFlow", "Deep Learning", "Selenium", "Web Scraping"] 
+    techs: ["PyTorch", "Docker", "AWS"]
   }
 ];
 
@@ -42,19 +43,39 @@ const TechIcon = ({ tech, theme }) => {
   const techIconsMap = {
     "React": "reactjs",
     "ReactJS": "reactjs",
+    "Next.js": "nextjs",
+    "Angular": "angular",
     "Vite": "vitejs",
+    "Tailwind": "tailwindcss",
     "HTML5": "html5",
     "CSS3": "css3",
     "JavaScript": "js",
     "JS": "js",
+    "TypeScript": "typescript",
     "Node.js": "nodejs",
     "NodeJS": "nodejs",
+    "Express": "expressjs",
     "MongoDB": "mongodb",
+    "PostgreSQL": "postgresql",
+    "Firebase": "firebase",
     "Python": "python",
-    "Material UI": "materialui",
-    "C++": "c++",
-    "PHP": "php",
-    "MySQL": "mysql"
+    "PyTorch": "pytorch",
+    "TensorFlow": "tensorflow",
+    "Docker": "docker",
+    "AWS": "aws",
+    "Terraform": "terraform",
+    "GitHub Actions": "github",
+    "Swift": "swift",
+    "Dart": "dart",
+    "Ruby": "rubyonrails",
+    "Rails": "rubyonrails",
+    "C#": "csharp",
+    "SQL": "mysql",
+    "MySQL": "mysql",
+    "Flask": "flask",
+    "FastAPI": "fastapi",
+    "OpenCV": "opencv",
+    "Ansible": "ansible"
   };
   
   // Check if we have a matching icon in tech-stack-icons
@@ -86,6 +107,11 @@ const TechIcon = ({ tech, theme }) => {
       <span className="text-xs mt-1 text-gray-300 whitespace-nowrap">{tech}</span>
     </div>
   );
+};
+
+TechIcon.propTypes = {
+  tech: PropTypes.string.isRequired,
+  theme: PropTypes.string,
 };
 
 const TechStackDisplay = () => {

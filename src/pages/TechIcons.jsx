@@ -44,7 +44,7 @@ export const getTechIcon = (tech) => {
   try {
     const icon = <StackIcon name={tech} style={{ fontSize: '1.5rem', width: '24px', height: '24px' }} />;
     return React.isValidElement(icon) ? icon : fallbackIcons[tech] || <span>{tech}</span>;
-  } catch (error) {
+  } catch {
     console.log("Error fetching icon for:", tech);
     return fallbackIcons[tech] || <span>{tech}</span>;
   }

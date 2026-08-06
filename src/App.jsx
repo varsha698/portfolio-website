@@ -1,14 +1,22 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, Suspense, lazy } from "react";
 import Header from "./components/Header";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Projects from "./pages/Projects";
-import ContactMe from "./pages/Contact";
 import Footer from "./components/Footer";
-import Certificates from "./pages/Certificate";
-import Publications from "./pages/Publications";
+import Home from "./pages/Home";
 import "./App.css";
+
+// Code-split heavier routes so the initial bundle stays small
+const About = lazy(() => import("./pages/About"));
+const Projects = lazy(() => import("./pages/Projects"));
+const Certificates = lazy(() => import("./pages/Certificate"));
+const Publications = lazy(() => import("./pages/Publications"));
+const ContactMe = lazy(() => import("./pages/Contact"));
+
+const RouteFallback = () => (
+  <div className="min-h-screen flex items-center justify-center bg-black text-amber-400">
+    <div className="animate-pulse text-lg font-mono">loading…</div>
+  </div>
+);
 
 const App = () => {
   const location = useLocation();
@@ -23,14 +31,16 @@ const App = () => {
     <>
       <Header />
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/certificates" element={<Certificates />} />
-          <Route path="/publications" element={<Publications />} />
-          <Route path="/contact" element={<ContactMe />} />
-        </Routes>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/certificates" element={<Certificates />} />
+            <Route path="/publications" element={<Publications />} />
+            <Route path="/contact" element={<ContactMe />} />
+          </Routes>
+        </Suspense>
       </main>
       {!isContactPage && <Footer />}
     </>
