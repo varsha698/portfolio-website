@@ -94,20 +94,6 @@ const Home = () => {
 
       {/* HERO */}
       <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 md:px-8 text-center pt-16 pb-8">
-        {/* Available-for pill */}
-        <motion.div
-          initial={{ opacity: 0, y: -6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-6 inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-300 text-xs font-mono"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
-          </span>
-          available for internships · summer 2026
-        </motion.div>
-
         <motion.h1
           className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
           initial={{ opacity: 0, y: -12 }}
