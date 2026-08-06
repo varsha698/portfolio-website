@@ -47,16 +47,6 @@ const professional = [
     techstackused: "Ruby on Rails, PostgreSQL, OptimoRoute, Airtable, Sidekiq",
     techstackicons: ["rubyonrails", "postgresql"],
   },
-  {
-    name: "Solid Rock — Client Website",
-    org: "Xecutive Development LLC",
-    desc: "Production Next.js 16 marketing and lead-generation website for a family-founded outdoor-living studio. Strict TypeScript, Tailwind v4, Motion for scroll interactions, and a Zod-validated Resend server action with honeypot spam protection and graceful degradation.",
-    link: "#",
-    code: "#",
-    private: true,
-    techstackused: "Next.js 16, TypeScript (strict), Tailwind v4, Motion, Resend, Zod",
-    techstackicons: ["nextjs", "typescript", "tailwindcss"],
-  },
 ];
 
 const personal = [
