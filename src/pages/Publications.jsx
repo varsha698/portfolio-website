@@ -7,7 +7,7 @@ const publications = [
     conference: "HEALTHINF 2026 (International Conference on Health Informatics)",
     year: "2026",
     status: "Accepted",
-    url: null, // Add PDF path when available
+    url: "/HEALTHINF_2026_Digital_Interventions.pdf",
     abstract: "A systematic synthesis of digital interventions including chatbots, app-based cognitive behavioral therapy, and immersive virtual/extended reality technologies for depression and anxiety treatment. Accepted as Short Paper.",
   },
   {

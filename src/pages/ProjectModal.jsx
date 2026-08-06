@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-// Accordion Component
 const Accordion = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -251,6 +250,11 @@ const ProjectModal = ({ project, onClose }) => {
       </motion.div>
     </motion.div>
   );
+};
+
+Accordion.propTypes = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.node,
 };
 
 ProjectModal.propTypes = {

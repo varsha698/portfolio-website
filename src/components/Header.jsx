@@ -115,25 +115,4 @@ const Header = () => {
   );
 };
 
-const HeaderStyles = () => (
-  <style jsx global>{`
-    .bg-scanline {
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.5) 2px,
-        rgba(0, 0, 0, 0.5) 4px
-      );
-    }
-  `}</style>
-);
-
-const HeaderWithStyles = () => (
-  <>
-    <HeaderStyles />
-    <Header />
-  </>
-);
-
-export default HeaderWithStyles;
+export default Header;

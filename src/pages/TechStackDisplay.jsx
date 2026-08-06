@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import PropTypes from "prop-types";
 import StackIcon from "tech-stack-icons";
 
 // Tech stack data
@@ -6,22 +7,22 @@ const techCategories = [
   {
     category: "Languages",
     theme: "neural",
-    techs: ["Python", "JavaScript", "TypeScript", "C#", "Ruby", "Swift", "Dart", "SQL"]
+    techs: ["Python", "TypeScript", "JavaScript", "Ruby", "Swift"]
   },
   {
     category: "Frontend",
     theme: "vortex",
-    techs: ["React", "Next.js", "Angular", "Vite", "Tailwind", "HTML5", "CSS3"]
+    techs: ["React", "Next.js", "Tailwind"]
   },
   {
     category: "Backend & Data",
     theme: "terminal",
-    techs: ["Node.js", "Express", "FastAPI", "Flask", "Rails", "MongoDB", "PostgreSQL", "Firebase"]
+    techs: ["Rails", "FastAPI", "PostgreSQL", "MongoDB"]
   },
   {
     category: "AI / DevOps",
     theme: "ai",
-    techs: ["PyTorch", "TensorFlow", "OpenCV", "Docker", "Terraform", "Ansible", "AWS", "GitHub Actions"]
+    techs: ["PyTorch", "Docker", "AWS"]
   }
 ];
 
@@ -106,6 +107,11 @@ const TechIcon = ({ tech, theme }) => {
       <span className="text-xs mt-1 text-gray-300 whitespace-nowrap">{tech}</span>
     </div>
   );
+};
+
+TechIcon.propTypes = {
+  tech: PropTypes.string.isRequired,
+  theme: PropTypes.string,
 };
 
 const TechStackDisplay = () => {
