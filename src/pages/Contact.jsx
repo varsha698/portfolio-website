@@ -2,7 +2,7 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 // Image path - Vite serves public files with the base path
-const imageSrc = "/portfolio-website/image.JPG";
+const imageSrc = "/image.JPG";
 
 const ContactMe = () => {
   return (
@@ -73,8 +73,8 @@ const ContactMe = () => {
             onError={(e) => {
               console.error("Image failed to load from:", e.target.src);
               // Try fallback path for GitHub Pages deployment
-              if (e.target.src === window.location.origin + '/image.JPG') {
-                e.target.src = '/portfolio-website/image.JPG';
+              if (!e.target.src.endsWith('/image.JPG')) {
+                e.target.src = '/image.JPG';
               }
             }}
           />

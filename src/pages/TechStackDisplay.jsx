@@ -3,25 +3,25 @@ import StackIcon from "tech-stack-icons";
 
 // Tech stack data
 const techCategories = [
-  { 
-    category: "Frontend", 
+  {
+    category: "Languages",
     theme: "neural",
-    techs: ["React", "Vite", "HTML5", "CSS3", "JavaScript", "Material UI"] 
+    techs: ["Python", "JavaScript", "TypeScript", "C#", "Ruby", "Swift", "Dart", "SQL"]
   },
-  { 
-    category: "Backend", 
-    theme: "terminal",
-    techs: ["Node.js", "Express", "Flask", "PHP"] 
-  },
-  { 
-    category: "Database", 
+  {
+    category: "Frontend",
     theme: "vortex",
-    techs: ["MongoDB", "MySQL", "Firebase"] 
+    techs: ["React", "Next.js", "Angular", "Vite", "Tailwind", "HTML5", "CSS3"]
   },
-  { 
-    category: "AI/Automation", 
+  {
+    category: "Backend & Data",
+    theme: "terminal",
+    techs: ["Node.js", "Express", "FastAPI", "Flask", "Rails", "MongoDB", "PostgreSQL", "Firebase"]
+  },
+  {
+    category: "AI / DevOps",
     theme: "ai",
-    techs: ["Python", "OpenCV", "TensorFlow", "Deep Learning", "Selenium", "Web Scraping"] 
+    techs: ["PyTorch", "TensorFlow", "OpenCV", "Docker", "Terraform", "Ansible", "AWS", "GitHub Actions"]
   }
 ];
 
@@ -42,19 +42,39 @@ const TechIcon = ({ tech, theme }) => {
   const techIconsMap = {
     "React": "reactjs",
     "ReactJS": "reactjs",
+    "Next.js": "nextjs",
+    "Angular": "angular",
     "Vite": "vitejs",
+    "Tailwind": "tailwindcss",
     "HTML5": "html5",
     "CSS3": "css3",
     "JavaScript": "js",
     "JS": "js",
+    "TypeScript": "typescript",
     "Node.js": "nodejs",
     "NodeJS": "nodejs",
+    "Express": "expressjs",
     "MongoDB": "mongodb",
+    "PostgreSQL": "postgresql",
+    "Firebase": "firebase",
     "Python": "python",
-    "Material UI": "materialui",
-    "C++": "c++",
-    "PHP": "php",
-    "MySQL": "mysql"
+    "PyTorch": "pytorch",
+    "TensorFlow": "tensorflow",
+    "Docker": "docker",
+    "AWS": "aws",
+    "Terraform": "terraform",
+    "GitHub Actions": "github",
+    "Swift": "swift",
+    "Dart": "dart",
+    "Ruby": "rubyonrails",
+    "Rails": "rubyonrails",
+    "C#": "csharp",
+    "SQL": "mysql",
+    "MySQL": "mysql",
+    "Flask": "flask",
+    "FastAPI": "fastapi",
+    "OpenCV": "opencv",
+    "Ansible": "ansible"
   };
   
   // Check if we have a matching icon in tech-stack-icons
