@@ -44,6 +44,54 @@ const projects = [
     code: "https://github.com/varsha698/portfolio-website.git",
     techstackused: "React.js, Tailwind CSS, Framer Motion, Vite, GitHub Pages",
     techstackicons: ["reactjs", "tailwindcss", "vite", "github"]
+  },
+  {
+    name: "AI Model Stock Analysis",
+    desc: "Built an ML ensemble (XGBoost + LSTM) trading-signal and portfolio-risk platform. FastAPI backend, Next.js 14 frontend, SQLite persistence, containerized with Docker and deployed on Fly.io.",
+    link: "https://github.com/varsha698/AI-Model-Stock-Analysis",
+    code: "https://github.com/varsha698/AI-Model-Stock-Analysis",
+    techstackused: "Python, FastAPI, Next.js, XGBoost, LSTM, SQLite, Docker, Fly.io",
+    techstackicons: ["python", "nextjs", "docker"]
+  },
+  {
+    name: "ai-doc-editor",
+    desc: "Local-LLM (LLaMA3 / Mistral) writing studio with async FastAPI, retrieval-augmented generation over ChromaDB, and a LoRA fine-tuning harness. Next.js 15 + Tiptap frontend, pgvector storage.",
+    link: "https://github.com/varsha698/ai-doc-editor",
+    code: "https://github.com/varsha698/ai-doc-editor",
+    techstackused: "Next.js, FastAPI, ChromaDB, PyTorch, pgvector, Tiptap",
+    techstackicons: ["nextjs", "python", "pytorch"]
+  },
+  {
+    name: "Winter Weather Lab",
+    desc: "NOAA / NWS Streamlit app with a RandomForest winter-storm severity predictor. Blends live weather feeds with a trained classifier to surface storm-risk scores.",
+    link: "https://github.com/varsha698/-Winter-Weather-Lab",
+    code: "https://github.com/varsha698/-Winter-Weather-Lab",
+    techstackused: "Python, Streamlit, scikit-learn, pandas",
+    techstackicons: ["python"]
+  },
+  {
+    name: "Sales Analytics Project",
+    desc: "pandas / numpy sales-KPI pipeline exporting cleaned CSVs for Tableau dashboards. Business-analyst portfolio piece paired with the Microsoft BA certification work.",
+    link: "https://github.com/varsha698/Sales-Analytics-Project",
+    code: "https://github.com/varsha698/Sales-Analytics-Project",
+    techstackused: "Python, pandas, numpy, Tableau",
+    techstackicons: ["python"]
+  },
+  {
+    name: "Personal Admin Assistant (iOS)",
+    desc: "Native SwiftUI + SwiftData + CloudKit iOS life-admin app with Tasks, Commitments, DailyBrief, and ActionReceipt models, EventKit calendar sync, and local notifications.",
+    link: "#",
+    code: "#",
+    techstackused: "Swift, SwiftUI, SwiftData, CloudKit, EventKit",
+    techstackicons: []
+  },
+  {
+    name: "dev-journal",
+    desc: "Meta-tool for tracking cross-repo engineering activity. stdlib collect.py → journal.json → self-redeploying GitHub Pages activity timeline. Zero external dependencies.",
+    link: "https://github.com/varsha698/dev-journal",
+    code: "https://github.com/varsha698/dev-journal",
+    techstackused: "Python, GitHub Actions, GitHub Pages",
+    techstackicons: ["python", "github"]
   }
 ];
 
