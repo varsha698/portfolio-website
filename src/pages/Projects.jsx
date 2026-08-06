@@ -92,6 +92,46 @@ const projects = [
     code: "https://github.com/varsha698/dev-journal",
     techstackused: "Python, GitHub Actions, GitHub Pages",
     techstackicons: ["python", "github"]
+  },
+  {
+    name: "Andrew's Lawn & Snow — ERP / Sales Portal (Xecutive Development)",
+    desc: "Rails 8 ERP and sales portal powering a multi-state lawn-care and snow-removal operation. PostgreSQL + Mongoid for hybrid storage; Stripe for billing; Avalara for tax; DocuSign for contracts; Airtable and Microsoft Graph integrations for CRM and email pipelines.",
+    link: "#",
+    code: "#",
+    techstackused: "Ruby on Rails 8, PostgreSQL, Mongoid, Stripe, Avalara, DocuSign, Airtable, Microsoft Graph",
+    techstackicons: ["rubyonrails", "postgresql"]
+  },
+  {
+    name: "Andrew's Lawn & Snow — Marketing Website (Xecutive Development)",
+    desc: "Live Next.js 16 marketing site on Cloudflare Pages. Server Actions post directly into the CRM; instrumented with Sentry, GA4, and the Meta Conversions API for full-funnel attribution.",
+    link: "#",
+    code: "#",
+    techstackused: "Next.js 16, React 19, TypeScript, Tailwind, Cloudflare Pages, Sentry",
+    techstackicons: ["nextjs", "typescript", "tailwindcss"]
+  },
+  {
+    name: "Automated Payments Engine (Xecutive Development)",
+    desc: "Rails 8 annual-renewal Stripe charging engine using off-session PaymentIntents, a Server-Sent-Events admin UI for real-time progress, and Microsoft Graph email notifications on every charge outcome.",
+    link: "#",
+    code: "#",
+    techstackused: "Ruby on Rails 8, Stripe, Server-Sent Events, Microsoft Graph, Sidekiq",
+    techstackicons: ["rubyonrails"]
+  },
+  {
+    name: "Operator Portal (Xecutive Development)",
+    desc: "Ruby on Rails operations portal with 3-role RBAC (admin, operations, operator) and integrated OptimoRoute, Airtable, payroll, and inventory workflows. Built with a mock-vs-live adapter layer so contract work can be developed offline.",
+    link: "#",
+    code: "#",
+    techstackused: "Ruby on Rails, PostgreSQL, OptimoRoute, Airtable, Sidekiq",
+    techstackicons: ["rubyonrails", "postgresql"]
+  },
+  {
+    name: "Solid Rock — Client Website (Xecutive Development)",
+    desc: "Production Next.js 16 marketing and lead-generation website for a family-founded outdoor-living studio. Strict TypeScript, Tailwind v4, Motion for scroll interactions, and a Zod-validated Resend server action with honeypot spam protection and graceful degradation.",
+    link: "#",
+    code: "#",
+    techstackused: "Next.js 16, TypeScript (strict), Tailwind v4, Motion, Resend, Zod",
+    techstackicons: ["nextjs", "typescript", "tailwindcss"]
   }
 ];
 

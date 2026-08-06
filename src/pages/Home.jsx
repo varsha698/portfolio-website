@@ -168,7 +168,7 @@ const Home = () => {
               textShadow: "0 0 5px rgba(255, 153, 102, 0.3)"
             }}
           >
-            Aspiring software engineer with experience in AI, cybersecurity, mobile application development, and cloud technologies. I specialize in building secure, user-focused, and scalable solutions across web, mobile, and backend systems. My work spans full-stack development, data analysis, DevOps automation, and academic research, enabling me to approach problems with both technical depth and design awareness. I am passionate about leveraging technology to improve user experience, support communities, and create impactful, real-world applications.
+            Software engineer working across full-stack web, AI/ML, and DevOps. I ship production Rails 8 and Next.js 16 systems for real businesses — Stripe payment engines, ERP and CRM dashboards, marketing sites on Cloudflare Pages, and Python email and dispatch pipelines — while building LLM tools and machine-learning models on the side. My research at UMN Duluth explores digital and robotic interventions for mental health, with two peer-reviewed papers accepted at HEALTHINF 2026 and ICICT 2025. I care about secure, well-designed software that actually reaches the people it&apos;s built for.
           </h3>
           
           {/* CTA button */}
