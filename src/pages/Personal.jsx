@@ -13,11 +13,11 @@ import {
 // ── Editorial "chapter" heading ──────────────────────────────
 const Chapter = ({ index, kicker }) => (
   <div className="flex items-baseline gap-6 mb-8">
-    <span className="font-mono text-xs tracking-[0.3em] text-sky-300/70">
+    <span className="font-mono text-xs tracking-[0.3em] text-rose-300/70">
       {String(index).padStart(2, "0")}
     </span>
-    <div className="h-px flex-grow bg-gradient-to-r from-sky-300/40 via-sky-200/20 to-transparent" />
-    <span className="font-mono text-xs tracking-[0.3em] uppercase text-sky-200/70">
+    <div className="h-px flex-grow bg-gradient-to-r from-rose-300/40 via-orange-200/20 to-transparent" />
+    <span className="font-mono text-xs tracking-[0.3em] uppercase text-orange-200/70">
       {kicker}
     </span>
   </div>
@@ -36,10 +36,10 @@ const Display = ({ children, className = "" }) => (
   </h2>
 );
 
-// ── Animated caustics / water ripple SVG background ──────────
-const WaterBackdrop = () => (
+// ── Dusk-glow SVG backdrop ───────────────────────────────────
+const DuskBackdrop = () => (
   <svg
-    className="absolute inset-0 w-full h-full opacity-30 mix-blend-screen"
+    className="absolute inset-0 w-full h-full opacity-40 mix-blend-screen"
     xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="none"
     viewBox="0 0 800 600"
@@ -56,13 +56,13 @@ const WaterBackdrop = () => (
         </feTurbulence>
         <feDisplacementMap in="SourceGraphic" scale="40" />
       </filter>
-      <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stopColor="#4fc3f7" stopOpacity="0.35" />
-        <stop offset="50%" stopColor="#0288d1" stopOpacity="0.25" />
-        <stop offset="100%" stopColor="#01579b" stopOpacity="0.55" />
+      <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%"   stopColor="#fdba74" stopOpacity="0.30" />
+        <stop offset="45%"  stopColor="#f472b6" stopOpacity="0.22" />
+        <stop offset="100%" stopColor="#3d1e28" stopOpacity="0.60" />
       </linearGradient>
     </defs>
-    <rect width="800" height="600" fill="url(#sea)" filter="url(#ripple)" />
+    <rect width="800" height="600" fill="url(#dusk)" filter="url(#ripple)" />
   </svg>
 );
 
@@ -109,7 +109,7 @@ const Personal = () => {
       className="relative min-h-screen text-stone-100"
       style={{
         background:
-          "linear-gradient(180deg, #041825 0%, #062a3f 25%, #0a3a55 55%, #0e4a6c 80%, #041825 100%)",
+          "linear-gradient(180deg, #1a0a12 0%, #2d1520 22%, #4a1f2c 50%, #2d1520 78%, #1a0a12 100%)",
       }}
     >
       {/* Grain overlay */}
@@ -121,23 +121,27 @@ const Personal = () => {
         }}
       />
 
+      {/* Ambient warm glow blobs */}
+      <div className="pointer-events-none fixed top-1/4 -left-32 w-96 h-96 rounded-full bg-rose-500 opacity-10 blur-3xl" />
+      <div className="pointer-events-none fixed bottom-1/4 -right-32 w-[28rem] h-[28rem] rounded-full bg-orange-400 opacity-10 blur-3xl" />
+
       {/* ──────────────── HERO ──────────────── */}
       <section
         ref={heroRef}
         className="relative h-screen flex flex-col justify-end overflow-hidden pb-16 md:pb-24 px-6 md:px-12"
       >
-        <WaterBackdrop />
+        <DuskBackdrop />
 
         {/* Marker chips */}
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
           className="relative z-10 flex items-center gap-4 mb-8"
         >
-          <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-sky-200/70">
+          <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-orange-200/70">
             Varshini
           </span>
-          <span className="h-px w-12 bg-sky-200/40" />
-          <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-sky-200/70">
+          <span className="h-px w-12 bg-orange-200/40" />
+          <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-orange-200/70">
             off the clock
           </span>
         </motion.div>
@@ -148,8 +152,8 @@ const Personal = () => {
             style={{
               fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
               backgroundImage:
-                "linear-gradient(180deg, #e0f7fa 0%, #b3e5fc 40%, #4fc3f7 100%)",
-              textShadow: "0 0 80px rgba(79, 195, 247, 0.35)",
+                "linear-gradient(180deg, #fff7ed 0%, #fed7aa 45%, #f472b6 100%)",
+              textShadow: "0 0 80px rgba(252, 162, 119, 0.4)",
             }}
           >
             hi, i&apos;m me.
@@ -161,7 +165,7 @@ const Personal = () => {
               <br />
               Not the job title. Just —
               <br />
-              <span className="text-sky-200 italic">
+              <span className="text-orange-200 italic">
                 water, friends, animated worlds, the log book.
               </span>
             </p>
@@ -179,13 +183,13 @@ const Personal = () => {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
         >
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-sky-200/60">
+          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-orange-200/60">
             scroll
           </span>
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-            className="w-px h-10 bg-gradient-to-b from-sky-200/70 to-transparent"
+            className="w-px h-10 bg-gradient-to-b from-orange-200/70 to-transparent"
           />
         </motion.div>
       </section>
@@ -202,10 +206,10 @@ const Personal = () => {
             transition={{ duration: 0.7 }}
             className="md:col-span-7"
           >
-            <Display className="text-sky-50">
+            <Display className="text-orange-50">
               Just being in it
               <br />
-              <span className="text-sky-300/90">is enough.</span>
+              <span className="text-rose-300/90">is enough.</span>
             </Display>
             <p className="mt-8 max-w-xl text-stone-200/85 leading-relaxed text-lg font-light">
               Pools, lakes, oceans — I don&apos;t care what shape it takes.
@@ -219,7 +223,7 @@ const Personal = () => {
             </p>
           </motion.div>
 
-          {/* Column card */}
+          {/* Column card — sunset over water */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -227,35 +231,44 @@ const Personal = () => {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="md:col-span-5"
           >
-            <div className="relative aspect-[3/4] rounded-sm overflow-hidden border border-sky-200/10">
-              {/* Layered gradient "ocean" placeholder */}
+            <div className="relative aspect-[3/4] rounded-sm overflow-hidden border border-orange-200/10">
+              {/* Sunset sky over dark water */}
               <div
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(180deg, #7dd3fc 0%, #38bdf8 20%, #0284c7 45%, #075985 70%, #082f49 100%)",
+                    "linear-gradient(180deg, #fed7aa 0%, #fca277 18%, #f472b6 38%, #a13760 60%, #4a1f2c 80%, #1a0a12 100%)",
                 }}
               />
               {/* Sun */}
               <div
-                className="absolute top-[18%] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full"
+                className="absolute top-[32%] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(255,241,208,0.95) 0%, rgba(255,200,120,0.5) 40%, transparent 70%)",
+                    "radial-gradient(circle, rgba(255,241,208,0.95) 0%, rgba(255,180,120,0.5) 40%, transparent 70%)",
                   filter: "blur(2px)",
                 }}
               />
-              {/* Wave lines */}
+              {/* Sun reflection on water */}
+              <div
+                className="absolute top-[45%] left-1/2 -translate-x-1/2 w-16 h-2/5"
+                style={{
+                  background:
+                    "linear-gradient(180deg, rgba(255,220,180,0.35) 0%, rgba(255,180,140,0.15) 50%, transparent 100%)",
+                  filter: "blur(1px)",
+                }}
+              />
+              {/* Wave lines (lower half) */}
               <svg
-                className="absolute inset-x-0 bottom-0 w-full h-2/3"
-                viewBox="0 0 400 300"
+                className="absolute inset-x-0 bottom-0 w-full h-1/2"
+                viewBox="0 0 400 250"
                 preserveAspectRatio="none"
               >
-                {[...Array(14)].map((_, i) => (
+                {[...Array(12)].map((_, i) => (
                   <path
                     key={i}
-                    d={`M0 ${60 + i * 18} Q 100 ${50 + i * 18} 200 ${65 + i * 18} T 400 ${55 + i * 18}`}
-                    stroke="rgba(255,255,255,0.18)"
+                    d={`M0 ${40 + i * 18} Q 100 ${30 + i * 18} 200 ${45 + i * 18} T 400 ${35 + i * 18}`}
+                    stroke="rgba(255,220,190,0.16)"
                     strokeWidth="1"
                     fill="none"
                   />
@@ -263,7 +276,7 @@ const Personal = () => {
               </svg>
               <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
                 <div>
-                  <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-sky-100/80">
+                  <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-orange-100/80">
                     field note
                   </div>
                   <div
@@ -273,16 +286,15 @@ const Personal = () => {
                     Superior, at dusk
                   </div>
                 </div>
-                <FaWater className="text-sky-100/80 text-xl" />
+                <FaWater className="text-orange-100/80 text-xl" />
               </div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Divider mark */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-sky-200/30 to-transparent" />
+        <div className="h-px bg-gradient-to-r from-transparent via-orange-200/30 to-transparent" />
       </div>
 
       {/* ──────────────── II. ANIME NIGHTS ──────────────── */}
@@ -297,10 +309,10 @@ const Personal = () => {
             transition={{ duration: 0.7 }}
             className="md:col-span-5"
           >
-            <Display className="text-sky-50">
+            <Display className="text-orange-50">
               Worlds
               <br />
-              <span className="text-rose-200/90">worth</span>
+              <span className="text-rose-300/90">worth</span>
               <br />
               <span className="italic">disappearing into.</span>
             </Display>
@@ -310,7 +322,7 @@ const Personal = () => {
               Give me a Studio Ghibli marathon and a rainy afternoon and
               I&apos;m good for the day.
             </p>
-            <div className="mt-6 flex items-center gap-3 text-sm text-sky-200/70 font-mono">
+            <div className="mt-6 flex items-center gap-3 text-sm text-orange-200/70 font-mono">
               <FaFilm />
               <span>currently rewatching · Frieren</span>
             </div>
@@ -323,7 +335,7 @@ const Personal = () => {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="md:col-span-7"
           >
-            <div className="border-t border-sky-200/20">
+            <div className="border-t border-orange-200/20">
               {animeFavs.map((a, i) => (
                 <motion.div
                   key={a.title}
@@ -331,14 +343,14 @@ const Personal = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="group flex items-baseline justify-between py-5 border-b border-sky-200/15 hover:bg-sky-200/[0.03] transition-colors px-2 -mx-2"
+                  className="group flex items-baseline justify-between py-5 border-b border-orange-200/15 hover:bg-orange-200/[0.03] transition-colors px-2 -mx-2"
                 >
                   <div className="flex items-baseline gap-5">
-                    <span className="font-mono text-[11px] text-sky-300/60">
+                    <span className="font-mono text-[11px] text-rose-300/60">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <span
-                      className="font-serif text-2xl md:text-3xl text-sky-50 italic tracking-tight"
+                      className="font-serif text-2xl md:text-3xl text-orange-50 italic tracking-tight"
                       style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
                     >
                       {a.title}
@@ -355,7 +367,7 @@ const Personal = () => {
       </section>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-sky-200/30 to-transparent" />
+        <div className="h-px bg-gradient-to-r from-transparent via-orange-200/30 to-transparent" />
       </div>
 
       {/* ──────────────── III. THE LOG ──────────────── */}
@@ -370,10 +382,10 @@ const Personal = () => {
             transition={{ duration: 0.7 }}
             className="md:col-span-6"
           >
-            <Display className="text-sky-50">
+            <Display className="text-orange-50">
               Show up.
               <br />
-              <span className="text-amber-200/90">Log it.</span>
+              <span className="text-orange-300/90">Log it.</span>
               <br />
               <span className="italic">Repeat.</span>
             </Display>
@@ -392,24 +404,24 @@ const Personal = () => {
             transition={{ duration: 0.7, delay: 0.15 }}
             className="md:col-span-6"
           >
-            <div className="rounded-sm border border-sky-200/10 bg-black/25 backdrop-blur-sm overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3 border-b border-sky-200/10 bg-black/30">
-                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-sky-200/70">
+            <div className="rounded-sm border border-orange-200/10 bg-black/25 backdrop-blur-sm overflow-hidden">
+              <div className="flex items-center justify-between px-5 py-3 border-b border-orange-200/10 bg-black/30">
+                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-orange-200/70">
                   training week
                 </span>
-                <FaDumbbell className="text-sky-200/60" />
+                <FaDumbbell className="text-orange-200/60" />
               </div>
               <div>
                 {workoutLog.map((row) => (
                   <div
                     key={row.day}
-                    className="grid grid-cols-12 items-center px-5 py-3 border-b border-sky-200/5 last:border-b-0 hover:bg-sky-200/[0.03] transition-colors"
+                    className="grid grid-cols-12 items-center px-5 py-3 border-b border-orange-200/5 last:border-b-0 hover:bg-orange-200/[0.03] transition-colors"
                   >
-                    <span className="col-span-2 font-mono text-xs uppercase text-sky-300/70">
+                    <span className="col-span-2 font-mono text-xs uppercase text-rose-300/70">
                       {row.day}
                     </span>
                     <span
-                      className="col-span-3 font-serif italic text-lg text-sky-50"
+                      className="col-span-3 font-serif italic text-lg text-orange-50"
                       style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
                     >
                       {row.split}
@@ -426,7 +438,7 @@ const Personal = () => {
       </section>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-sky-200/30 to-transparent" />
+        <div className="h-px bg-gradient-to-r from-transparent via-orange-200/30 to-transparent" />
       </div>
 
       {/* ──────────────── IV. THE PEOPLE ──────────────── */}
@@ -440,10 +452,10 @@ const Personal = () => {
           transition={{ duration: 0.7 }}
           className="max-w-5xl"
         >
-          <Display className="text-sky-50">
+          <Display className="text-orange-50">
             The best hours
             <br />
-            <span className="italic text-rose-100/90">
+            <span className="italic text-rose-200/90">
               are the ones we don&apos;t plan.
             </span>
           </Display>
@@ -462,7 +474,7 @@ const Personal = () => {
               for three hours without saying anything. Both count. I try to be
               both.
             </p>
-            <div className="mt-8 flex items-center gap-3 text-sky-200/70">
+            <div className="mt-8 flex items-center gap-3 text-orange-200/70">
               <FaUserFriends />
               <span className="font-mono text-xs tracking-[0.3em] uppercase">
                 small circle · deep well
@@ -489,7 +501,7 @@ const Personal = () => {
                 }}
                 className="flex items-start gap-4 group"
               >
-                <span className="mt-2 h-px w-8 bg-sky-200/40 group-hover:w-12 transition-all" />
+                <span className="mt-2 h-px w-8 bg-orange-200/40 group-hover:w-12 transition-all" />
                 <span
                   className="font-serif italic text-xl md:text-2xl text-stone-100/90 leading-snug"
                   style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
@@ -511,22 +523,27 @@ const Personal = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <div className="font-mono text-[11px] tracking-[0.4em] uppercase text-sky-200/60 mb-6">
+            <div className="font-mono text-[11px] tracking-[0.4em] uppercase text-orange-200/60 mb-6">
               end of chapter
             </div>
             <p
-              className="font-serif italic text-3xl md:text-5xl text-sky-50 leading-tight"
+              className="font-serif italic text-3xl md:text-5xl text-orange-50 leading-tight"
               style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
             >
               That&apos;s the rest of me.
               <br />
-              <span className="text-sky-300/80">Thanks for reading.</span>
+              <span className="text-rose-300/80">Thanks for reading.</span>
             </p>
 
             <div className="mt-14 flex items-center justify-center">
               <Link
                 to="/contact"
-                className="group inline-flex items-center gap-3 px-8 py-3 rounded-full bg-sky-100 text-sky-900 hover:bg-white transition-colors text-sm tracking-widest font-mono uppercase"
+                className="group inline-flex items-center gap-3 px-8 py-3 rounded-full text-rose-950 hover:brightness-105 transition-all text-sm tracking-widest font-mono uppercase"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #fed7c3 0%, #fca277 50%, #f472b6 100%)",
+                  boxShadow: "0 0 30px rgba(252, 162, 119, 0.3)",
+                }}
               >
                 say hi
                 <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />

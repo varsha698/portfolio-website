@@ -21,7 +21,7 @@ const Personal = lazy(() => import("./pages/Personal"));
 const RouteFallback = ({ isPersonal }) => (
   <div
     className={`min-h-screen flex items-center justify-center ${
-      isPersonal ? "bg-[#041825] text-sky-200" : "bg-black text-amber-400"
+      isPersonal ? "bg-[#1a0a12] text-rose-200" : "bg-black text-amber-400"
     }`}
   >
     <div

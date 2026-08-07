@@ -31,24 +31,24 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const accent = isPersonal ? "text-sky-200 hover:text-sky-100" : "text-amber-400 hover:text-amber-300";
-  const accentBorder = isPersonal ? "border-sky-300/40 hover:bg-sky-300/10" : "border-amber-400/50 hover:bg-amber-400/10";
+  const accent = isPersonal ? "text-rose-200 hover:text-rose-100" : "text-amber-400 hover:text-amber-300";
+  const accentBorder = isPersonal ? "border-rose-300/40 hover:bg-rose-300/10" : "border-amber-400/50 hover:bg-amber-400/10";
 
   return (
     <header
       className={`fixed top-0 w-full px-4 md:px-8 py-4 flex items-center justify-between z-50 transition-all duration-500 ${
         scrolled
           ? isPersonal
-            ? "bg-[#041825]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(125,211,252,0.15)]"
+            ? "bg-[#1a0a12]/80 backdrop-blur-md shadow-[0_4px_20px_rgba(252,162,119,0.18)]"
             : "bg-black/80 backdrop-blur-md shadow-[0_4px_20px_rgba(255,153,102,0.15)]"
           : isPersonal
-          ? "bg-[#041825]/40 backdrop-blur-sm"
+          ? "bg-[#1a0a12]/40 backdrop-blur-sm"
           : "bg-black/40 backdrop-blur-sm"
       }`}
     >
       <div className="absolute bottom-0 left-0 h-px w-full overflow-hidden">
         <motion.div
-          className={`h-px w-full bg-gradient-to-r from-transparent ${isPersonal ? "via-sky-300" : "via-amber-400"} to-transparent`}
+          className={`h-px w-full bg-gradient-to-r from-transparent ${isPersonal ? "via-rose-300" : "via-amber-400"} to-transparent`}
           animate={{ x: ["-100%", "100%"] }}
           transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
         />
@@ -69,7 +69,7 @@ const Header = () => {
         </Link>
         <div
           className={`absolute -inset-1 blur-md rounded-full -z-10 ${
-            isPersonal ? "bg-sky-400 opacity-20" : "bg-amber-500 opacity-20"
+            isPersonal ? "bg-rose-400 opacity-20" : "bg-amber-500 opacity-20"
           }`}
         />
       </div>
@@ -98,12 +98,12 @@ const Header = () => {
                     : undefined
                 }
               >
-                <span className={`relative z-10 ${isPersonal ? "hover:text-sky-200" : "hover:text-amber-400"}`}>
+                <span className={`relative z-10 ${isPersonal ? "hover:text-rose-200" : "hover:text-amber-400"}`}>
                   {link}
                 </span>
                 <span
                   className={`absolute -bottom-1 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ${
-                    isPersonal ? "bg-sky-300" : "bg-amber-400"
+                    isPersonal ? "bg-rose-300" : "bg-amber-400"
                   }`}
                 />
               </Link>
@@ -142,7 +142,7 @@ const Header = () => {
 
       <div
         className={`absolute top-full right-4 w-56 mt-2 backdrop-blur-md border rounded-lg shadow-lg md:hidden transition-all duration-300 overflow-hidden ${
-          isPersonal ? "bg-[#062a3f]/90 border-sky-300/30" : "bg-gray-900/90 border-amber-900/50"
+          isPersonal ? "bg-[#241118]/95 border-rose-300/30" : "bg-gray-900/90 border-amber-900/50"
         } ${isMenuOpen ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}
       >
         <div className="py-2">
@@ -153,7 +153,7 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
               className={`block px-4 py-3 transition-colors ${
                 isPersonal
-                  ? "text-stone-200 hover:bg-sky-300/10 hover:text-sky-100 font-serif italic"
+                  ? "text-stone-200 hover:bg-rose-300/10 hover:text-rose-100 font-serif italic"
                   : "text-gray-300 hover:bg-amber-900/30 hover:text-amber-400"
               }`}
               style={
