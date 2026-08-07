@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import {
   FaArrowRight,
-  FaArrowLeft,
   FaWater,
   FaDumbbell,
   FaFilm,
@@ -135,7 +134,7 @@ const Personal = () => {
           className="relative z-10 flex items-center gap-4 mb-8"
         >
           <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-sky-200/70">
-            Chapter II
+            Varshini
           </span>
           <span className="h-px w-12 bg-sky-200/40" />
           <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-sky-200/70">
@@ -153,27 +152,23 @@ const Personal = () => {
               textShadow: "0 0 80px rgba(79, 195, 247, 0.35)",
             }}
           >
-            the other side
+            hi, i&apos;m me.
           </h1>
 
           <div className="mt-10 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
             <p className="max-w-md text-stone-200/85 text-lg md:text-xl leading-relaxed font-light">
-              You already met the engineer.
+              Not the resume.
               <br />
-              This is the rest of me —
+              Not the job title. Just —
               <br />
               <span className="text-sky-200 italic">
                 water, friends, animated worlds, the log book.
               </span>
             </p>
 
-            <Link
-              to="/"
-              className="group inline-flex items-center gap-3 text-sm font-mono tracking-widest uppercase text-stone-300 hover:text-sky-200 transition-colors self-start md:self-end"
-            >
-              <FaArrowLeft className="text-xs transition-transform group-hover:-translate-x-1" />
-              back to the professional side
-            </Link>
+            <span className="text-xs font-mono tracking-widest uppercase text-stone-300/70 self-start md:self-end">
+              scroll for the rest ↓
+            </span>
           </div>
         </motion.div>
 
@@ -523,19 +518,12 @@ const Personal = () => {
               className="font-serif italic text-3xl md:text-5xl text-sky-50 leading-tight"
               style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
             >
-              Two sides.
+              That&apos;s the rest of me.
               <br />
-              <span className="text-sky-300/80">Same person.</span>
+              <span className="text-sky-300/80">Thanks for reading.</span>
             </p>
 
-            <div className="mt-14 flex flex-col md:flex-row items-center justify-center gap-4">
-              <Link
-                to="/"
-                className="group inline-flex items-center gap-3 px-8 py-3 rounded-full border border-sky-200/40 text-sky-100 hover:bg-sky-200/10 transition-colors text-sm tracking-widest font-mono uppercase"
-              >
-                <FaArrowLeft className="text-xs transition-transform group-hover:-translate-x-1" />
-                back to the work
-              </Link>
+            <div className="mt-14 flex items-center justify-center">
               <Link
                 to="/contact"
                 className="group inline-flex items-center gap-3 px-8 py-3 rounded-full bg-sky-100 text-sky-900 hover:bg-white transition-colors text-sm tracking-widest font-mono uppercase"
