@@ -1,569 +1,473 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import {
-  FaArrowRight,
+  FaInstagram,
+  FaLinkedin,
+  FaPlay,
   FaWater,
-  FaDumbbell,
   FaFilm,
+  FaDumbbell,
   FaUserFriends,
+  FaBookOpen,
+  FaMusic,
+  FaHeart,
+  FaClock,
+  FaRegCircle,
+  FaCheckCircle,
 } from "react-icons/fa";
 
-// ── Editorial "chapter" heading ──────────────────────────────
-const Chapter = ({ index, kicker }) => (
-  <div className="flex items-baseline gap-6 mb-8">
-    <span className="font-mono text-xs tracking-[0.3em] text-rose-300/70">
-      {String(index).padStart(2, "0")}
-    </span>
-    <div className="h-px flex-grow bg-gradient-to-r from-rose-300/40 via-orange-200/20 to-transparent" />
-    <span className="font-mono text-xs tracking-[0.3em] uppercase text-orange-200/70">
-      {kicker}
-    </span>
+// ── Data ─────────────────────────────────────────────────────
+const SPOTIFY_EMBED =
+  "https://open.spotify.com/embed/track/7siXHCf5qUbyJrhNYQXKFr?utm_source=generator";
+const INSTAGRAM_URL = "https://instagram.com/varsha.com7";
+const LINKEDIN_URL = "https://www.linkedin.com/in/varshinikb/";
+
+const routine = [
+  { time: "6:30 AM",  label: "wake up / cold water" },
+  { time: "9:00 AM",  label: "coffee + email triage" },
+  { time: "12:00 PM", label: "lunch / walk" },
+  { time: "5:30 PM",  label: "gym or pool" },
+  { time: "8:00 PM",  label: "cook / anime" },
+  { time: "11:00 PM", label: "read / sleep" },
+];
+
+const bucket = [
+  { done: true,  label: "graduate" },
+  { done: false, label: "japan trip" },
+  { done: false, label: "learn to freedive" },
+  { done: false, label: "run a half marathon" },
+  { done: false, label: "read 30 books this year" },
+  { done: false, label: "get scuba certified" },
+  { done: false, label: "master a real deadlift PR" },
+];
+
+const stats = [
+  { label: "Anime watched",  n: "+120", bg: "#a78bfa", fg: "#1a0f2e" },
+  { label: "Pool laps / wk", n: "+40",  bg: "#38bdf8", fg: "#062a3f" },
+  { label: "Gym days / wk",  n: "5",    bg: "#fb7185", fg: "#3a0d1a" },
+  { label: "Books this yr",  n: "+18",  bg: "#facc15", fg: "#3a2a02" },
+  { label: "Cities visited", n: "12",   bg: "#4ade80", fg: "#052e15" },
+];
+
+const hobbies = [
+  {
+    key: "water",
+    title: "In the water",
+    kicker: "swim · float · repeat",
+    blurb:
+      "Pools, lakes, oceans — doesn't matter. Something about weightlessness makes the noise stop.",
+    Icon: FaWater,
+    gradient: "linear-gradient(160deg, #7dd3fc 0%, #38bdf8 35%, #0369a1 70%, #082f49 100%)",
+    accent: "#7dd3fc",
+  },
+  {
+    key: "anime",
+    title: "Anime nights",
+    kicker: "Demon Slayer · JJK",
+    blurb:
+      "Demon Slayer for the animation, Jujutsu Kaisen for the fights. Frieren when I want to feel something quiet.",
+    Icon: FaFilm,
+    gradient: "linear-gradient(160deg, #f9a8d4 0%, #c084fc 45%, #7c3aed 100%)",
+    accent: "#f9a8d4",
+  },
+  {
+    key: "gym",
+    title: "The log book",
+    kicker: "push · pull · legs",
+    blurb:
+      "Lifting is my meditation. Show up on the random Tuesdays when nobody's watching. That's the point.",
+    Icon: FaDumbbell,
+    gradient: "linear-gradient(160deg, #fecaca 0%, #fb7185 45%, #be123c 100%)",
+    accent: "#fecaca",
+  },
+  {
+    key: "friends",
+    title: "The circle",
+    kicker: "small · deep · loud",
+    blurb:
+      "Late-night drives, four-hour coffees, cooking on the floor. The best hours are the ones we don't plan.",
+    Icon: FaUserFriends,
+    gradient: "linear-gradient(160deg, #fde68a 0%, #fbbf24 45%, #d97706 100%)",
+    accent: "#fde68a",
+  },
+];
+
+const currentObsessions = [
+  { title: "Demon Slayer",   src: "/personal/anime/demon-slayer.jpg", fallback: "linear-gradient(160deg, #0f1b2d 0%, #1e293b 40%, #dc2626 100%)" },
+  { title: "Jujutsu Kaisen", src: "/personal/anime/jjk.jpg",          fallback: "linear-gradient(160deg, #1a1a2e 0%, #52525b 50%, #7f1d1d 100%)" },
+  { title: "Frieren",        src: "/personal/anime/frieren.jpg",      fallback: "linear-gradient(160deg, #064e3b 0%, #10b981 60%, #d1fae5 100%)" },
+];
+
+// Placeholder photo tiles — each is a distinct gradient/scene until real jpgs land
+const photoWall = [
+  { alt: "sunset over Lake Superior",
+    style: "linear-gradient(180deg, #fed7aa 0%, #fca277 25%, #f472b6 55%, #7c2d5c 100%)" },
+  { alt: "gym mirror selfie",
+    style: "linear-gradient(160deg, #1f2937 0%, #374151 50%, #6b7280 100%)" },
+  { alt: "anime rewatch night",
+    style: "linear-gradient(160deg, #312e81 0%, #6d28d9 60%, #ec4899 100%)" },
+  { alt: "coffee with friends",
+    style: "linear-gradient(160deg, #92400e 0%, #d97706 45%, #fde68a 100%)" },
+  { alt: "pool laps",
+    style: "linear-gradient(160deg, #0c4a6e 0%, #0284c7 45%, #7dd3fc 100%)" },
+  { alt: "campus walk",
+    style: "linear-gradient(160deg, #14532d 0%, #16a34a 50%, #bbf7d0 100%)" },
+];
+
+// ── Card wrapper ─────────────────────────────────────────────
+const Card = ({ children, className = "", delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 16 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.15 }}
+    transition={{ duration: 0.5, delay }}
+    className={
+      "relative rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-md " +
+      "hover:border-white/[0.15] transition-colors " +
+      className
+    }
+  >
+    {children}
+  </motion.div>
+);
+
+const CardHeading = ({ icon: Icon, children, accent = "text-sky-300" }) => (
+  <div className="flex items-center gap-2 mb-4">
+    {Icon && <Icon className={accent} />}
+    <span className="font-mono text-sm text-white/90">{children}</span>
   </div>
 );
 
-// ── Big serif display ────────────────────────────────────────
-const Display = ({ children, className = "" }) => (
-  <h2
-    className={
-      "font-serif italic text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tight " +
-      className
-    }
-    style={{ fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif' }}
-  >
-    {children}
-  </h2>
-);
-
-// ── Dusk-glow SVG backdrop ───────────────────────────────────
-const DuskBackdrop = () => (
-  <svg
-    className="absolute inset-0 w-full h-full opacity-40 mix-blend-screen"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="none"
-    viewBox="0 0 800 600"
-  >
-    <defs>
-      <filter id="ripple" x="-20%" y="-20%" width="140%" height="140%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.008 0.02" numOctaves="2" seed="4">
-          <animate
-            attributeName="baseFrequency"
-            dur="24s"
-            values="0.008 0.02;0.012 0.03;0.008 0.02"
-            repeatCount="indefinite"
-          />
-        </feTurbulence>
-        <feDisplacementMap in="SourceGraphic" scale="40" />
-      </filter>
-      <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%"   stopColor="#fdba74" stopOpacity="0.30" />
-        <stop offset="45%"  stopColor="#f472b6" stopOpacity="0.22" />
-        <stop offset="100%" stopColor="#3d1e28" stopOpacity="0.60" />
-      </linearGradient>
-    </defs>
-    <rect width="800" height="600" fill="url(#dusk)" filter="url(#ripple)" />
-  </svg>
-);
-
-// ── Data ─────────────────────────────────────────────────────
-const animeFavs = [
-  { title: "Your Name",         note: "the one that hits every rewatch" },
-  { title: "Spirited Away",     note: "comfort in a bathhouse" },
-  { title: "Attack on Titan",   note: "for the scale of it" },
-  { title: "Demon Slayer",      note: "for the animation" },
-  { title: "Jujutsu Kaisen",    note: "for the fights" },
-  { title: "A Silent Voice",    note: "cry every time" },
-];
-
-const workoutLog = [
-  { day: "Mon", split: "Push",  note: "chest / shoulders / tri" },
-  { day: "Tue", split: "Pull",  note: "back / bi / rear delt" },
-  { day: "Wed", split: "Legs",  note: "squat + posterior chain" },
-  { day: "Thu", split: "Swim",  note: "long easy laps" },
-  { day: "Fri", split: "Push",  note: "heavy day" },
-  { day: "Sat", split: "Pull",  note: "volume day" },
-  { day: "Sun", split: "Rest",  note: "walk + stretch" },
-];
-
-const friendMoments = [
-  "late-night drives with the windows down",
-  "coffee that turns into a four-hour conversation",
-  "cooking together and eating on the floor",
-  "no-plan weekends that become the best ones",
-  "text chains that never actually end",
-];
-
 // ── Page ─────────────────────────────────────────────────────
 const Personal = () => {
-  const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
-  const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
   return (
     <div
-      className="relative min-h-screen text-stone-100"
-      style={{
-        background:
-          "linear-gradient(180deg, #1a0a12 0%, #2d1520 22%, #4a1f2c 50%, #2d1520 78%, #1a0a12 100%)",
-      }}
+      className="relative min-h-screen font-mono text-white/90"
+      style={{ background: "radial-gradient(ellipse at top, #0f1220 0%, #05070f 60%, #030509 100%)" }}
     >
-      {/* Grain overlay */}
+      {/* Grid pattern backdrop */}
       <div
-        className="pointer-events-none fixed inset-0 opacity-[0.06] mix-blend-overlay z-0"
+        className="pointer-events-none fixed inset-0 opacity-[0.04]"
         style={{
           backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
+            "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+          backgroundSize: "48px 48px",
         }}
       />
+      {/* Soft ambient blobs */}
+      <div className="pointer-events-none fixed top-1/4 -left-32 w-96 h-96 rounded-full bg-fuchsia-500 opacity-[0.08] blur-3xl" />
+      <div className="pointer-events-none fixed bottom-1/4 -right-32 w-[28rem] h-[28rem] rounded-full bg-sky-500 opacity-[0.08] blur-3xl" />
 
-      {/* Ambient warm glow blobs */}
-      <div className="pointer-events-none fixed top-1/4 -left-32 w-96 h-96 rounded-full bg-rose-500 opacity-10 blur-3xl" />
-      <div className="pointer-events-none fixed bottom-1/4 -right-32 w-[28rem] h-[28rem] rounded-full bg-orange-400 opacity-10 blur-3xl" />
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 pt-28 pb-16">
 
-      {/* ──────────────── HERO ──────────────── */}
-      <section
-        ref={heroRef}
-        className="relative h-screen flex flex-col justify-end overflow-hidden pb-16 md:pb-24 px-6 md:px-12"
-      >
-        <DuskBackdrop />
-
-        {/* Marker chips */}
+        {/* ── HERO ─────────────────────────────────────────── */}
         <motion.div
-          style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 flex items-center gap-4 mb-8"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-10"
         >
-          <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-orange-200/70">
-            Varshini
-          </span>
-          <span className="h-px w-12 bg-orange-200/40" />
-          <span className="font-mono text-[11px] tracking-[0.4em] uppercase text-orange-200/70">
-            off the clock
-          </span>
-        </motion.div>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <div className="text-xs tracking-[0.3em] uppercase text-white/50 mb-3">
+                Personal · off the clock
+              </div>
+              <h1 className="text-4xl md:text-6xl text-white font-bold tracking-tight leading-tight">
+                Varshini&apos;s
+                <br />
+                <span className="text-transparent bg-clip-text"
+                      style={{ backgroundImage: "linear-gradient(90deg, #f9a8d4 0%, #c084fc 50%, #7dd3fc 100%)" }}>
+                  hobby dashboard
+                </span>
+              </h1>
+              <p className="mt-4 text-sm md:text-base text-white/60 max-w-md">
+                Not the resume. Not the job title. Just water, workouts,
+                anime nights, and the people I like most.
+              </p>
+            </div>
 
-        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="relative z-10">
-          <h1
-            className="font-serif italic text-[15vw] md:text-[11vw] lg:text-[9rem] leading-[0.9] tracking-tight text-transparent bg-clip-text"
-            style={{
-              fontFamily: '"Cormorant Garamond", "Playfair Display", Georgia, serif',
-              backgroundImage:
-                "linear-gradient(180deg, #fff7ed 0%, #fed7aa 45%, #f472b6 100%)",
-              textShadow: "0 0 80px rgba(252, 162, 119, 0.4)",
-            }}
-          >
-            hi, i&apos;m me.
-          </h1>
-
-          <div className="mt-10 flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-            <p className="max-w-md text-stone-200/85 text-lg md:text-xl leading-relaxed font-light">
-              Not the resume.
-              <br />
-              Not the job title. Just —
-              <br />
-              <span className="text-orange-200 italic">
-                water, friends, animated worlds, the log book.
-              </span>
-            </p>
-
-            <span className="text-xs font-mono tracking-widest uppercase text-stone-300/70 self-start md:self-end">
-              scroll for the rest ↓
-            </span>
+            {/* Socials */}
+            <div className="flex items-center gap-3">
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-widest text-white/80 hover:border-pink-400/60 hover:text-pink-200 transition-colors"
+              >
+                <FaInstagram className="text-pink-300 group-hover:scale-110 transition-transform" />
+                @varsha.com7
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs uppercase tracking-widest text-white/80 hover:border-sky-400/60 hover:text-sky-200 transition-colors"
+              >
+                <FaLinkedin className="text-sky-300 group-hover:scale-110 transition-transform" />
+                LinkedIn
+              </a>
+            </div>
           </div>
         </motion.div>
 
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
-        >
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-orange-200/60">
-            scroll
-          </span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-            className="w-px h-10 bg-gradient-to-b from-orange-200/70 to-transparent"
-          />
-        </motion.div>
-      </section>
+        {/* ── ROW 1 · Now playing · Daily rhythm · Stats ─── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4">
 
-      {/* ──────────────── I. IN THE WATER ──────────────── */}
-      <section className="relative py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
-        <Chapter index={1} kicker="element · water" />
+          {/* Now playing */}
+          <Card className="md:col-span-5 p-5">
+            <CardHeading icon={FaMusic} accent="text-fuchsia-300">
+              Now playing
+            </CardHeading>
+            <div className="rounded-xl overflow-hidden">
+              <iframe
+                title="Spotify — Now playing"
+                src={SPOTIFY_EMBED}
+                width="100%"
+                height="152"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                style={{ borderRadius: 12 }}
+              />
+            </div>
+            <div className="mt-3 flex items-center gap-2 text-[11px] text-white/50">
+              <FaHeart className="text-pink-400/80" />
+              on repeat this month
+            </div>
+          </Card>
 
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
-            className="md:col-span-7"
-          >
-            <Display className="text-orange-50">
-              Just being in it
-              <br />
-              <span className="text-rose-300/90">is enough.</span>
-            </Display>
-            <p className="mt-8 max-w-xl text-stone-200/85 leading-relaxed text-lg font-light">
-              Pools, lakes, oceans — I don&apos;t care what shape it takes.
-              Something about the weightlessness, the way sound goes muffled and
-              time slows down. The best kind of quiet.
-            </p>
-            <p className="mt-4 max-w-xl text-stone-300/70 leading-relaxed">
-              Duluth sits on the biggest lake I&apos;ve ever seen. When the wind
-              is right and the ore boats drift out at dusk, Superior looks like
-              an ocean pretending to be a lake.
-            </p>
-          </motion.div>
+          {/* Daily rhythm */}
+          <Card className="md:col-span-3 p-5" delay={0.05}>
+            <CardHeading icon={FaClock} accent="text-emerald-300">
+              Daily rhythm
+            </CardHeading>
+            <ul className="space-y-2.5">
+              {routine.map((r) => (
+                <li key={r.time} className="flex items-baseline gap-3 text-sm">
+                  <span className="w-16 text-emerald-300/80 text-xs">{r.time}</span>
+                  <span className="text-white/70">{r.label}</span>
+                </li>
+              ))}
+            </ul>
+          </Card>
 
-          {/* Column card — sunset over water */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="md:col-span-5"
-          >
-            <div className="relative aspect-[3/4] rounded-sm overflow-hidden border border-orange-200/10">
-              {/* Sunset sky over dark water */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(180deg, #fed7aa 0%, #fca277 18%, #f472b6 38%, #a13760 60%, #4a1f2c 80%, #1a0a12 100%)",
-                }}
-              />
-              {/* Sun */}
-              <div
-                className="absolute top-[32%] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(255,241,208,0.95) 0%, rgba(255,180,120,0.5) 40%, transparent 70%)",
-                  filter: "blur(2px)",
-                }}
-              />
-              {/* Sun reflection on water */}
-              <div
-                className="absolute top-[45%] left-1/2 -translate-x-1/2 w-16 h-2/5"
-                style={{
-                  background:
-                    "linear-gradient(180deg, rgba(255,220,180,0.35) 0%, rgba(255,180,140,0.15) 50%, transparent 100%)",
-                  filter: "blur(1px)",
-                }}
-              />
-              {/* Wave lines (lower half) */}
-              <svg
-                className="absolute inset-x-0 bottom-0 w-full h-1/2"
-                viewBox="0 0 400 250"
-                preserveAspectRatio="none"
+          {/* Stat pills */}
+          <div className="md:col-span-4 grid grid-cols-2 md:grid-cols-1 gap-2.5">
+            {stats.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                className="flex items-center justify-between rounded-xl px-4 py-2.5 shadow-lg"
+                style={{ backgroundColor: s.bg, color: s.fg }}
               >
-                {[...Array(12)].map((_, i) => (
-                  <path
-                    key={i}
-                    d={`M0 ${40 + i * 18} Q 100 ${30 + i * 18} 200 ${45 + i * 18} T 400 ${35 + i * 18}`}
-                    stroke="rgba(255,220,190,0.16)"
-                    strokeWidth="1"
-                    fill="none"
-                  />
-                ))}
-              </svg>
-              <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
-                <div>
-                  <div className="font-mono text-[10px] tracking-[0.3em] uppercase text-orange-100/80">
-                    field note
-                  </div>
-                  <div
-                    className="font-serif italic text-2xl text-white mt-1"
-                    style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-                  >
-                    Superior, at dusk
-                  </div>
-                </div>
-                <FaWater className="text-orange-100/80 text-xl" />
-              </div>
-            </div>
-          </motion.div>
+                <span className="text-sm font-bold tracking-tight">{s.label}</span>
+                <span className="text-lg font-extrabold">{s.n}</span>
+              </motion.div>
+            ))}
+          </div>
         </div>
-      </section>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-orange-200/30 to-transparent" />
-      </div>
-
-      {/* ──────────────── II. ANIME NIGHTS ──────────────── */}
-      <section className="relative py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
-        <Chapter index={2} kicker="watchlist · animated worlds" />
-
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
-            className="md:col-span-5"
-          >
-            <Display className="text-orange-50">
-              Worlds
-              <br />
-              <span className="text-rose-300/90">worth</span>
-              <br />
-              <span className="italic">disappearing into.</span>
-            </Display>
-            <p className="mt-8 text-stone-200/85 leading-relaxed text-lg font-light max-w-md">
-              Anime got me through the exam weeks and the flight home layovers
-              and every stretch where the real world was a little too loud.
-              Give me a Studio Ghibli marathon and a rainy afternoon and
-              I&apos;m good for the day.
-            </p>
-            <div className="mt-6 flex items-center gap-3 text-sm text-orange-200/70 font-mono">
-              <FaFilm />
-              <span>currently rewatching · Frieren</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="md:col-span-7"
-          >
-            <div className="border-t border-orange-200/20">
-              {animeFavs.map((a, i) => (
-                <motion.div
-                  key={a.title}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.05 }}
-                  className="group flex items-baseline justify-between py-5 border-b border-orange-200/15 hover:bg-orange-200/[0.03] transition-colors px-2 -mx-2"
-                >
-                  <div className="flex items-baseline gap-5">
-                    <span className="font-mono text-[11px] text-rose-300/60">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span
-                      className="font-serif text-2xl md:text-3xl text-orange-50 italic tracking-tight"
-                      style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-                    >
-                      {a.title}
-                    </span>
-                  </div>
-                  <span className="hidden md:inline text-sm text-stone-300/60 italic max-w-xs text-right">
-                    {a.note}
+        {/* ── ROW 2 · Hobbies (photo cards with placeholder gradients) ── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4">
+          {hobbies.map((h, i) => (
+            <motion.div
+              key={h.key}
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.06 }}
+              className="md:col-span-6 relative rounded-2xl overflow-hidden border border-white/10 group"
+            >
+              <div
+                className="aspect-[16/10] w-full relative"
+                style={{ background: h.gradient }}
+              >
+                {/* Simple sceney overlay */}
+                <div className="absolute inset-0 opacity-40" style={{
+                  background:
+                    "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.35) 0%, transparent 45%)",
+                }} />
+                {/* Placeholder marker (swap with real photo later) */}
+                <div className="absolute top-3 right-3 text-[10px] font-mono uppercase tracking-widest text-white/60 bg-black/30 rounded-full px-2 py-1 backdrop-blur-sm">
+                  photo · placeholder
+                </div>
+                {/* Icon */}
+                <h.Icon
+                  className="absolute bottom-6 right-6 text-6xl text-white/25 group-hover:text-white/40 transition-colors"
+                />
+              </div>
+              <div className="p-5 bg-white/[0.03] backdrop-blur-md">
+                <div className="flex items-baseline justify-between">
+                  <h3 className="text-lg text-white font-semibold">{h.title}</h3>
+                  <span className="text-[10px] uppercase tracking-widest" style={{ color: h.accent }}>
+                    {h.kicker}
                   </span>
+                </div>
+                <p className="mt-2 text-sm text-white/60 leading-relaxed">{h.blurb}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* ── ROW · Current anime obsessions ─────────────── */}
+        <Card className="p-5 mb-4">
+          <CardHeading icon={FaFilm} accent="text-fuchsia-300">
+            Current obsessions
+          </CardHeading>
+          <div className="grid grid-cols-3 gap-3">
+            {currentObsessions.map((o, i) => (
+              <motion.div
+                key={o.title}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.06 }}
+                whileHover={{ y: -3 }}
+                className="relative aspect-[2/3] rounded-xl overflow-hidden border border-white/10 group"
+                style={{ background: o.fallback }}
+              >
+                <img
+                  src={o.src}
+                  alt={o.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  onError={(e) => { e.target.style.display = "none"; }}
+                />
+                <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                  <div className="text-sm font-semibold text-white leading-tight">{o.title}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="mt-3 text-[11px] text-white/40">
+            drop cover art at <span className="text-white/70">/public/personal/anime/</span> — auto-fills over the gradient
+          </div>
+        </Card>
+
+        {/* ── ROW 3 · Photo wall + Bucket list ────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mb-4">
+
+          {/* Photo wall */}
+          <Card className="md:col-span-8 p-5">
+            <CardHeading icon={FaHeart} accent="text-pink-300">
+              The wall — moments
+            </CardHeading>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
+              {photoWall.map((p, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, delay: i * 0.04 }}
+                  whileHover={{ scale: 1.03 }}
+                  className="relative aspect-square rounded-lg overflow-hidden border border-white/10"
+                  title={p.alt}
+                  style={{ background: p.style }}
+                >
+                  <div className="absolute inset-0 opacity-30" style={{
+                    background: "radial-gradient(circle at 40% 30%, rgba(255,255,255,0.5) 0%, transparent 60%)",
+                  }} />
+                  <div className="absolute bottom-1.5 left-2 right-2 text-[9px] font-mono text-white/70 uppercase tracking-wider truncate">
+                    {p.alt}
+                  </div>
                 </motion.div>
               ))}
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-orange-200/30 to-transparent" />
-      </div>
-
-      {/* ──────────────── III. THE LOG ──────────────── */}
-      <section className="relative py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
-        <Chapter index={3} kicker="log · strength & swim" />
-
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12 items-end">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
-            className="md:col-span-6"
-          >
-            <Display className="text-orange-50">
-              Show up.
-              <br />
-              <span className="text-orange-300/90">Log it.</span>
-              <br />
-              <span className="italic">Repeat.</span>
-            </Display>
-            <p className="mt-8 text-stone-200/85 leading-relaxed text-lg font-light max-w-md">
-              Lifting is my meditation. Push / pull / legs, a little cardio,
-              sometimes a swim day. The point isn&apos;t hitting a number, the
-              point is being someone who shows up on a random Tuesday when
-              nobody&apos;s watching.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: 0.15 }}
-            className="md:col-span-6"
-          >
-            <div className="rounded-sm border border-orange-200/10 bg-black/25 backdrop-blur-sm overflow-hidden">
-              <div className="flex items-center justify-between px-5 py-3 border-b border-orange-200/10 bg-black/30">
-                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-orange-200/70">
-                  training week
-                </span>
-                <FaDumbbell className="text-orange-200/60" />
-              </div>
-              <div>
-                {workoutLog.map((row) => (
-                  <div
-                    key={row.day}
-                    className="grid grid-cols-12 items-center px-5 py-3 border-b border-orange-200/5 last:border-b-0 hover:bg-orange-200/[0.03] transition-colors"
-                  >
-                    <span className="col-span-2 font-mono text-xs uppercase text-rose-300/70">
-                      {row.day}
-                    </span>
-                    <span
-                      className="col-span-3 font-serif italic text-lg text-orange-50"
-                      style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-                    >
-                      {row.split}
-                    </span>
-                    <span className="col-span-7 text-sm text-stone-300/70 text-right">
-                      {row.note}
-                    </span>
-                  </div>
-                ))}
-              </div>
+            <div className="mt-3 text-[11px] text-white/40">
+              placeholders — drop real jpgs in <span className="text-white/70">/public/personal/</span> to swap
             </div>
-          </motion.div>
+          </Card>
+
+          {/* Bucket list */}
+          <Card className="md:col-span-4 p-5" delay={0.05}>
+            <CardHeading icon={FaBookOpen} accent="text-amber-300">
+              What&apos;s next
+            </CardHeading>
+            <ul className="space-y-2.5">
+              {bucket.map((b) => (
+                <li key={b.label} className="flex items-center gap-3 text-sm">
+                  {b.done ? (
+                    <FaCheckCircle className="text-emerald-400 flex-shrink-0" />
+                  ) : (
+                    <FaRegCircle className="text-white/30 flex-shrink-0" />
+                  )}
+                  <span className={b.done ? "text-white/40 line-through" : "text-white/80"}>
+                    {b.label}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Card>
         </div>
-      </section>
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="h-px bg-gradient-to-r from-transparent via-orange-200/30 to-transparent" />
-      </div>
-
-      {/* ──────────────── IV. THE PEOPLE ──────────────── */}
-      <section className="relative py-24 md:py-40 px-6 md:px-12 max-w-7xl mx-auto">
-        <Chapter index={4} kicker="the people · off the record" />
-
+        {/* ── OUTRO ────────────────────────────────────────── */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7 }}
-          className="max-w-5xl"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-16 text-center"
         >
-          <Display className="text-orange-50">
-            The best hours
-            <br />
-            <span className="italic text-rose-200/90">
-              are the ones we don&apos;t plan.
-            </span>
-          </Display>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-10 mt-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
-          >
-            <p className="text-stone-200/85 leading-relaxed text-lg font-light">
-              I have the kind of friends who&apos;ll pick up on the second ring
-              at 2 a.m., and the kind who&apos;ll sit next to me on the couch
-              for three hours without saying anything. Both count. I try to be
-              both.
-            </p>
-            <div className="mt-8 flex items-center gap-3 text-orange-200/70">
-              <FaUserFriends />
-              <span className="font-mono text-xs tracking-[0.3em] uppercase">
-                small circle · deep well
-              </span>
-            </div>
-          </motion.div>
-
-          <motion.ul
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={{
-              hidden: {},
-              show: { transition: { staggerChildren: 0.08 } },
-            }}
-            className="space-y-4"
-          >
-            {friendMoments.map((moment) => (
-              <motion.li
-                key={moment}
-                variants={{
-                  hidden: { opacity: 0, x: 20 },
-                  show: { opacity: 1, x: 0 },
-                }}
-                className="flex items-start gap-4 group"
-              >
-                <span className="mt-2 h-px w-8 bg-orange-200/40 group-hover:w-12 transition-all" />
-                <span
-                  className="font-serif italic text-xl md:text-2xl text-stone-100/90 leading-snug"
-                  style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
-                >
-                  {moment}
-                </span>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </div>
-      </section>
-
-      {/* ──────────────── COLOPHON / OUTRO ──────────────── */}
-      <section className="relative py-24 md:py-32 px-6 md:px-12">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <div className="font-mono text-[11px] tracking-[0.4em] uppercase text-orange-200/60 mb-6">
-              end of chapter
-            </div>
-            <p
-              className="font-serif italic text-3xl md:text-5xl text-orange-50 leading-tight"
-              style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
+          <div className="text-xs tracking-[0.3em] uppercase text-white/40 mb-3">
+            end of the personal side
+          </div>
+          <p className="text-2xl md:text-4xl text-white font-semibold tracking-tight">
+            for scrolling —{" "}
+            <span
+              className="text-transparent bg-clip-text"
+              style={{ backgroundImage: "linear-gradient(90deg, #c084fc 0%, #f472b6 60%, #fbbf24 100%)" }}
             >
-              That&apos;s the rest of me.
-              <br />
-              <span className="text-rose-300/80">Thanks for reading.</span>
-            </p>
-
-            <div className="mt-14 flex items-center justify-center">
-              <Link
-                to="/contact"
-                className="group inline-flex items-center gap-3 px-8 py-3 rounded-full text-rose-950 hover:brightness-105 transition-all text-sm tracking-widest font-mono uppercase"
-                style={{
-                  background:
-                    "linear-gradient(135deg, #fed7c3 0%, #fca277 50%, #f472b6 100%)",
-                  boxShadow: "0 0 30px rgba(252, 162, 119, 0.3)",
-                }}
-              >
-                say hi
-                <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+              thank you.
+            </span>
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-2xl text-white/60 hover:text-pink-300 transition-colors"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-2xl text-white/60 hover:text-sky-300 transition-colors"
+            >
+              <FaLinkedin />
+            </a>
+            <a
+              href="https://open.spotify.com/track/7siXHCf5qUbyJrhNYQXKFr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Play song on Spotify"
+              className="text-2xl text-white/60 hover:text-emerald-300 transition-colors"
+            >
+              <FaPlay />
+            </a>
+          </div>
+        </motion.div>
+      </div>
     </div>
   );
 };
 
-Chapter.propTypes = {
-  index: PropTypes.number.isRequired,
-  kicker: PropTypes.string.isRequired,
-};
-
-Display.propTypes = {
+Card.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  delay: PropTypes.number,
+};
+
+CardHeading.propTypes = {
+  icon: PropTypes.elementType,
+  children: PropTypes.node,
+  accent: PropTypes.string,
 };
 
 export default Personal;
