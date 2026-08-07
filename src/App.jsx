@@ -13,6 +13,7 @@ const Projects = lazy(() => import("./pages/Projects"));
 const Certificates = lazy(() => import("./pages/Certificate"));
 const Publications = lazy(() => import("./pages/Publications"));
 const ContactMe = lazy(() => import("./pages/Contact"));
+const Personal = lazy(() => import("./pages/Personal"));
 
 const RouteFallback = () => (
   <div className="min-h-screen flex items-center justify-center bg-black text-amber-400">
@@ -43,6 +44,7 @@ const App = () => {
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/publications" element={<Publications />} />
             <Route path="/contact" element={<ContactMe />} />
+            <Route path="/personal" element={<Personal />} />
           </Routes>
         </Suspense>
       </main>

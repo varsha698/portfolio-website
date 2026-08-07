@@ -10,6 +10,7 @@ const commands = [
   { id: "pubs", label: "Publications", hint: "/publications", type: "nav", target: "/publications" },
   { id: "certs", label: "Certifications", hint: "/certificates", type: "nav", target: "/certificates" },
   { id: "contact", label: "Contact", hint: "/contact", type: "nav", target: "/contact" },
+  { id: "personal", label: "Personal — the other side", hint: "/personal", type: "nav", target: "/personal" },
   {
     id: "resume",
     label: "Download Resume (PDF)",

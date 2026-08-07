@@ -202,6 +202,32 @@ const Home = () => {
           </kbd>{" "}
           to search
         </motion.div>
+
+        {/* Chapter II teaser — the personal side */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.7 }}
+          className="mt-12 flex flex-col items-center gap-3"
+        >
+          <div className="flex items-center gap-3 text-[10px] font-mono tracking-[0.35em] uppercase text-gray-500">
+            <span className="h-px w-8 bg-gray-700" />
+            Chapter I · the engineer
+            <span className="h-px w-8 bg-gray-700" />
+          </div>
+          <Link
+            to="/personal"
+            className="group inline-flex items-center gap-3 text-sm text-sky-200/80 hover:text-sky-100 transition-colors"
+          >
+            <span
+              className="font-serif italic text-lg md:text-xl"
+              style={{ fontFamily: '"Cormorant Garamond", Georgia, serif' }}
+            >
+              read chapter II — the other side
+            </span>
+            <FaArrowRight className="text-xs transition-transform group-hover:translate-x-1" />
+          </Link>
+        </motion.div>
       </div>
 
       {/* TECH MARQUEE */}

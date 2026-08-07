@@ -8,7 +8,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const links = ["Home", "About", "Projects", "Certificates", "Publications", "Contact"];
+  const links = ["Home", "About", "Projects", "Certificates", "Publications", "Personal", "Contact"];
 
   useEffect(() => {
     let ticking = false;
@@ -83,7 +83,7 @@ const Header = () => {
       </button>
 
       <div className={`absolute top-full right-4 w-56 mt-2 backdrop-blur-md border rounded-lg shadow-lg md:hidden transition-all duration-300 overflow-hidden bg-gray-900/90 border-amber-900/50 ${
-        isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+        isMenuOpen ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
       }`}>
         <div className="py-2">
           {links.map((link) => (
