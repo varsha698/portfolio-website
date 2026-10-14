@@ -7,9 +7,7 @@ const certificates = [
     provider: "Google (via Coursera)",
     issuedate: "18 May 2025",
     desc: "Completed an 8-course certification covering security best practices, threat detection, risk management, and incident response.",
-    // If you want to show the badge, put the image file inside public/certificates/
-    // and uncomment the line below with the correct filename:
-    // image: "GoogleCybersecurityProfessionalCertificateV2_Badge20250518-27-k82hcp_page-0001.jpg",
+    image: "GoogleCybersecurityProfessionalCertificateV2_Badge20250518-27-k82hcp_page-0001.jpg",
     url: "https://www.credly.com/badges/ed51ce48-72c1-40bf-9aeb-faebd2924e2b/public_url",
   },
   {

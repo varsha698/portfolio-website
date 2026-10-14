@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaGithub, FaCodeBranch, FaStar } from "react-icons/fa";
+import { GITHUB_USER } from "../data/profile";
 
-const USER = "varsha698";
+const USER = GITHUB_USER;
 
 // Uses the public GitHub API (no auth). If it rate-limits, we render a
 // friendly link fallback instead of dead space.

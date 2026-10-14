@@ -1,25 +1,29 @@
-import StackIcon from "tech-stack-icons";
+import PropTypes from "prop-types";
+import { TechIcon } from "./techIcons";
 
 const items = [
-  "python", "typescript", "js", "reactjs", "nextjs", "nodejs",
-  "tailwindcss", "vitejs", "flask", "fastapi", "postgresql",
-  "mongodb", "docker", "aws", "terraform", "ansible", "github",
-  "firebase", "swift", "angular", "pytorch", "tensorflow",
+  "python", "typescript", "javascript", "ruby", "rails", "react", "nextjs",
+  "nodejs", "tailwind", "fastapi", "flask", "postgresql", "mongodb",
+  "supabase", "stripe", "docker", "aws", "terraform", "cloudflare", "github",
+  "pytorch", "angular", "flutter", "swift",
 ];
 
-const Row = () => (
-  <div className="flex items-center gap-10 shrink-0 px-5">
+const Row = ({ hidden = false }) => (
+  <div className="flex items-center gap-10 shrink-0 px-5" aria-hidden={hidden || undefined}>
     {items.map((name) => (
       <div
         key={name}
         className="w-10 h-10 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-        title={name}
       >
-        <StackIcon name={name} />
+        <TechIcon name={name} className="w-9 h-9" />
       </div>
     ))}
   </div>
 );
+
+Row.propTypes = {
+  hidden: PropTypes.bool,
+};
 
 const TechMarquee = () => (
   <div className="relative overflow-hidden py-4 border-y border-amber-900/40 bg-black/40">
@@ -29,7 +33,7 @@ const TechMarquee = () => (
 
     <div className="flex marquee-track">
       <Row />
-      <Row />
+      <Row hidden />
     </div>
 
     <style>{`
@@ -43,6 +47,10 @@ const TechMarquee = () => (
       }
       .marquee-track:hover {
         animation-play-state: paused;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .marquee-track { animation: none; flex-wrap: wrap; justify-content: center; }
+        .marquee-track > :last-child { display: none; }
       }
     `}</style>
   </div>

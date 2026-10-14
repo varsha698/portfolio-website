@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import TerminalWidget from "../components/TerminalWidget";
 import LocalTime from "../components/LocalTime";
 import GithubActivity from "../components/GithubActivity";
+import { GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 
 // Lazy — these pull in the heavy tech-stack-icons bundle
 const TechMarquee = lazy(() => import("../components/TechMarquee"));
@@ -151,7 +152,7 @@ const Home = () => {
             About Me
           </Link>
           <a
-            href="/Varshini_Bhavanam_Resume.pdf"
+            href={RESUME_PATH}
             download
             className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-gray-300 border border-gray-600 hover:text-amber-400 hover:border-amber-400/50 transition-all duration-300"
           >
@@ -166,7 +167,7 @@ const Home = () => {
           transition={{ duration: 0.6, delay: 0.5 }}
         >
           <a
-            href="https://github.com/varsha698"
+            href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -175,7 +176,7 @@ const Home = () => {
             <FaGithub />
           </a>
           <a
-            href="https://www.linkedin.com/in/varshinikb/"
+            href={LINKEDIN_URL}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="LinkedIn"

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaArrowRight } from "react-icons/fa";
+import { EMAIL, GITHUB_URL, GITHUB_USER, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 
 // Static command list. Add more items here.
 const commands = [
@@ -15,28 +16,28 @@ const commands = [
     label: "Download Resume (PDF)",
     hint: "action",
     type: "download",
-    target: "/Varshini_Bhavanam_Resume.pdf",
+    target: RESUME_PATH,
   },
   {
     id: "email",
-    label: "Email me — bhava008@d.umn.edu",
+    label: `Email me — ${EMAIL}`,
     hint: "action",
     type: "external",
-    target: "mailto:bhava008@d.umn.edu",
+    target: `mailto:${EMAIL}`,
   },
   {
     id: "gh",
-    label: "GitHub — @varsha698",
+    label: `GitHub — @${GITHUB_USER}`,
     hint: "external",
     type: "external",
-    target: "https://github.com/varsha698",
+    target: GITHUB_URL,
   },
   {
     id: "li",
-    label: "LinkedIn — varshinikb",
+    label: "LinkedIn",
     hint: "external",
     type: "external",
-    target: "https://www.linkedin.com/in/varshinikb/",
+    target: LINKEDIN_URL,
   },
   {
     id: "healthinf",

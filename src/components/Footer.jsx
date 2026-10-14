@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin, FaDownload } from "react-icons/fa";
+import { GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 
 const Footer = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -20,8 +21,8 @@ const Footer = () => {
   }, []);
 
   const socialLinks = [
-    { icon: <FaGithub />, url: "https://github.com/varsha698", label: "GitHub" },
-    { icon: <FaLinkedin />, url: "https://www.linkedin.com/in/varshinikb/", label: "LinkedIn" },
+    { icon: <FaGithub />, url: GITHUB_URL, label: "GitHub" },
+    { icon: <FaLinkedin />, url: LINKEDIN_URL, label: "LinkedIn" },
   ];
 
   return (
@@ -54,7 +55,7 @@ const Footer = () => {
       {/* Resume Download */}
       <div className="mb-4">
         <a
-          href="/Varshini_Bhavanam_Resume.pdf"
+          href={RESUME_PATH}
           download="Varshini_Bhavanam_Resume.pdf"
           className="inline-flex items-center gap-2 px-4 py-2 text-amber-400 border border-amber-400/50 rounded-lg hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 text-sm font-semibold relative group"
         >

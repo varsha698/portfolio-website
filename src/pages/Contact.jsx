@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { FaGithub, FaLinkedin, FaEnvelope, FaPhone, FaPaperPlane } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
-
-const imageSrc = "/image.JPG";
+import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "../data/profile";
 
 // Optional: to enable real form delivery, create a free Formspree
 // endpoint at https://formspree.io and set it here (or via a
@@ -12,8 +11,8 @@ const FORMSPREE_ENDPOINT =
   import.meta.env.VITE_FORMSPREE_ENDPOINT || "";
 
 const ContactMe = () => {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | ok | error
+  const [form, setForm] = useState({ name: "", email: "", message: "", _gotcha: "" });
+  const [status, setStatus] = useState("idle"); // idle | sending | ok | mailto | error
   const [errorMsg, setErrorMsg] = useState("");
 
   const onChange = (e) =>
@@ -31,8 +30,8 @@ const ContactMe = () => {
       // Fallback: open user's mail client
       const subject = encodeURIComponent(`Portfolio contact from ${form.name}`);
       const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-      window.location.href = `mailto:bhava008@d.umn.edu?subject=${subject}&body=${body}`;
-      setStatus("ok");
+      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+      setStatus("mailto");
       return;
     }
 
@@ -49,7 +48,7 @@ const ContactMe = () => {
       });
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
       setStatus("ok");
-      setForm({ name: "", email: "", message: "" });
+      setForm({ name: "", email: "", message: "", _gotcha: "" });
     } catch (err) {
       setStatus("error");
       setErrorMsg(err.message || "Something went wrong. Please email me directly.");
@@ -107,8 +106,8 @@ const ContactMe = () => {
         Contact Me
       </motion.h1>
       <p className="text-gray-400 text-center max-w-xl relative z-10 mb-10 px-4">
-        Open to collaboration, internships, and interesting problems. The
-        fastest way to reach me is email — or drop a note below.
+        Open to collaboration and interesting problems. The fastest way to
+        reach me is email — or drop a note below.
       </p>
 
       <div className="relative z-10 grid md:grid-cols-[auto,1fr] gap-10 md:gap-12 items-start w-full max-w-5xl px-4">
@@ -125,8 +124,10 @@ const ContactMe = () => {
               type="image/webp"
             />
             <motion.img
-              src={imageSrc}
+              src="/varshini.jpg"
               alt="Varshini Bhavanam"
+              width="208"
+              height="208"
               className="w-40 h-40 md:w-52 md:h-52 rounded-full object-cover border-4 border-amber-400/50"
               style={{
                 boxShadow:
@@ -135,11 +136,6 @@ const ContactMe = () => {
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.3 }}
               loading="eager"
-              onError={(e) => {
-                if (!e.target.src.endsWith("/image.JPG")) {
-                  e.target.src = "/image.JPG";
-                }
-              }}
             />
           </picture>
 
@@ -147,26 +143,17 @@ const ContactMe = () => {
             <p className="flex items-center gap-3">
               <FaEnvelope className="text-amber-400" />
               <a
-                href="mailto:bhava008@d.umn.edu"
+                href={`mailto:${EMAIL}`}
                 className="hover:text-amber-400 transition"
               >
-                bhava008@d.umn.edu
-              </a>
-            </p>
-            <p className="flex items-center gap-3">
-              <FaPhone className="text-amber-400" />
-              <a
-                href="tel:+16513591842"
-                className="hover:text-amber-400 transition"
-              >
-                651-359-1842
+                {EMAIL}
               </a>
             </p>
           </div>
 
           <div className="mt-6 flex gap-5">
             <a
-              href="https://github.com/varsha698"
+              href={GITHUB_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -175,7 +162,7 @@ const ContactMe = () => {
               <FaGithub />
             </a>
             <a
-              href="https://www.linkedin.com/in/varshinikb/"
+              href={LINKEDIN_URL}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -237,6 +224,8 @@ const ContactMe = () => {
           <input
             type="text"
             name="_gotcha"
+            value={form._gotcha}
+            onChange={onChange}
             tabIndex={-1}
             autoComplete="off"
             style={{ position: "absolute", left: "-5000px", height: 0, width: 0 }}
@@ -254,12 +243,18 @@ const ContactMe = () => {
               {status === "sending" ? "Sending…" : "Send message"}
             </button>
             {status === "ok" && (
-              <p className="text-green-400 text-sm">
+              <p className="text-green-400 text-sm" role="status">
                 Thanks — your message is on its way!
               </p>
             )}
+            {status === "mailto" && (
+              <p className="text-amber-300 text-sm" role="status">
+                Your email app should have opened with the message ready —
+                hit send there. Nothing opened? Email {EMAIL} directly.
+              </p>
+            )}
             {status === "error" && (
-              <p className="text-red-400 text-sm">{errorMsg}</p>
+              <p className="text-red-400 text-sm" role="alert">{errorMsg}</p>
             )}
             {!FORMSPREE_ENDPOINT && (
               <p className="text-gray-500 text-xs italic">

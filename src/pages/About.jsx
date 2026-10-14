@@ -2,38 +2,45 @@ import { motion } from "framer-motion";
 
 const timeline = [
   {
-    year: "Dec 2025 (Expected)",
-    title: "Bachelor of Science in Computer Science",
-    desc: "University of Minnesota - Duluth. Relevant coursework: Computer Security, Operating Systems, Software Engineering, Natural Language Processing, Mobile User Experience and Design, Automata and Formal Languages, and Sensors and Internet of Things.",
-    iconPath: "icons/umd_logo.png",
-    path: "https://www.d.umn.edu/",
-  },
-  {
-    year: "2026 – Present",
-    title: "Software Engineer – Xecutive Development LLC",
-    desc: "Contributing across a multi-service operations platform: Rails 8 ERP/CRM, Next.js 16 marketing sites on Cloudflare Pages, Python payment and mailer pipelines, and integrations with Stripe, Airtable, Odoo, and Microsoft Graph.",
-    iconPath: "icons/default.png",
+    year: "Feb 2026 – Present",
+    title: "Software Developer – Xecutive Development LLC",
+    desc: "Minneapolis, MN. Building the operations platform for a 7-state lawn-care and snow-removal business: a Rails 8 + PostgreSQL service that syncs Airtable customers nightly across 7 OptimoRoute accounts and serves as the company's source of truth; Stripe renewal and payment-reconciliation pipelines; a React + Supabase real-time inventory tracker; and Jupyter ETL that migrated 6,258 contacts, 3,448 sales orders and 3,299 payments into Odoo. Deployed on a self-managed Proxmox VM behind Caddy and Cloudflare Tunnel with GitHub Actions CI.",
+    iconPath: "/icons/default.png",
     path: "https://github.com/Xecutive-Development-LLC",
   },
   {
+    year: "Dec 2025",
+    title: "B.S. Computer Science – University of Minnesota Duluth",
+    desc: "Relevant coursework: Computer Security, Operating Systems, Software Engineering, Natural Language Processing, Mobile User Experience and Design, Automata and Formal Languages, and Sensors and Internet of Things.",
+    iconPath: "/icons/umd_logo.png",
+    path: "https://www.d.umn.edu/",
+  },
+  {
+    year: "Jul 2025 – Sep 2025",
+    title: "Software Development Intern – Code Ninjas",
+    desc: "Atlanta, GA. Built a full-stack AI quiz-generation platform (Angular + ASP.NET Core) that cut manual content-creation time by ~80%, plus a rule-based Python chatbot that walks students through curriculum problems — containerized with Docker and deployed via GitHub Actions.",
+    iconPath: "/icons/default.png",
+    path: "https://www.codeninjas.com/",
+  },
+  {
     year: "Feb 2025 – Apr 2025",
-    title: "EHR Data Migration Intern",
-    desc: "St. Luke's Aspirus Administration, Duluth, MN. Migrated and validated patient data from Meditech to Epic, improving data consistency and accuracy. Processed and reconciled structured clinical records with attention to detail and HIPAA compliance.",
-    iconPath: "icons/stlukes_logo.jpg",
+    title: "EHR Data Migration Intern – St. Luke's Aspirus",
+    desc: "Duluth, MN. Transferred and validated 10,000+ patient records from Meditech to Epic during an enterprise EHR cutover, documenting data discrepancies under HIPAA-compliant workflows.",
+    iconPath: "/icons/stlukes_logo.jpg",
     path: "https://www.slhduluth.com/",
   },
   {
     year: "Sep 2024 – May 2025",
-    title: "Undergraduate Research Assistant",
-    desc: "UMN Duluth, with Dr. Arshia Khan. Researched digital and robotic interventions for depression, anxiety, and student mental wellness. Prototyped a gamified mobile app; led literature review and IRB documentation. Work resulted in two published papers (HEALTHINF 2026 and ICICT 2025).",
-    iconPath: "icons/umd_logo.png",
+    title: "Undergraduate Research Assistant – UMN Duluth",
+    desc: "With Dr. Arshia Khan. Researched digital and robotic interventions for depression, anxiety, and student mental wellness; compiled IRB protocol and consent documentation for a mobile wellness study and analyzed user-behavior data. Co-authored two peer-reviewed papers (HEALTHINF 2026 and ICICT 2025).",
+    iconPath: "/icons/umd_logo.png",
     path: "https://www.d.umn.edu/",
   },
   {
-    year: "Aug 2024 – Present",
-    title: "Intern – International Student Services",
-    desc: "Managing student data in Sunapsis and supporting international student onboarding, orientation, and engagement at UMD.",
-    iconPath: "icons/umd_iss_logo.png",
+    year: "Aug 2024 – Dec 2025",
+    title: "Intern – International Student Services, UMN Duluth",
+    desc: "Managed student data in Sunapsis and supported international student onboarding, orientation, and engagement.",
+    iconPath: "/icons/umd_iss_logo.png",
     path: "https://www.d.umn.edu/international/",
   },
 ];
@@ -136,7 +143,7 @@ const About = () => {
                     style={{ padding: "4px", backgroundColor: "#fff" }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = "icons/default.png";
+                      e.target.src = "/icons/default.png";
                     }}
                   />
                 </a>

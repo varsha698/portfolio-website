@@ -2,20 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Hide the system cursor while the custom cursor is active.
-   Inputs keep their text caret (that's a separate concept). */
-html.hide-native-cursor,
-html.hide-native-cursor * {
-  cursor: none !important;
-}
-
 /* Root variables */
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: light;
-  color: rgba(0, 0, 0, 0.87);
+  color-scheme: dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,13 +15,15 @@ html.hide-native-cursor * {
   width: 100%;
 }
 
-.dark {
-  color-scheme: dark;
-}
-
 /* Smooth Scroll */
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 /* Root App Container */
@@ -44,18 +38,14 @@ html {
   box-sizing: border-box;
 }
 
+/* The whole site is dark; a black body avoids a white flash before React mounts. */
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background-color: #fff;
-  color: #213547;
-  width: 100%;
-}
-
-.dark body {
   background-color: #000;
   color: #e0e0e0;
+  width: 100%;
 }
 
 /* Typography Defaults */
@@ -90,38 +80,11 @@ button {
 button:hover {
   border-color: #646cff;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-.dark button {
-  background-color: #222;
-}
 
-/* Glassmorphism Card */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-}
-.dark .glass {
-  background: rgba(0, 0, 0, 0.4);
-}
-
-/* Neon Glow Hover Text */
-.neon-text {
-  color: rgb(255, 204, 102);
-  transition: 0.3s;
-}
-.neon-text:hover {
-  color: rgb(255, 204, 102);
-  text-shadow: 0 0 10px #fff, 0 0 20px #bbb5aa,
-               0 0 40px rgb(255, 204, 102),
-               0 0 80px rgb(255, 204, 102),
-               0 0 120px rgb(255, 204, 102),
-               0 0 200px rgb(255, 204, 102),
-               0 0 300px rgb(255, 204, 102),
-               0 0 400px rgb(255, 204, 102);
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid #fbbf24;
+  outline-offset: 2px;
 }
 
 /* Scanline Effect (used in Header/Footer) */
@@ -133,4 +96,14 @@ button:focus-visible {
     rgba(0, 0, 0, 0.5) 2px,
     rgba(0, 0, 0, 0.5) 4px
   );
+}
+
+/* Sliding highlight on the footer's top border */
+@keyframes moveGradient {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
 }

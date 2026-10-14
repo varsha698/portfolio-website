@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 
 // Lightweight canvas particle system. Amber dots connect when close and
 // gently repel from the cursor. Sits fixed behind everything on the page.
+// Draws a single still frame when the visitor prefers reduced motion, and
+// stops animating while the tab is hidden.
 const ParticleBackground = () => {
   const canvasRef = useRef(null);
   const rafRef = useRef(null);
@@ -16,6 +18,7 @@ const ParticleBackground = () => {
     let particles = [];
 
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const resize = () => {
       W = window.innerWidth;
@@ -102,20 +105,42 @@ const ParticleBackground = () => {
         }
       }
 
-      rafRef.current = requestAnimationFrame(step);
+      if (!reducedMotion.matches && !document.hidden) {
+        rafRef.current = requestAnimationFrame(step);
+      } else {
+        rafRef.current = null;
+      }
+    };
+
+    const start = () => {
+      if (rafRef.current == null) rafRef.current = requestAnimationFrame(step);
+    };
+
+    const onResize = () => {
+      resize();
+      start();
+    };
+
+    const onVisibility = () => {
+      if (!document.hidden) start();
     };
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", onResize);
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseleave", onLeave);
-    rafRef.current = requestAnimationFrame(step);
+    document.addEventListener("visibilitychange", onVisibility);
+    reducedMotion.addEventListener("change", start);
+    start();
 
     return () => {
       cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+      rafRef.current = null;
+      window.removeEventListener("resize", onResize);
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
+      document.removeEventListener("visibilitychange", onVisibility);
+      reducedMotion.removeEventListener("change", start);
     };
   }, []);
 

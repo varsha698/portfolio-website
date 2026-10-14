@@ -1,322 +1,120 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import StackIcon from "tech-stack-icons";
+import { TechIcon } from "../components/techIcons";
 
-// Tech stack data
+// Mirrors the "Technical Skills" section of the resume. Keys refer to
+// src/components/techIcons.jsx.
 const techCategories = [
   {
     category: "Languages",
-    theme: "neural",
-    techs: ["Python", "TypeScript", "JavaScript", "Ruby", "Swift"]
+    techs: ["python", "typescript", "javascript", "ruby", "swift"],
   },
   {
     category: "Frontend",
-    theme: "vortex",
-    techs: ["React", "Next.js", "Tailwind"]
+    techs: ["react", "nextjs", "angular", "tailwind", "vite"],
   },
   {
     category: "Backend & Data",
-    theme: "terminal",
-    techs: ["Rails", "FastAPI", "PostgreSQL", "MongoDB"]
+    techs: ["rails", "fastapi", "flask", "postgresql", "mongodb", "supabase"],
   },
   {
-    category: "AI / DevOps",
-    theme: "ai",
-    techs: ["PyTorch", "Docker", "AWS"]
-  }
+    category: "AI / ML",
+    techs: ["pytorch", "sklearn", "pandas", "jupyter", "streamlit"],
+  },
+  {
+    category: "DevOps & Cloud",
+    techs: ["docker", "aws", "terraform", "kubernetes", "ansible", "github", "cloudflare"],
+  },
+  {
+    category: "Integrations",
+    techs: ["stripe", "airtable", "odoo", "firebase"],
+  },
 ];
 
-// Custom icon component with fallback to custom implementation
-
-const TechIcon = ({ tech, theme }) => {
-  // Different glow colors based on theme
-  const glowColors = {
-    neural: "#00ffff",    // Cyan
-    terminal: "#00ff00",  // Green
-    vortex: "#a855f7",    // Purple
-    ai: "#3b82f6"         // Blue
-  };
-  
-  const color = glowColors[theme] || "#00ffff";
-  
-  // Mapping of tech names to tech-stack-icons identifiers
-  const techIconsMap = {
-    "React": "reactjs",
-    "ReactJS": "reactjs",
-    "Next.js": "nextjs",
-    "Angular": "angular",
-    "Vite": "vitejs",
-    "Tailwind": "tailwindcss",
-    "HTML5": "html5",
-    "CSS3": "css3",
-    "JavaScript": "js",
-    "JS": "js",
-    "TypeScript": "typescript",
-    "Node.js": "nodejs",
-    "NodeJS": "nodejs",
-    "Express": "expressjs",
-    "MongoDB": "mongodb",
-    "PostgreSQL": "postgresql",
-    "Firebase": "firebase",
-    "Python": "python",
-    "PyTorch": "pytorch",
-    "TensorFlow": "tensorflow",
-    "Docker": "docker",
-    "AWS": "aws",
-    "Terraform": "terraform",
-    "GitHub Actions": "github",
-    "Swift": "swift",
-    "Dart": "dart",
-    "Ruby": "rubyonrails",
-    "Rails": "rubyonrails",
-    "C#": "csharp",
-    "SQL": "mysql",
-    "MySQL": "mysql",
-    "Flask": "flask",
-    "FastAPI": "fastapi",
-    "OpenCV": "opencv",
-    "Ansible": "ansible"
-  };
-  
-  // Check if we have a matching icon in tech-stack-icons
-  const iconKey = techIconsMap[tech];
-  
-  if (iconKey) {
-    return (
-      <div className="relative w-14 h-14 flex flex-col items-center justify-center">
-        <div className="w-12 h-12 flex items-center justify-center">
-          <StackIcon name={iconKey} />
-        </div>
-        <span className="text-xs mt-1 text-gray-300 whitespace-nowrap">{tech}</span>
-      </div>
-    );
-  }
-  
-  // Fallback to our custom implementation
-  return (
-    <div className="relative w-12 h-12 flex flex-col items-center justify-center">
-      <div 
-        className="text-2xl font-bold flex items-center justify-center w-10 h-10 rounded-lg"
-        style={{ 
-          color: color,
-          textShadow: `0 0 5px ${color}, 0 0 10px ${color}`
-        }}
-      >
-        {tech.charAt(0)}
-      </div>
-      <span className="text-xs mt-1 text-gray-300 whitespace-nowrap">{tech}</span>
-    </div>
-  );
+const LABELS = {
+  python: "Python",
+  typescript: "TypeScript",
+  javascript: "JavaScript",
+  ruby: "Ruby",
+  swift: "Swift",
+  react: "React",
+  nextjs: "Next.js",
+  angular: "Angular",
+  tailwind: "Tailwind",
+  vite: "Vite",
+  rails: "Rails",
+  fastapi: "FastAPI",
+  flask: "Flask",
+  postgresql: "PostgreSQL",
+  mongodb: "MongoDB",
+  supabase: "Supabase",
+  pytorch: "PyTorch",
+  sklearn: "scikit-learn",
+  pandas: "pandas",
+  jupyter: "Jupyter",
+  streamlit: "Streamlit",
+  docker: "Docker",
+  aws: "AWS",
+  terraform: "Terraform",
+  kubernetes: "Kubernetes",
+  ansible: "Ansible",
+  github: "GH Actions",
+  cloudflare: "Cloudflare",
+  stripe: "Stripe",
+  airtable: "Airtable",
+  odoo: "Odoo",
+  firebase: "Firebase",
 };
 
-TechIcon.propTypes = {
+const TechChip = ({ tech }) => (
+  <motion.div
+    className="flex flex-col items-center justify-center w-20 h-20 p-2 rounded-xl border bg-gray-800/60 border-gray-700 hover:border-amber-500/60 transition-colors"
+    whileHover={{ scale: 1.1, y: -3 }}
+    transition={{ duration: 0.2 }}
+  >
+    <TechIcon name={tech} className="w-8 h-8" />
+    <span className="text-xs mt-2 text-gray-300 whitespace-nowrap">
+      {LABELS[tech] ?? tech}
+    </span>
+  </motion.div>
+);
+
+TechChip.propTypes = {
   tech: PropTypes.string.isRequired,
-  theme: PropTypes.string,
 };
 
-const TechStackDisplay = () => {
-  // Animation variants for different themes
-  const cardVariants = {
-    neural: {
-      hover: { boxShadow: "0 0 15px 2px rgba(0, 255, 255, 0.7)", scale: 1.02 }
-    },
-    terminal: {
-      hover: { boxShadow: "0 0 15px 2px rgba(0, 255, 0, 0.7)", scale: 1.02 }
-    },
-    vortex: {
-      hover: { boxShadow: "0 0 15px 2px rgba(168, 85, 247, 0.7)", scale: 1.02 }
-    },
-    ai: {
-      hover: { boxShadow: "0 0 15px 2px rgba(59, 130, 246, 0.7)", scale: 1.02 }
-    }
-  };
-
-  return (
-    <div 
-      className="relative w-full min-h-screen p-4 md:p-10 overflow-hidden transition-colors duration-300 bg-black text-white"
-      style={{
-        background: 'radial-gradient(circle at center, #0f1523 0%, #000000 100%)'
-      }}
+const TechStackDisplay = () => (
+  <div className="relative w-full px-4 md:px-10 py-16 overflow-hidden text-white">
+    <motion.h2
+      className="text-3xl md:text-4xl font-bold text-center mb-10 relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
+      initial={{ opacity: 0, y: -20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
     >
-      {/* Grid background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={`h-${i}`}
-            className="absolute w-full h-px" 
-            style={{
-              top: `${i * 5}%`,
-              background: 'linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)',
-              opacity: '0.3'
-            }}
-          />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div 
-            key={`v-${i}`}
-            className="absolute h-full w-px" 
-            style={{
-              left: `${i * 5}%`,
-              background: 'linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)',
-              opacity: '0.3'
-            }}
-          />
-        ))}
-      </div>
-      
-      {/* Glow effects */}
-      <div className="fixed top-1/4 left-1/4 w-64 h-64 rounded-full bg-blue-500 opacity-10 blur-3xl"></div>
-      <div className="fixed bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-purple-500 opacity-10 blur-3xl"></div>
-      
-      <motion.h1 
-        className="text-3xl md:text-4xl font-bold text-center mb-10 relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        style={{
-          textShadow: "0 0 10px #00ffff, 0 0 20px #00ffff"
-        }}
-      >
-        Tech Stack Showcase
-      </motion.h1>
-      
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.5 }}
-      >
-        {techCategories.map(({ category, techs, theme: cardTheme }) => (
-          <motion.div
-            key={category}
-                  className="border p-6 rounded-xl backdrop-blur-sm relative flex flex-col items-center min-h-[250px] transition-colors duration-300 border-gray-700 bg-gray-900 bg-opacity-20 shadow-lg"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            viewport={{ once: true }}
-            whileHover={cardVariants[cardTheme].hover}
-          >
-            {/* Glitch line effect */}
-            <div className="absolute h-px w-full top-0 left-0 overflow-hidden">
-              <motion.div 
-                className="h-px bg-cyan-400" 
-                animate={{ 
-                  x: ["-100%", "100%"],
-                  opacity: [0, 1, 0]
-                }}
-                transition={{
-                  repeat: Infinity,
-                  duration: 3,
-                  ease: "linear"
-                }}
-              />
-            </div>
-            
-            <motion.h2 
-              className="text-xl font-bold mb-6 text-center"
-              style={{ 
-                textShadow: cardTheme === 'neural' ? "0 0 5px #00ffff, 0 0 10px #00ffff" :
-                           cardTheme === 'terminal' ? "0 0 5px #00ff00, 0 0 10px #00ff00" :
-                           cardTheme === 'vortex' ? "0 0 5px #a855f7, 0 0 10px #a855f7" :
-                           "0 0 5px #3b82f6, 0 0 10px #3b82f6"
-              }}
-              animate={{
-                textShadow: [
-                  cardTheme === 'neural' ? "0 0 5px #00ffff, 0 0 10px #00ffff" : 
-                  cardTheme === 'terminal' ? "0 0 5px #00ff00, 0 0 10px #00ff00" :
-                  cardTheme === 'vortex' ? "0 0 5px #a855f7, 0 0 10px #a855f7" :
-                  "0 0 5px #3b82f6, 0 0 10px #3b82f6",
-                  
-                  cardTheme === 'neural' ? "0 0 2px #00ffff, 0 0 5px #00ffff" : 
-                  cardTheme === 'terminal' ? "0 0 2px #00ff00, 0 0 5px #00ff00" :
-                  cardTheme === 'vortex' ? "0 0 2px #a855f7, 0 0 5px #a855f7" :
-                  "0 0 2px #3b82f6, 0 0 5px #3b82f6",
-                ]
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-            >
-              {category}
-            </motion.h2>
-            
-            <div className="relative flex flex-wrap justify-center items-center gap-4 w-full">
-              {techs.map((tech, index) => (
-                <motion.div
-                  key={tech}
-                        className="flex flex-col items-center p-2 rounded-xl border relative overflow-hidden transition-colors duration-300 bg-gray-800 bg-opacity-60 border-gray-700"
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ 
-                    scale: 1.15,
-                    rotate: cardTheme === 'neural' ? 5 : 
-                            cardTheme === 'terminal' ? 0 : 
-                            cardTheme === 'vortex' ? [0, 5, -5, 0] : 3,
-                    y: cardTheme === 'vortex' ? -5 : 0
-                  }}
-                  style={{
-                    boxShadow: cardTheme === 'neural' ? "0 0 5px rgba(0, 255, 255, 0.3)" :
-                              cardTheme === 'terminal' ? "0 0 5px rgba(0, 255, 0, 0.3)" :
-                              cardTheme === 'vortex' ? "0 0 5px rgba(168, 85, 247, 0.3)" :
-                              "0 0 5px rgba(59, 130, 246, 0.3)"
-                  }}
-                >
-                  <TechIcon tech={tech} theme={cardTheme} />
-                  
-                  {/* Theme-specific effects */}
-                  {cardTheme === 'neural' && (
-                    <motion.div 
-                      className="absolute inset-0 border border-cyan-500 rounded-xl"
-                      animate={{ opacity: [0, 0.5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                  )}
-                  
-                  {cardTheme === 'terminal' && (
-                    <motion.div 
-                      className="absolute inset-0 bg-green-500 rounded-xl"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: [0, 0.1, 0] }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    />
-                  )}
-                  
-                  {cardTheme === 'vortex' && (
-                    <div className="absolute inset-0 overflow-hidden rounded-xl">
-                      <motion.div 
-                        className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500"
-                        animate={{ 
-                          rotate: [0, 360],
-                          opacity: 0.1
-                        }}
-                        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                      />
-                    </div>
-                  )}
-                  
-                  {cardTheme === 'ai' && (
-                    <motion.div 
-                      className="absolute inset-0 bg-blue-500 rounded-xl"
-                      animate={{ 
-                        opacity: [0.05, 0.2, 0.05],
-                        scale: [1, 1.05, 1]
-                      }}
-                      transition={{ duration: 2, repeat: Infinity }}
-                    />
-                  )}
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-      
-      
+      Tech Stack
+    </motion.h2>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 max-w-7xl mx-auto">
+      {techCategories.map(({ category, techs }, i) => (
+        <motion.div
+          key={category}
+          className="border p-6 rounded-xl backdrop-blur-sm flex flex-col items-center border-amber-900/50 bg-black/60 hover:border-amber-500/50 transition-colors"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+        >
+          <h3 className="text-lg font-semibold mb-5 text-amber-300">{category}</h3>
+          <div className="flex flex-wrap justify-center gap-3 w-full">
+            {techs.map((tech) => (
+              <TechChip key={tech} tech={tech} />
+            ))}
+          </div>
+        </motion.div>
+      ))}
     </div>
-  );
-};
+  </div>
+);
 
 export default TechStackDisplay;

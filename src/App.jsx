@@ -1,12 +1,10 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, Suspense, lazy } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import ParticleBackground from "./components/ParticleBackground";
 import CommandPalette from "./components/CommandPalette";
-import CustomCursor from "./components/CustomCursor";
-import "./App.css";
 
 const About = lazy(() => import("./pages/About"));
 const Projects = lazy(() => import("./pages/Projects"));
@@ -22,17 +20,25 @@ const RouteFallback = () => (
 
 const App = () => {
   const location = useLocation();
-  const isContactPage = location.hash.replace(/\/$/, "") === "#/contact";
+  const navigate = useNavigate();
+  const isContactPage = location.pathname.replace(/\/$/, "") === "/contact";
+
+  // The site used hash routing until late 2026; keep old /#/projects style
+  // links (resumes, LinkedIn, bookmarks) working.
+  useEffect(() => {
+    if (location.hash.startsWith("#/")) {
+      navigate(location.hash.slice(1), { replace: true });
+    }
+  }, [location.hash, navigate]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname, location.hash]);
+  }, [location.pathname]);
 
   return (
     <>
       <ParticleBackground />
       <CommandPalette />
-      <CustomCursor />
       <Header />
       <main>
         <Suspense fallback={<RouteFallback />}>
@@ -43,6 +49,7 @@ const App = () => {
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/publications" element={<Publications />} />
             <Route path="/contact" element={<ContactMe />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
       </main>

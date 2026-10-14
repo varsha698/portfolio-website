@@ -1,24 +1,29 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { FaGithub, FaExternalLinkAlt, FaLock, FaCheck } from "react-icons/fa";
-import { getTechIcon } from "./TechIcons";
+import { TechIcon } from "../components/techIcons";
 
 const ProjectModal = ({ project, onClose }) => {
+  const closeRef = useRef(null);
+
   useEffect(() => {
+    const previouslyFocused = document.activeElement;
     const onKey = (e) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
+      previouslyFocused?.focus?.();
     };
   }, [onClose]);
 
   if (!project) return null;
 
-  const hasRealRepo = project.code && project.code !== "#";
-  const hasRealDemo = project.link && project.link !== "#" && project.link !== project.code;
+  const hasRealRepo = Boolean(project.code);
+  const hasRealDemo = Boolean(project.link) && project.link !== project.code;
 
   return (
     <motion.div
@@ -35,6 +40,9 @@ const ProjectModal = ({ project, onClose }) => {
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
         initial={{ scale: 0.96, y: 20, opacity: 0 }}
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.96, y: 20, opacity: 0 }}
@@ -43,6 +51,7 @@ const ProjectModal = ({ project, onClose }) => {
       >
         {/* Close */}
         <motion.button
+          ref={closeRef}
           onClick={onClose}
           aria-label="Close"
           className="absolute top-4 right-4 text-amber-400 hover:text-amber-300 focus:outline-none z-10"
@@ -82,6 +91,7 @@ const ProjectModal = ({ project, onClose }) => {
 
           {/* Title */}
           <h2
+            id="project-modal-title"
             className="text-2xl md:text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
             style={{ textShadow: "0 0 15px rgba(255, 153, 102, 0.3)" }}
           >
@@ -123,14 +133,8 @@ const ProjectModal = ({ project, onClose }) => {
             </p>
             {project.techstackicons && project.techstackicons.length > 0 && (
               <div className="flex flex-wrap gap-3">
-                {project.techstackicons.map((tech, i) => (
-                  <div
-                    key={i}
-                    className="text-2xl text-amber-500"
-                    title={tech}
-                  >
-                    {getTechIcon(tech)}
-                  </div>
+                {project.techstackicons.map((tech) => (
+                  <TechIcon key={tech} name={tech} className="w-7 h-7" />
                 ))}
               </div>
             )}
@@ -164,8 +168,8 @@ const ProjectModal = ({ project, onClose }) => {
             {!hasRealDemo && !hasRealRepo && (
               <p className="text-sm text-gray-500 italic">
                 {project.private
-                  ? "Private repository — source unavailable."
-                  : "Repository link coming soon."}
+                  ? "Private client repository — source not public."
+                  : "Source not public yet."}
               </p>
             )}
           </div>

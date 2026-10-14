@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { FaLock } from "react-icons/fa";
 import ProjectModal from "./ProjectModal";
-import { getTechIcon } from "./TechIcons";
+import { TechIcon } from "../components/techIcons";
 
 const XD = "Xecutive Development LLC";
 
@@ -20,11 +20,9 @@ const professional = [
       "DocuSign contract flow with status webhooks",
       "Airtable and Microsoft Graph pipelines feeding CRM and outbound email",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby on Rails 8, PostgreSQL, Mongoid, Stripe, Avalara, DocuSign, Airtable, Microsoft Graph",
-    techstackicons: ["rubyonrails", "postgresql"],
+    techstackicons: ["rails", "postgresql"],
   },
   {
     name: "Andrew's Lawn & Snow — Lead CRM",
@@ -36,11 +34,9 @@ const professional = [
       "CSV importer for legacy Odoo lead exports",
       "Assignment, notes, and per-lead activity timeline",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby on Rails 8, PostgreSQL, Hotwire, Sidekiq",
-    techstackicons: ["rubyonrails", "postgresql"],
+    techstackicons: ["rails", "postgresql"],
   },
 
   // ── Customer-facing web ───────────────────────────
@@ -54,11 +50,9 @@ const professional = [
       "GA4 and Meta Conversions API for full-funnel attribution",
       "Deployed on Cloudflare Pages with edge caching",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Next.js 16, React 19, TypeScript, Tailwind, Cloudflare Pages, Sentry",
-    techstackicons: ["nextjs", "typescript", "tailwindcss"],
+    techstackicons: ["nextjs", "typescript", "tailwind"],
   },
   {
     name: "Lawn Care & Snow Services — Alternate Brand Site",
@@ -69,11 +63,9 @@ const professional = [
       "Kept in a separate repo to isolate compliance and content ownership",
       "Deployed on Cloudflare Pages",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Astro 5, TypeScript, Tailwind, Cloudflare Pages",
-    techstackicons: ["typescript", "tailwindcss"],
+    techstackicons: ["typescript", "tailwind"],
   },
   {
     name: "ALS Hub — Internal App Launcher",
@@ -84,11 +76,9 @@ const professional = [
       "Directory of every internal tool with role-scoped visibility",
       "Central place for on-call links, runbooks, and quick actions",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Next.js, NextAuth, TypeScript, Tailwind",
-    techstackicons: ["nextjs", "typescript", "tailwindcss"],
+    techstackicons: ["nextjs", "typescript", "tailwind"],
   },
 
   // ── Snow dispatch & mailers ──────────────────────
@@ -102,11 +92,9 @@ const professional = [
       "Sidekiq fan-out with retry, dead-letter, and per-campaign metrics",
       "Hotwire admin UI for live send progress",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby on Rails 8, Hotwire, Sidekiq, Airtable, OptimoRoute, Microsoft Graph",
-    techstackicons: ["rubyonrails"],
+    techstackicons: ["rails"],
   },
   {
     name: "Snow Dispatch Pipeline",
@@ -118,8 +106,6 @@ const professional = [
       "Emits a normalized cleanup-dispatch CSV for the ops team",
       "Runs on a scheduled worker with idempotent processing",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, OpenAI (Whisper + GPT-4o-mini), Vonage API, Microsoft Graph",
     techstackicons: ["python"],
@@ -136,8 +122,6 @@ const professional = [
       "SQLite backend with export to accounting",
       "Supersedes the older Payroll-Scripts codebase",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, Flask, SQLite, Jinja",
     techstackicons: ["flask", "python"],
@@ -151,8 +135,6 @@ const professional = [
       "Python + SQLite persistence for audit history",
       "Now superseded by Consolidated Payroll",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "JavaScript, Python, SQLite",
     techstackicons: ["python"],
@@ -169,11 +151,9 @@ const professional = [
       "Microsoft Graph email notifications on every success and failure",
       "Sidekiq batch processing with retry and idempotency keys",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby on Rails 8, Stripe, Server-Sent Events, Microsoft Graph, Sidekiq",
-    techstackicons: ["rubyonrails"],
+    techstackicons: ["rails"],
   },
   {
     name: "AirBridge Payment Renewal Sync",
@@ -184,8 +164,6 @@ const professional = [
       "Writes back matched records into Airtable with normalized statuses",
       "Handles reconciliation edge cases (partial matches, missing customers)",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, Stripe API, Airtable API",
     techstackicons: ["python"],
@@ -199,8 +177,6 @@ const professional = [
       "Fuzzy-matches by normalized email to catch address-style variants",
       "Outputs a merged CSV ready for downstream billing tools",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, pandas, Stripe API",
     techstackicons: ["python"],
@@ -214,11 +190,9 @@ const professional = [
       "Sidekiq workers for parallel API scan with rate-limit awareness",
       "Kamal + Docker deployment recipe for one-command redeploys",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby on Rails, Stripe API, Sidekiq, Kamal, Docker",
-    techstackicons: ["rubyonrails", "docker"],
+    techstackicons: ["rails", "docker"],
   },
 
   // ── Airtable & email services ────────────────────
@@ -231,11 +205,9 @@ const professional = [
       "Nightly full-sync into PostgreSQL for reporting and joins",
       "Endpoint surface for other internal services to pull cached snapshots",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby, Airtable API, PostgreSQL",
-    techstackicons: ["rubyonrails", "postgresql"],
+    techstackicons: ["rails", "postgresql"],
   },
   {
     name: "Automated Emails",
@@ -246,8 +218,6 @@ const professional = [
       "Batching with rate limits and per-recipient logging",
       "Superseded by Python_Email_Service as a reusable library",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, SMTP, Microsoft Graph",
     techstackicons: ["python"],
@@ -261,8 +231,6 @@ const professional = [
       "Exponential-backoff retry, envelope + payload abstraction",
       "Drop-in dependency for any Python service that needs to send mail",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, Microsoft Graph, OAuth2",
     techstackicons: ["python"],
@@ -278,8 +246,6 @@ const professional = [
       "Seasonal service configuration models tied to sales workflows",
       "Deployed alongside the corporate Odoo instance",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, Odoo, PostgreSQL, XML views",
     techstackicons: ["python", "postgresql"],
@@ -293,8 +259,6 @@ const professional = [
       "Load into Odoo via authenticated XML-RPC with per-model mapping",
       "Reproducible run book kept in notebook cells",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Python, Jupyter, Odoo XML-RPC, Airtable API, pandas",
     techstackicons: ["python"],
@@ -310,8 +274,6 @@ const professional = [
       "Successor to the earlier Inventory-Tracking prototype",
       "Deployed at inventory.andrewslawnandsnow.org",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "TypeScript, Node.js, PostgreSQL",
     techstackicons: ["typescript", "postgresql"],
@@ -327,11 +289,9 @@ const professional = [
       "OptimoRoute, Airtable, payroll, and inventory integrations",
       "Mock-vs-live adapter layer lets contract dev happen offline",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Ruby on Rails, PostgreSQL, OptimoRoute, Airtable, Sidekiq",
-    techstackicons: ["rubyonrails", "postgresql"],
+    techstackicons: ["rails", "postgresql"],
   },
   {
     name: "Xecutive Development Corporate Website",
@@ -342,11 +302,9 @@ const professional = [
       "Tailwind design system and reusable content sections",
       "Cloudflare Pages deploy",
     ],
-    link: "#",
-    code: "#",
     private: true,
     techstackused: "Next.js, TypeScript, Tailwind, Cloudflare Pages",
-    techstackicons: ["nextjs", "typescript", "tailwindcss"],
+    techstackicons: ["nextjs", "typescript", "tailwind"],
   },
 ];
 
@@ -388,8 +346,6 @@ const personal = [
       "Groq API for fast NLP-based question generation",
       "Docker containerization and GitHub Actions CI/CD",
     ],
-    link: "#",
-    code: "#",
     techstackused: "Angular, C#, ASP.NET Core, Docker, GitHub Actions, Swagger, Groq API",
     techstackicons: ["angular", "docker", "github"],
   },
@@ -471,8 +427,6 @@ const personal = [
       "EventKit calendar sync and local notifications",
       "Daily-brief screen surfaces what needs attention today",
     ],
-    link: "#",
-    code: "#",
     techstackused: "Swift, SwiftUI, SwiftData, CloudKit, EventKit",
     techstackicons: [],
   },
@@ -502,7 +456,7 @@ const personal = [
     link: "https://varshinibhavanam.com",
     code: "https://github.com/varsha698/portfolio-website",
     techstackused: "React 19, Vite 6, Tailwind CSS, Framer Motion, Cloudflare Pages",
-    techstackicons: ["reactjs", "tailwindcss", "vite", "github"],
+    techstackicons: ["react", "tailwind", "vite", "github"],
   },
 ];
 
@@ -561,7 +515,7 @@ const ProjectCard = ({ project, onClick, index }) => (
             transition={{ duration: 0.3 }}
             className="text-2xl text-amber-500"
           >
-            {getTechIcon(tech)}
+            <TechIcon name={tech} className="w-6 h-6" />
           </motion.div>
         ))}
       </div>
@@ -679,7 +633,7 @@ const Projects = () => {
         </div>
 
         <SectionHeader
-          label="Personal &amp; Open Source"
+          label="Personal & Open Source"
           sub="Side projects, research code, and open-source work"
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-7xl mx-auto">
