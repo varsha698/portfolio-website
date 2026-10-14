@@ -15,6 +15,7 @@ import TerminalWidget from "../components/TerminalWidget";
 import LocalTime from "../components/LocalTime";
 import GithubActivity from "../components/GithubActivity";
 import { GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
+import { projectCount } from "../data/projects";
 
 // Lazy — these pull in the heavy tech-stack-icons bundle
 const TechMarquee = lazy(() => import("../components/TechMarquee"));
@@ -23,10 +24,10 @@ const TechStackShowcase = lazy(() => import("./TechStackDisplay"));
 // ── Typewriter tagline ──────────────────────────────────────
 const ROLES = [
   "full-stack web",
-  "AI/ML engineer",
-  "DevOps automation",
+  "Rails + React",
+  "Python data pipelines",
+  "ML + LLM tools",
   "research + publications",
-  "shipping to real users",
 ];
 
 const Typewriter = () => {
@@ -123,13 +124,13 @@ const Home = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.25 }}
         >
-          I ship production Rails 8 and Next.js 16 systems for real businesses —
-          Stripe payment engines, ERP and CRM dashboards, marketing sites on
-          Cloudflare Pages, and Python email and dispatch pipelines — while
-          building LLM tools and machine-learning models on the side. My
-          research at UMN Duluth explores digital and robotic interventions for
-          mental health, with two peer-reviewed papers published in HEALTHINF
-          2026 and ICICT 2025.
+          Software developer at Xecutive Development, working on the systems
+          behind a 7-state lawn and snow business. I built its multi-state
+          sales-tax filing system and contribute to Stripe renewal billing, an
+          operator payroll portal and the marketing site. On the side I build ML
+          and LLM tools. My research at
+          UMN Duluth on digital and robotic interventions for mental health
+          produced two peer-reviewed papers, in HEALTHINF 2026 and ICICT 2025.
         </motion.p>
 
         <motion.div
@@ -248,10 +249,10 @@ const Home = () => {
           <Tile className="md:col-span-2" delay={0.15}>
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
-                <FaBriefcase /> Projects shipped
+                <FaBriefcase /> Projects
               </div>
               <div className="font-mono text-4xl font-bold text-amber-300">
-                32<span className="text-2xl">+</span>
+                {projectCount}
               </div>
               <p className="text-sm text-gray-400 mt-1">
                 professional + personal
@@ -274,15 +275,15 @@ const Home = () => {
               <ul className="text-sm text-gray-300 space-y-1.5">
                 <li className="flex gap-2">
                   <span className="text-amber-400">›</span>
-                  Shipping Rails 8 &amp; Next 16 for Xecutive Development
+                  Software developer at Xecutive Development
                 </li>
                 <li className="flex gap-2">
                   <span className="text-amber-400">›</span>
-                  Prototyping a local-LLM writing studio
+                  Maintaining a multi-state sales-tax filing system (MN · CO · NY)
                 </li>
                 <li className="flex gap-2">
                   <span className="text-amber-400">›</span>
-                  Finishing my CS degree at UMN Duluth
+                  B.S. Computer Science, UMN Duluth — Dec 2025
                 </li>
               </ul>
             </div>

@@ -77,9 +77,9 @@ const ProjectModal = ({ project, onClose }) => {
         <div className="p-6 md:p-8">
           {/* Header: org tag + private badge */}
           <div className="flex flex-wrap items-center gap-2 mb-2 pr-10">
-            {project.org && (
+            {(project.org || project.role) && (
               <span className="text-xs uppercase tracking-wider text-amber-300/80 italic">
-                {project.org}
+                {[project.org, project.role].filter(Boolean).join(" · ")}
               </span>
             )}
             {project.private && (
@@ -183,6 +183,7 @@ ProjectModal.propTypes = {
   project: PropTypes.shape({
     name: PropTypes.string,
     org: PropTypes.string,
+    role: PropTypes.string,
     desc: PropTypes.string,
     longDesc: PropTypes.string,
     features: PropTypes.arrayOf(PropTypes.string),

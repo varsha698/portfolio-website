@@ -4,7 +4,7 @@ const timeline = [
   {
     year: "Feb 2026 – Present",
     title: "Software Developer – Xecutive Development LLC",
-    desc: "Minneapolis, MN. Building the operations platform for a 7-state lawn-care and snow-removal business: a Rails 8 + PostgreSQL service that syncs Airtable customers nightly across 7 OptimoRoute accounts and serves as the company's source of truth; Stripe renewal and payment-reconciliation pipelines; a React + Supabase real-time inventory tracker; and Jupyter ETL that migrated 6,258 contacts, 3,448 sales orders and 3,299 payments into Odoo. Deployed on a self-managed Proxmox VM behind Caddy and Cloudflare Tunnel with GitHub Actions CI.",
+    desc: "Minneapolis, MN. Building and maintaining the operations software for a 7-state lawn-care and snow-removal business. Primary author of a Django sales-tax filing system for MN, CO and NY (parallel batch engine: 1,021 rows in 12 s instead of ~6 min). Contributions across the team's Rails and React apps: the operator portal's redesign and English/Spanish i18n, a dry-run mode and email template editor for Stripe renewal billing, analytics and Meta Conversions API on the marketing site, and security hardening across internal tools.",
     iconPath: "/icons/default.png",
     path: "https://github.com/Xecutive-Development-LLC",
   },

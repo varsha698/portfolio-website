@@ -1,16 +1,17 @@
 import { useEffect, useState, useRef } from "react";
+import { projectCount } from "../data/projects";
 
 // Types out a sequence of shell commands + their responses. Cursor keeps
 // blinking. Auto-scrolls the inner terminal to the latest line.
 const LINES = [
   { prompt: true, text: "whoami" },
-  { text: "varshini bhavanam · cs @ umn duluth" },
+  { text: "varshini bhavanam · software developer" },
   { prompt: true, text: "pwd" },
   { text: "~/minneapolis/mn" },
   { prompt: true, text: "cat current_stack.txt" },
-  { text: "rails 8 · next.js 16 · python · postgres · stripe" },
+  { text: "rails · react · next.js · python · postgres · stripe" },
   { prompt: true, text: "ls projects/ | wc -l" },
-  { text: "32" },
+  { text: String(projectCount) },
   { prompt: true, text: "echo $STATUS" },
   { text: "shipping ✨", status: true },
 ];
