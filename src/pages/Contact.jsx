@@ -4,16 +4,16 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "../data/profile";
 
-// Optional: to enable real form delivery, create a free Formspree
-// endpoint at https://formspree.io and set it here (or via a
-// VITE_FORMSPREE_ENDPOINT env var). If unset, the form falls back to
-// opening the user's default mail client.
+// The message form only appears when a Formspree endpoint is configured
+// (VITE_FORMSPREE_ENDPOINT, e.g. in Cloudflare Pages → Settings → Variables).
+// Without one, the page shows a plain "email me" card instead of a form that
+// would just open the visitor's mail app.
 const FORMSPREE_ENDPOINT =
   import.meta.env.VITE_FORMSPREE_ENDPOINT || "";
 
 const ContactMe = () => {
   const [form, setForm] = useState({ name: "", email: "", message: "", _gotcha: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | ok | mailto | error
+  const [status, setStatus] = useState("idle"); // idle | sending | ok | error
   const [errorMsg, setErrorMsg] = useState("");
 
   const onChange = (e) =>
@@ -24,15 +24,6 @@ const ContactMe = () => {
     if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
       setStatus("error");
       setErrorMsg("Please fill in every field.");
-      return;
-    }
-
-    if (!FORMSPREE_ENDPOINT) {
-      // Fallback: open user's mail client
-      const subject = encodeURIComponent(`Portfolio contact from ${form.name}`);
-      const body = encodeURIComponent(`${form.message}\n\n— ${form.name} (${form.email})`);
-      window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
-      setStatus("mailto");
       return;
     }
 
@@ -107,8 +98,8 @@ const ContactMe = () => {
         Contact Me
       </motion.h1>
       <p className="text-gray-400 text-center max-w-xl relative z-10 mb-10 px-4">
-        Open to collaboration and interesting problems. The fastest way to
-        reach me is email — or drop a note below.
+        Open to software engineering roles, collaboration and interesting
+        problems. The fastest way to reach me is email.
       </p>
 
       <div className="relative z-10 grid md:grid-cols-[auto,1fr] gap-10 md:gap-12 items-start w-full max-w-5xl px-4">
@@ -145,7 +136,7 @@ const ContactMe = () => {
               <FaEnvelope className="text-amber-400" />
               <a
                 href={`mailto:${EMAIL}`}
-                className="hover:text-amber-400 transition"
+                className="text-amber-400 hover:text-amber-300 transition"
               >
                 {EMAIL}
               </a>
@@ -174,7 +165,39 @@ const ContactMe = () => {
           </div>
         </motion.div>
 
-        {/* Right: Form */}
+        {/* Right: form when Formspree is configured, otherwise an email card */}
+        {!FORMSPREE_ENDPOINT ? (
+          <motion.div
+            className="w-full backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/60 p-6 md:p-8 flex flex-col items-start gap-5"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.5 }}
+          >
+            <h2 className="text-2xl font-semibold text-amber-300">Say hello</h2>
+            <p className="text-gray-300 leading-relaxed">
+              Hiring, a project idea, or a question about my work or research?
+              Email me and I&apos;ll get back to you, usually within a day. You
+              can also reach me on LinkedIn.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold text-black bg-amber-400 hover:bg-amber-300 hover:text-black transition"
+                style={{ boxShadow: "0 0 15px rgba(255, 153, 102, 0.4)" }}
+              >
+                <FaPaperPlane className="text-sm" /> Email me
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold text-amber-400 border border-amber-400 hover:bg-amber-400/10 transition"
+              >
+                <FaLinkedin /> LinkedIn
+              </a>
+            </div>
+          </motion.div>
+        ) : (
         <motion.form
           onSubmit={onSubmit}
           className="w-full backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/60 p-6 md:p-8"
@@ -248,22 +271,12 @@ const ContactMe = () => {
                 Thanks — your message is on its way!
               </p>
             )}
-            {status === "mailto" && (
-              <p className="text-amber-300 text-sm" role="status">
-                Your email app should have opened with the message ready —
-                hit send there. Nothing opened? Email {EMAIL} directly.
-              </p>
-            )}
             {status === "error" && (
               <p className="text-red-400 text-sm" role="alert">{errorMsg}</p>
             )}
-            {!FORMSPREE_ENDPOINT && (
-              <p className="text-gray-500 text-xs italic">
-                Submitting opens your email client.
-              </p>
-            )}
           </div>
         </motion.form>
+        )}
       </div>
     </section>
   );

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { FaLock } from "react-icons/fa";
 import ProjectModal from "./ProjectModal";
+import FeaturedProjects from "../components/FeaturedProjects";
 import { professional, personal } from "../data/projects";
 import { TechIcon } from "../components/techIcons";
 
@@ -159,6 +160,14 @@ const Projects = () => {
       </p>
 
       <div className="relative z-10 w-full">
+        <SectionHeader
+          label="Featured"
+          sub="Start here — the work I'd most like to talk about"
+        />
+        <div className="w-full max-w-7xl mx-auto mb-16">
+          <FeaturedProjects />
+        </div>
+
         <SectionHeader
           label="Professional"
           sub="Production systems at Xecutive Development LLC — team projects list what I built"

@@ -9,16 +9,15 @@ import {
   FaBriefcase,
   FaTerminal,
 } from "react-icons/fa";
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useCallback, useEffect, useState, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import TerminalWidget from "../components/TerminalWidget";
-import LocalTime from "../components/LocalTime";
 import GithubActivity from "../components/GithubActivity";
 import { GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 import { projectCount } from "../data/projects";
 
-// Lazy — these pull in the heavy tech-stack-icons bundle
-const TechMarquee = lazy(() => import("../components/TechMarquee"));
+// Lazy — below the fold; keeps the brand-icon bundle out of the first load
+const FeaturedProjects = lazy(() => import("../components/FeaturedProjects"));
 const TechStackShowcase = lazy(() => import("./TechStackDisplay"));
 
 // ── Typewriter tagline ──────────────────────────────────────
@@ -28,6 +27,7 @@ const ROLES = [
   "Python data pipelines",
   "ML + LLM tools",
   "research + publications",
+  "Proxmox + self-hosting",
 ];
 
 const Typewriter = () => {
@@ -82,6 +82,9 @@ const Tile = ({ className = "", children, delay = 0 }) => (
 );
 
 const Home = () => {
+  const [githubOk, setGithubOk] = useState(true);
+  const hideGithub = useCallback(() => setGithubOk(false), []);
+
   return (
     <section
       id="home"
@@ -124,13 +127,10 @@ const Home = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.25 }}
         >
-          Software developer at Xecutive Development, working on the systems
-          behind a 7-state lawn and snow business. I built its multi-state
-          sales-tax filing system and contribute to Stripe renewal billing, an
-          operator payroll portal and the marketing site. On the side I build ML
-          and LLM tools. My research at
-          UMN Duluth on digital and robotic interventions for mental health
-          produced two peer-reviewed papers, in HEALTHINF 2026 and ICICT 2025.
+          I build production Rails, React and Python systems for a 7-state lawn
+          and snow business, and run the Proxmox servers they live on. I wrote
+          its multi-state sales-tax engine and co-authored two peer-reviewed
+          papers on digital mental health.
         </motion.p>
 
         <motion.div
@@ -206,10 +206,24 @@ const Home = () => {
         </motion.div>
       </div>
 
-      {/* TECH MARQUEE */}
-      <div className="relative z-10 mb-16">
-        <Suspense fallback={<div className="h-16" />}>
-          <TechMarquee />
+      {/* FEATURED WORK */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 pb-12">
+        <div className="flex items-end justify-between mb-6">
+          <h2
+            className="text-2xl md:text-3xl font-bold text-amber-400"
+            style={{ textShadow: "0 0 10px rgba(255, 153, 102, 0.4)" }}
+          >
+            Featured work
+          </h2>
+          <Link
+            to="/projects"
+            className="text-sm text-amber-400 hover:text-amber-300 font-mono transition"
+          >
+            all projects →
+          </Link>
+        </div>
+        <Suspense fallback={<div className="h-64" />}>
+          <FeaturedProjects />
         </Suspense>
       </div>
 
@@ -221,13 +235,35 @@ const Home = () => {
             <TerminalWidget />
           </Tile>
 
-          {/* Local time */}
+          {/* Currently building */}
           <Tile className="md:col-span-2" delay={0.05}>
-            <LocalTime />
+            <div className="flex flex-col justify-center h-full">
+              <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
+                <FaTerminal /> Currently
+              </div>
+              <ul className="text-sm text-gray-300 space-y-1.5">
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Software developer at Xecutive Development
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Maintaining a multi-state sales-tax filing system (MN · CO · NY)
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Running the company&apos;s Proxmox servers and VMs
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  B.S. Computer Science, UMN Duluth — Dec 2025
+                </li>
+              </ul>
+            </div>
           </Tile>
 
           {/* Stats — publications */}
-          <Tile className="md:col-span-2" delay={0.1}>
+          <Tile className="md:col-span-3" delay={0.1}>
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
                 <FaBookOpen /> Publications
@@ -246,7 +282,7 @@ const Home = () => {
           </Tile>
 
           {/* Stats — projects */}
-          <Tile className="md:col-span-2" delay={0.15}>
+          <Tile className="md:col-span-3" delay={0.15}>
             <div className="flex flex-col justify-center h-full">
               <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
                 <FaBriefcase /> Projects
@@ -266,33 +302,12 @@ const Home = () => {
             </div>
           </Tile>
 
-          {/* Currently building */}
-          <Tile className="md:col-span-2" delay={0.2}>
-            <div className="flex flex-col justify-center h-full">
-              <div className="flex items-center gap-2 text-amber-400/80 text-xs uppercase tracking-wider mb-2">
-                <FaTerminal /> Currently
-              </div>
-              <ul className="text-sm text-gray-300 space-y-1.5">
-                <li className="flex gap-2">
-                  <span className="text-amber-400">›</span>
-                  Software developer at Xecutive Development
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-400">›</span>
-                  Maintaining a multi-state sales-tax filing system (MN · CO · NY)
-                </li>
-                <li className="flex gap-2">
-                  <span className="text-amber-400">›</span>
-                  B.S. Computer Science, UMN Duluth — Dec 2025
-                </li>
-              </ul>
-            </div>
-          </Tile>
-
-          {/* GitHub activity — wide */}
-          <Tile className="md:col-span-6" delay={0.25}>
-            <GithubActivity />
-          </Tile>
+          {/* GitHub activity — wide; hidden if the API is unavailable */}
+          {githubOk && (
+            <Tile className="md:col-span-6" delay={0.25}>
+              <GithubActivity onUnavailable={hideGithub} />
+            </Tile>
+          )}
         </div>
       </div>
 

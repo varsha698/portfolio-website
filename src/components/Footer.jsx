@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { FaGithub, FaLinkedin, FaDownload } from "react-icons/fa";
-import { GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { GITHUB_URL, LINKEDIN_URL } from "../data/profile";
 
 const Footer = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -50,19 +50,6 @@ const Footer = () => {
             <span className="absolute -inset-2 -z-10 opacity-0 group-hover:opacity-20 bg-amber-400 blur-md rounded-full transition-opacity duration-300"></span>
           </a>
         ))}
-      </div>
-
-      {/* Resume Download */}
-      <div className="mb-4">
-        <a
-          href={RESUME_PATH}
-          download="Varshini_Bhavanam_Resume.pdf"
-          className="inline-flex items-center gap-2 px-4 py-2 text-amber-400 border border-amber-400/50 rounded-lg hover:bg-amber-400/10 hover:border-amber-400 transition-all duration-300 text-sm font-semibold relative group"
-        >
-          <FaDownload className="text-lg" />
-          <span>Download Resume</span>
-          <span className="absolute -inset-1 bg-amber-500 opacity-0 group-hover:opacity-10 blur-md rounded-lg transition-opacity duration-300"></span>
-        </a>
       </div>
 
       {/* Copyright */}

@@ -1,12 +1,35 @@
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { FaGithub, FaCodeBranch, FaStar } from "react-icons/fa";
 import { GITHUB_USER } from "../data/profile";
 
 const USER = GITHUB_USER;
 
-// Uses the public GitHub API (no auth). If it rate-limits, we render a
-// friendly link fallback instead of dead space.
-const GithubActivity = () => {
+const CACHE_KEY = "gh-activity";
+const CACHE_MS = 30 * 60 * 1000;
+
+const readCache = () => {
+  try {
+    const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY));
+    if (cached && Date.now() - cached.at < CACHE_MS) return cached.data;
+  } catch {
+    // storage unavailable or corrupt — just refetch
+  }
+  return null;
+};
+
+const writeCache = (data) => {
+  try {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), data }));
+  } catch {
+    // ignore
+  }
+};
+
+// Uses the public GitHub API (no auth), cached per browser session to stay
+// under the rate limit. If it fails or there is nothing to show, it calls
+// onUnavailable so the page can drop the tile instead of showing an error.
+const GithubActivity = ({ onUnavailable }) => {
   const [state, setState] = useState({
     loading: true,
     error: false,
@@ -17,6 +40,11 @@ const GithubActivity = () => {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      const cached = readCache();
+      if (cached) {
+        setState({ loading: false, error: false, ...cached });
+        return;
+      }
       try {
         const [eventsRes, userRes] = await Promise.all([
           fetch(`https://api.github.com/users/${USER}/events/public?per_page=6`),
@@ -26,25 +54,27 @@ const GithubActivity = () => {
         const events = await eventsRes.json();
         const user = await userRes.json();
         if (cancelled) return;
-        setState({
-          loading: false,
-          error: false,
+        const data = {
           events: events.slice(0, 5),
           stats: {
             repos: user.public_repos,
             followers: user.followers,
           },
-        });
+        };
+        if (data.events.length === 0) throw new Error("no activity");
+        writeCache(data);
+        setState({ loading: false, error: false, ...data });
       } catch {
         if (!cancelled) {
           setState((s) => ({ ...s, loading: false, error: true }));
+          onUnavailable?.();
         }
       }
     })();
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [onUnavailable]);
 
   const describe = (ev) => {
     const repo = ev.repo?.name?.split("/").pop() || "repo";
@@ -110,26 +140,8 @@ const GithubActivity = () => {
         <div className="text-sm text-gray-500 font-mono">fetching…</div>
       )}
 
-      {state.error && (
-        <div className="text-sm text-gray-500">
-          Couldn&apos;t reach the GitHub API — see the full profile{" "}
-          <a
-            href={`https://github.com/${USER}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-amber-400 hover:text-amber-300"
-          >
-            here
-          </a>
-          .
-        </div>
-      )}
-
       {!state.loading && !state.error && (
         <ul className="space-y-1.5 text-sm flex-grow overflow-hidden">
-          {state.events.length === 0 && (
-            <li className="text-gray-500">No recent public activity.</li>
-          )}
           {state.events.map((ev) => (
             <li key={ev.id} className="flex justify-between gap-3 text-gray-300">
               <span className="truncate">{describe(ev)}</span>
@@ -142,6 +154,10 @@ const GithubActivity = () => {
       )}
     </div>
   );
+};
+
+GithubActivity.propTypes = {
+  onUnavailable: PropTypes.func,
 };
 
 export default GithubActivity;

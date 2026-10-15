@@ -8,6 +8,7 @@ import CommandPalette from "./components/CommandPalette";
 
 const About = lazy(() => import("./pages/About"));
 const Projects = lazy(() => import("./pages/Projects"));
+const SalesTaxCaseStudy = lazy(() => import("./pages/SalesTaxCaseStudy"));
 const Certificates = lazy(() => import("./pages/Certificate"));
 const Publications = lazy(() => import("./pages/Publications"));
 const ContactMe = lazy(() => import("./pages/Contact"));
@@ -46,6 +47,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/sales-tax" element={<SalesTaxCaseStudy />} />
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/publications" element={<Publications />} />
             <Route path="/contact" element={<ContactMe />} />

@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { FaGithub, FaExternalLinkAlt, FaLock, FaCheck } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaGithub, FaExternalLinkAlt, FaLock, FaCheck, FaBookOpen } from "react-icons/fa";
 import { TechIcon } from "../components/techIcons";
 
 const ProjectModal = ({ project, onClose }) => {
@@ -142,6 +143,16 @@ const ProjectModal = ({ project, onClose }) => {
 
           {/* Actions */}
           <div className="flex flex-wrap gap-3 pt-2 border-t border-amber-900/40 mt-6">
+            {project.caseStudy && (
+              <Link
+                to={project.caseStudy}
+                onClick={onClose}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-bold text-black bg-amber-400 hover:bg-amber-300 transition-all duration-300"
+                style={{ boxShadow: "0 0 15px rgba(255, 153, 102, 0.35)" }}
+              >
+                <FaBookOpen className="text-xs" /> Read the case study
+              </Link>
+            )}
             {hasRealDemo && (
               <motion.a
                 href={project.link}
@@ -165,7 +176,7 @@ const ProjectModal = ({ project, onClose }) => {
                 <FaGithub /> View Source
               </motion.a>
             )}
-            {!hasRealDemo && !hasRealRepo && (
+            {!hasRealDemo && !hasRealRepo && !project.caseStudy && (
               <p className="text-sm text-gray-500 italic">
                 {project.private
                   ? "Private client repository — source not public."
@@ -192,6 +203,7 @@ ProjectModal.propTypes = {
     techstackicons: PropTypes.arrayOf(PropTypes.string),
     link: PropTypes.string,
     code: PropTypes.string,
+    caseStudy: PropTypes.string,
   }),
   onClose: PropTypes.func.isRequired,
 };
