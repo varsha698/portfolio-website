@@ -38,9 +38,25 @@ Old `/#/…` links are redirected in `src/App.jsx`.
 
 ### Contact form
 
-By default the form opens the visitor's email app. To deliver messages directly, create a
-free form at [Formspree](https://formspree.io) and set `VITE_FORMSPREE_ENDPOINT` in the
-Cloudflare Pages environment variables.
+Without configuration the Contact page shows an "email me" card. To show a message form
+instead, create a free form at [Formspree](https://formspree.io) and set
+`VITE_FORMSPREE_ENDPOINT` in the Cloudflare Pages environment variables.
+
+### Tracked links (visit alerts)
+
+Send a personal link per application, e.g. `https://varshinibhavanam.com/?ref=acme-swe`.
+When someone opens it, `functions/api/visit.js` (a Cloudflare Pages Function) pushes an
+alert to your phone through [ntfy](https://ntfy.sh) with the ref, city, referring site
+and landing page — and a second alert if they download the resume. Each alert fires once
+per browser session, and visitors without a `ref` are never reported.
+
+Refs are 1–48 characters of lowercase letters, digits, `-` and `_`.
+
+Setup:
+1. Install the ntfy app and subscribe to a hard-to-guess topic name (anyone who knows the
+   topic can read or post to it).
+2. In Cloudflare Pages → Settings → Variables and Secrets, add `NTFY_TOPIC` as a
+   **secret** for Production, then redeploy.
 
 Only put **public** values in `VITE_*` variables — Vite bundles them into the JavaScript
 that every visitor downloads.

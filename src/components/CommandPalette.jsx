@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaArrowRight } from "react-icons/fa";
 import { EMAIL, GITHUB_URL, GITHUB_USER, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
+import { trackResumeDownload } from "../utils/visitTracking";
 
 // Static command list. Add more items here.
 const commands = [
@@ -131,6 +132,7 @@ const CommandPalette = () => {
     if (cmd.type === "nav") {
       navigate(cmd.target);
     } else if (cmd.type === "download") {
+      if (cmd.target === RESUME_PATH) trackResumeDownload();
       const a = document.createElement("a");
       a.href = cmd.target;
       a.download = "";
