@@ -1,4 +1,5 @@
 // src/pages/Certificate.jsx
+import { asset } from "../utils/asset";
 import { motion } from "framer-motion";
 
 const certificates = [
@@ -90,7 +91,7 @@ const Certificate = () => {
             {/* Optional Badge Image */}
             {cert.image && (
               <img
-                src={`/certificates/${cert.image}`}
+                src={asset(`/certificates/${cert.image}`)}
                 alt={cert.certificate}
                 className="w-full h-40 object-contain mb-4 rounded-md"
               />

@@ -1,3 +1,4 @@
+import { asset } from "../utils/asset";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaSearch, FaArrowRight } from "react-icons/fa";
@@ -44,14 +45,14 @@ const commands = [
     label: "Publication · HEALTHINF 2026",
     hint: "download",
     type: "external",
-    target: "/HEALTHINF_2026_Digital_Interventions.pdf",
+    target: asset("/HEALTHINF_2026_Digital_Interventions.pdf"),
   },
   {
     id: "icict",
     label: "Publication · ICICT 2025",
     hint: "download",
     type: "external",
-    target: "/ICICT_Mental_Health_and_Robotics.pdf",
+    target: asset("/ICICT_Mental_Health_and_Robotics.pdf"),
   },
 ];
 

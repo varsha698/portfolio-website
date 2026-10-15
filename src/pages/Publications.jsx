@@ -1,3 +1,4 @@
+import { asset } from "../utils/asset";
 import { motion } from "framer-motion";
 
 const publications = [
@@ -7,7 +8,7 @@ const publications = [
     conference: "HEALTHINF 2026 (International Conference on Health Informatics)",
     year: "2026",
     status: "Published",
-    url: "/HEALTHINF_2026_Digital_Interventions.pdf",
+    url: asset("/HEALTHINF_2026_Digital_Interventions.pdf"),
     abstract: "A systematic synthesis of digital interventions including chatbots, app-based cognitive behavioral therapy, and immersive virtual/extended reality technologies for depression and anxiety treatment. Accepted as Short Paper.",
   },
   {
@@ -16,7 +17,7 @@ const publications = [
     conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
     status: "Published",
-    url: "/ICICT_Mental_Health_and_Robotics.pdf",
+    url: asset("/ICICT_Mental_Health_and_Robotics.pdf"),
     abstract: "A PRISMA-guided systematic review examining the therapeutic and emotional outcomes of humanoid and socially assistive robots in mental health care, covering research from 2021 to 2025.",
   },
 ];
