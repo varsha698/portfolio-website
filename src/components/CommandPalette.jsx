@@ -9,6 +9,7 @@ const commands = [
   { id: "home", label: "Go to Home", hint: "/", type: "nav", target: "/" },
   { id: "about", label: "About Me", hint: "/about", type: "nav", target: "/about" },
   { id: "projects", label: "Projects", hint: "/projects", type: "nav", target: "/projects" },
+  { id: "salestax", label: "Case study: Sales Tax Filing System", hint: "/projects/sales-tax", type: "nav", target: "/projects/sales-tax" },
   { id: "pubs", label: "Publications", hint: "/publications", type: "nav", target: "/publications" },
   { id: "certs", label: "Certifications", hint: "/certificates", type: "nav", target: "/certificates" },
   { id: "contact", label: "Contact", hint: "/contact", type: "nav", target: "/contact" },

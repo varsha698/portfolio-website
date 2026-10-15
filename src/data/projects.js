@@ -14,6 +14,8 @@
 //   link                  live site (optional)
 //   code                  public repository (optional; omit for private repos)
 //   private               show the "private" badge
+//   caseStudy             route of an in-depth write-up (optional)
+//   featured              also shown in "Featured" on Home and Projects
 
 const XD = "Xecutive Development LLC";
 
@@ -31,7 +33,25 @@ export const professional = [
       "Dockerized and deployed behind the company's Caddy + Cloudflare Tunnel gateway",
     ],
     techstackused: "Python, Django, PostgreSQL, Gunicorn, Docker, Caddy, Airtable API",
-    techstackicons: ["python", "postgresql", "docker", "airtable"],
+    techstackicons: ["python", "django", "postgresql", "docker"],
+    caseStudy: "/projects/sales-tax",
+    featured: true,
+    private: true,
+  },
+  {
+    name: "On-Prem Server & VM Infrastructure",
+    org: XD,
+    role: "Built and run day to day",
+    desc: "Installed Proxmox VE on the company's servers and built the virtual machines that host its internal apps.",
+    features: [
+      "Installed and configured Proxmox VE and created the virtual machines the company's apps run on",
+      "Worked out how each app is hosted on its VM: Docker Compose stacks managed by systemd, with Gunicorn or Puma behind them",
+      "Apps are served through a shared Caddy reverse-proxy gateway VM and a Cloudflare Tunnel, so no inbound ports are open",
+      "Hosts the sales-tax filing system, the operator portal, the payroll hub and other internal tools",
+      "Hands-on every day: VM provisioning, deploys, updates and troubleshooting",
+    ],
+    techstackused: "Proxmox VE, Linux, Docker, systemd, Caddy, Cloudflare Tunnel",
+    techstackicons: ["proxmox", "linux", "docker", "caddy", "cloudflare"],
     private: true,
   },
   {
@@ -141,35 +161,6 @@ export const professional = [
 
 export const personal = [
   {
-    name: "dev-journal",
-    role: "Sole author",
-    desc: "Automated developer journal: a nightly GitHub Action collects my commits, PRs and reviews and publishes a timeline.",
-    features: [
-      "Standard-library-only Python collector using the GitHub Search API, paginated and de-duplicated by URL so reruns are safe",
-      "Nightly cron commits journal.json and a chained workflow redeploys the site",
-      "Single-file HTML/CSS/JS frontend with a by-project view and a backfill covering 29 projects",
-      "Running every night since mid-2026",
-    ],
-    techstackused: "Python (stdlib), GitHub Actions, GitHub Pages, vanilla JS",
-    techstackicons: ["python", "github"],
-    link: "https://journal.varshinibhavanam.com",
-    private: true,
-  },
-  {
-    name: "AI Market Signals Research",
-    role: "Sole author",
-    desc: "Research framework that blends price, news-sentiment and macro features into next-day signals, with honest backtesting.",
-    features: [
-      "XGBoost + LSTM ensemble with the blend weight tuned on a held-out split",
-      "Walk-forward backtests with realistic fees and slippage — results are reported even where they trail buy-and-hold",
-      "Portfolio-risk tools: factor exposure, correlation-regime alerts, drawdown tracking and a tax-loss scanner with wash-sale checks",
-      "One FastAPI backend serves both a Streamlit and a Next.js UI; CI runs pytest on Python 3.10–3.12",
-    ],
-    techstackused: "Python, XGBoost, PyTorch (LSTM), FinBERT/VADER, FastAPI, Next.js, Streamlit, SQLite, Docker",
-    techstackicons: ["python", "pytorch", "fastapi", "nextjs", "docker"],
-    private: true,
-  },
-  {
     name: "ai-doc-editor",
     role: "Sole author",
     desc: "Local-first AI writing studio running open-weight LLMs, with RAG and a LoRA fine-tuning harness.",
@@ -183,6 +174,7 @@ export const personal = [
     techstackused: "Python, FastAPI, PyTorch, Hugging Face PEFT, ChromaDB, PostgreSQL + pgvector, Next.js 15, Tiptap",
     techstackicons: ["python", "fastapi", "pytorch", "nextjs", "postgresql"],
     code: "https://github.com/varsha698/ai-doc-editor",
+    featured: true,
   },
   {
     name: "QuizMaster — AI Quiz Generator",
@@ -198,6 +190,37 @@ export const personal = [
     techstackused: "Angular 20, Tailwind, Node.js, Express, MongoDB, Groq API, Tesseract.js, ASP.NET Core",
     techstackicons: ["angular", "nodejs", "mongodb", "csharp"],
     code: "https://github.com/varsha698/Quiz-Generator",
+    featured: true,
+  },
+  {
+    name: "dev-journal",
+    role: "Sole author",
+    desc: "Automated developer journal: a nightly GitHub Action collects my commits, PRs and reviews and publishes a timeline.",
+    features: [
+      "Standard-library-only Python collector using the GitHub Search API, paginated and de-duplicated by URL so reruns are safe",
+      "Nightly cron commits journal.json and a chained workflow redeploys the site",
+      "Single-file HTML/CSS/JS frontend with a by-project view and a backfill covering 29 projects",
+      "Running every night since mid-2026",
+    ],
+    techstackused: "Python (stdlib), GitHub Actions, GitHub Pages, vanilla JS",
+    techstackicons: ["python", "github"],
+    link: "https://journal.varshinibhavanam.com",
+    private: true,
+    featured: true,
+  },
+  {
+    name: "AI Market Signals Research",
+    role: "Sole author",
+    desc: "Research framework that blends price, news-sentiment and macro features into next-day signals, with honest backtesting.",
+    features: [
+      "XGBoost + LSTM ensemble with the blend weight tuned on a held-out split",
+      "Walk-forward backtests with realistic fees and slippage — results are reported even where they trail buy-and-hold",
+      "Portfolio-risk tools: factor exposure, correlation-regime alerts, drawdown tracking and a tax-loss scanner with wash-sale checks",
+      "One FastAPI backend serves both a Streamlit and a Next.js UI; CI runs pytest on Python 3.10–3.12",
+    ],
+    techstackused: "Python, XGBoost, PyTorch (LSTM), FinBERT/VADER, FastAPI, Next.js, Streamlit, SQLite, Docker",
+    techstackicons: ["python", "pytorch", "fastapi", "nextjs", "docker"],
+    private: true,
   },
   {
     name: "LifeAdmin — iOS App",
@@ -284,3 +307,5 @@ export const personal = [
 ];
 
 export const projectCount = professional.length + personal.length;
+
+export const featured = [...professional, ...personal].filter((p) => p.featured);

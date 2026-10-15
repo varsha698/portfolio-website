@@ -2,12 +2,12 @@ import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { TechIcon } from "../components/techIcons";
 
-// Mirrors the "Technical Skills" section of the resume. Keys refer to
+// What I use day to day and am happy to be interviewed on. Keys refer to
 // src/components/techIcons.jsx.
 const techCategories = [
   {
     category: "Languages",
-    techs: ["python", "typescript", "javascript", "ruby", "swift"],
+    techs: ["python", "typescript", "javascript", "ruby"],
   },
   {
     category: "Frontend",
@@ -15,7 +15,7 @@ const techCategories = [
   },
   {
     category: "Backend & Data",
-    techs: ["rails", "fastapi", "flask", "postgresql", "mongodb", "supabase"],
+    techs: ["rails", "django", "fastapi", "flask", "postgresql", "mongodb", "supabase"],
   },
   {
     category: "AI / ML",
@@ -23,11 +23,11 @@ const techCategories = [
   },
   {
     category: "DevOps & Cloud",
-    techs: ["docker", "aws", "terraform", "kubernetes", "ansible", "github", "cloudflare"],
+    techs: ["proxmox", "linux", "docker", "caddy", "cloudflare", "github", "aws", "terraform"],
   },
   {
     category: "Integrations",
-    techs: ["stripe", "airtable", "odoo", "firebase"],
+    techs: ["stripe", "airtable", "odoo"],
   },
 ];
 
@@ -36,13 +36,13 @@ const LABELS = {
   typescript: "TypeScript",
   javascript: "JavaScript",
   ruby: "Ruby",
-  swift: "Swift",
   react: "React",
   nextjs: "Next.js",
   angular: "Angular",
   tailwind: "Tailwind",
   vite: "Vite",
   rails: "Rails",
+  django: "Django",
   fastapi: "FastAPI",
   flask: "Flask",
   postgresql: "PostgreSQL",
@@ -53,17 +53,17 @@ const LABELS = {
   pandas: "pandas",
   jupyter: "Jupyter",
   streamlit: "Streamlit",
+  proxmox: "Proxmox",
+  linux: "Linux",
   docker: "Docker",
+  caddy: "Caddy",
   aws: "AWS",
   terraform: "Terraform",
-  kubernetes: "Kubernetes",
-  ansible: "Ansible",
   github: "GH Actions",
   cloudflare: "Cloudflare",
   stripe: "Stripe",
   airtable: "Airtable",
   odoo: "Odoo",
-  firebase: "Firebase",
 };
 
 const TechChip = ({ tech }) => (

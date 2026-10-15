@@ -5,8 +5,8 @@ const timeline = [
   {
     year: "Feb 2026 – Present",
     title: "Software Developer – Xecutive Development LLC",
-    desc: "Minneapolis, MN. Building and maintaining the operations software for a 7-state lawn-care and snow-removal business. Primary author of a Django sales-tax filing system for MN, CO and NY (parallel batch engine: 1,021 rows in 12 s instead of ~6 min). Contributions across the team's Rails and React apps: the operator portal's redesign and English/Spanish i18n, a dry-run mode and email template editor for Stripe renewal billing, analytics and Meta Conversions API on the marketing site, and security hardening across internal tools.",
-    iconPath: asset("/icons/default.png"),
+    desc: "Minneapolis, MN. Building and maintaining the operations software for a 7-state lawn-care and snow-removal business. Primary author of a Django sales-tax filing system for MN, CO and NY (parallel batch engine: 1,021 rows in 12 s instead of ~6 min). Contributions across the team's Rails and React apps: the operator portal's redesign and English/Spanish i18n, a dry-run mode and email template editor for Stripe renewal billing, analytics and Meta Conversions API on the marketing site, and security hardening across internal tools. I also run the company's on-prem servers: I installed Proxmox VE, built and maintain the virtual machines, and set up how each app is hosted on them.",
+    iconPath: asset("/icons/xecutive_logo.png"),
     path: "https://github.com/Xecutive-Development-LLC",
   },
   {
@@ -20,7 +20,7 @@ const timeline = [
     year: "Jul 2025 – Sep 2025",
     title: "Software Development Intern – Code Ninjas",
     desc: "Atlanta, GA. Built a full-stack AI quiz-generation platform (Angular + ASP.NET Core) that cut manual content-creation time by ~80%, plus a rule-based Python chatbot that walks students through curriculum problems — containerized with Docker and deployed via GitHub Actions.",
-    iconPath: asset("/icons/default.png"),
+    iconPath: asset("/icons/default.svg"),
     path: "https://www.codeninjas.com/",
   },
   {
@@ -144,7 +144,7 @@ const About = () => {
                     style={{ padding: "4px", backgroundColor: "#fff" }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = asset("/icons/default.png");
+                      e.target.src = asset("/icons/default.svg");
                     }}
                   />
                 </a>

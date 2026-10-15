@@ -82,7 +82,7 @@ const Certificate = () => {
             href={cert.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="relative p-6 backdrop-blur-md rounded-lg border overflow-hidden flex flex-col justify-between cursor-pointer hover:shadow-lg transition-all duration-300 bg-black/60 border-amber-900/50 hover:shadow-amber-500/30"
+            className="relative p-6 backdrop-blur-md rounded-lg border overflow-hidden flex flex-col cursor-pointer hover:shadow-lg transition-all duration-300 bg-black/60 border-amber-900/50 hover:shadow-amber-500/30"
             whileHover={{ scale: 1.05 }}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -106,20 +106,13 @@ const Certificate = () => {
               <strong>Issued:</strong> {cert.issuedate}
             </p>
             <p className="text-gray-300 mt-4">{cert.desc}</p>
+            <span className="mt-auto pt-4 text-sm font-mono text-amber-400">
+              view credential →
+            </span>
           </motion.a>
         ))}
       </div>
 
-      {/* Incoming Certifications Note */}
-      <motion.div
-        className="text-center mt-12 text-lg text-gray-400"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        Incoming Certifications: Google Cloud Associate, AWS Developer
-        Associate, Microsoft Azure Fundamentals.
-      </motion.div>
     </section>
   );
 };

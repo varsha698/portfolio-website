@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 const publications = [
   {
     title: "Digital Interventions for Depression and Anxiety: A Systematic Synthesis of Chatbots, App-Based CBT, and Immersive VR/XR",
-    authors: "Varshini Bhavanam, Dr. Arshia Khan, and co-authors",
+    authors: "Zannatul Ferdousee, Varshini Bhavanam, Maggie Beach and Arshia Khan",
+    // Add the DOI or proceedings link here once it is available.
+    doi: null,
     conference: "HEALTHINF 2026 (International Conference on Health Informatics)",
     year: "2026",
     status: "Published",
@@ -13,7 +15,8 @@ const publications = [
   },
   {
     title: "Humanoid and Socially Assistive Robots in Mental Health Care: A PRISMA Guided Systematic Review of Therapeutic and Emotional Outcomes (2021–2025)",
-    authors: "Varshini Bhavanam, Ayesha Noshin and Dr. Arshia Khan",
+    authors: "Ayesha Noshin, Varshini Bhavanam and Arshia Khan",
+    doi: null,
     conference: "ICICT (International Conference on Information and Communication Technology)",
     year: "2025",
     status: "Published",
@@ -123,18 +126,30 @@ const Publications = () => {
                 <p className="text-sm mb-4 italic text-gray-300">{pub.abstract}</p>
               )}
 
-              {pub.url ? (
-                <a
-                  href={pub.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-amber-400 hover:text-amber-300 text-sm font-semibold transition"
-                >
-                  {pub.url.endsWith('.pdf') ? 'Download PDF →' : 'View Paper →'}
-                </a>
-              ) : (
-                <p className="text-sm text-gray-500 italic">PDF available soon</p>
-              )}
+              <div className="flex flex-wrap gap-5">
+                {pub.url ? (
+                  <a
+                    href={pub.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-amber-400 hover:text-amber-300 text-sm font-semibold transition"
+                  >
+                    {pub.url.endsWith('.pdf') ? 'Download PDF →' : 'View Paper →'}
+                  </a>
+                ) : (
+                  <p className="text-sm text-gray-500 italic">PDF available soon</p>
+                )}
+                {pub.doi && (
+                  <a
+                    href={pub.doi}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-amber-400 hover:text-amber-300 text-sm font-semibold transition"
+                  >
+                    Proceedings / DOI →
+                  </a>
+                )}
+              </div>
             </motion.div>
           ))}
         </div>
