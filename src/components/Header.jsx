@@ -1,4 +1,5 @@
 // Header.jsx
+import { asset } from "../utils/asset";
 import { useState, useEffect } from "react";
 import { FaBars, FaTimes, FaDownload } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
@@ -43,7 +44,7 @@ const Header = () => {
       <div className="relative">
         <Link to="/" aria-label="Home">
           <img
-            src="/favicon.svg"
+            src={asset("/favicon.svg")}
             alt="Varshini Bhavanam"
             width="44"
             height="44"

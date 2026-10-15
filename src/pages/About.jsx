@@ -1,3 +1,4 @@
+import { asset } from "../utils/asset";
 import { motion } from "framer-motion";
 
 const timeline = [
@@ -5,42 +6,42 @@ const timeline = [
     year: "Feb 2026 – Present",
     title: "Software Developer – Xecutive Development LLC",
     desc: "Minneapolis, MN. Building and maintaining the operations software for a 7-state lawn-care and snow-removal business. Primary author of a Django sales-tax filing system for MN, CO and NY (parallel batch engine: 1,021 rows in 12 s instead of ~6 min). Contributions across the team's Rails and React apps: the operator portal's redesign and English/Spanish i18n, a dry-run mode and email template editor for Stripe renewal billing, analytics and Meta Conversions API on the marketing site, and security hardening across internal tools.",
-    iconPath: "/icons/default.png",
+    iconPath: asset("/icons/default.png"),
     path: "https://github.com/Xecutive-Development-LLC",
   },
   {
     year: "Dec 2025",
     title: "B.S. Computer Science – University of Minnesota Duluth",
     desc: "Relevant coursework: Computer Security, Operating Systems, Software Engineering, Natural Language Processing, Mobile User Experience and Design, Automata and Formal Languages, and Sensors and Internet of Things.",
-    iconPath: "/icons/umd_logo.png",
+    iconPath: asset("/icons/umd_logo.png"),
     path: "https://www.d.umn.edu/",
   },
   {
     year: "Jul 2025 – Sep 2025",
     title: "Software Development Intern – Code Ninjas",
     desc: "Atlanta, GA. Built a full-stack AI quiz-generation platform (Angular + ASP.NET Core) that cut manual content-creation time by ~80%, plus a rule-based Python chatbot that walks students through curriculum problems — containerized with Docker and deployed via GitHub Actions.",
-    iconPath: "/icons/default.png",
+    iconPath: asset("/icons/default.png"),
     path: "https://www.codeninjas.com/",
   },
   {
     year: "Feb 2025 – Apr 2025",
     title: "EHR Data Migration Intern – St. Luke's Aspirus",
     desc: "Duluth, MN. Transferred and validated 10,000+ patient records from Meditech to Epic during an enterprise EHR cutover, documenting data discrepancies under HIPAA-compliant workflows.",
-    iconPath: "/icons/stlukes_logo.jpg",
+    iconPath: asset("/icons/stlukes_logo.jpg"),
     path: "https://www.slhduluth.com/",
   },
   {
     year: "Sep 2024 – May 2025",
     title: "Undergraduate Research Assistant – UMN Duluth",
     desc: "With Dr. Arshia Khan. Researched digital and robotic interventions for depression, anxiety, and student mental wellness; compiled IRB protocol and consent documentation for a mobile wellness study and analyzed user-behavior data. Co-authored two peer-reviewed papers (HEALTHINF 2026 and ICICT 2025).",
-    iconPath: "/icons/umd_logo.png",
+    iconPath: asset("/icons/umd_logo.png"),
     path: "https://www.d.umn.edu/",
   },
   {
     year: "Aug 2024 – Dec 2025",
     title: "Intern – International Student Services, UMN Duluth",
     desc: "Managed student data in Sunapsis and supported international student onboarding, orientation, and engagement.",
-    iconPath: "/icons/umd_iss_logo.png",
+    iconPath: asset("/icons/umd_iss_logo.png"),
     path: "https://www.d.umn.edu/international/",
   },
 ];
@@ -143,7 +144,7 @@ const About = () => {
                     style={{ padding: "4px", backgroundColor: "#fff" }}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = "/icons/default.png";
+                      e.target.src = asset("/icons/default.png");
                     }}
                   />
                 </a>

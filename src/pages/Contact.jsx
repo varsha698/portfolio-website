@@ -1,3 +1,4 @@
+import { asset } from "../utils/asset";
 import { useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -120,11 +121,11 @@ const ContactMe = () => {
         >
           <picture>
             <source
-              srcSet="/varshini.webp"
+              srcSet={asset("/varshini.webp")}
               type="image/webp"
             />
             <motion.img
-              src="/varshini.jpg"
+              src={asset("/varshini.jpg")}
               alt="Varshini Bhavanam"
               width="208"
               height="208"
