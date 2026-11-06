@@ -2,6 +2,7 @@ import { asset } from "../utils/asset";
 import { useState } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaPaperPlane } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { SheetHeader } from "../components/Blueprint";
 import { EMAIL, GITHUB_URL, LINKEDIN_URL } from "../data/profile";
 
 // The message form only appears when a Formspree endpoint is configured
@@ -50,57 +51,20 @@ const ContactMe = () => {
   return (
     <section
       id="contact"
-      className="min-h-screen flex flex-col items-center overflow-hidden relative transition-colors duration-300 bg-black"
+      className="min-h-screen flex flex-col items-center overflow-hidden relative"
       style={{
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
         paddingTop: "6rem",
         paddingBottom: "4rem",
       }}
     >
-      {/* Background grid */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`h-${i}`}
-            className="absolute w-full h-px"
-            style={{
-              top: `${i * 5}%`,
-              background:
-                "linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`v-${i}`}
-            className="absolute h-full w-px"
-            style={{
-              left: `${i * 5}%`,
-              background:
-                "linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
+      <div className="w-full px-4">
+        <SheetHeader
+          sheet="06"
+          kicker="contact"
+          title="Contact Me"
+          sub="Open to software engineering roles, collaboration and interesting problems. The fastest way to reach me is email."
+        />
       </div>
-
-      <motion.h1
-        className="text-4xl md:text-5xl font-bold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          textShadow:
-            "0 0 15px rgba(255, 153, 102, 0.7), 0 0 30px rgba(255, 153, 102, 0.5)",
-        }}
-      >
-        Contact Me
-      </motion.h1>
-      <p className="text-gray-400 text-center max-w-xl relative z-10 mb-10 px-4">
-        Open to software engineering roles, collaboration and interesting
-        problems. The fastest way to reach me is email.
-      </p>
 
       <div className="relative z-10 grid md:grid-cols-[auto,1fr] gap-10 md:gap-12 items-start w-full max-w-5xl px-4">
         {/* Left: Photo + contact info */}
@@ -168,7 +132,7 @@ const ContactMe = () => {
         {/* Right: form when Formspree is configured, otherwise an email card */}
         {!FORMSPREE_ENDPOINT ? (
           <motion.div
-            className="w-full backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/60 p-6 md:p-8 flex flex-col items-start gap-5"
+            className="bp-corner relative w-full backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/60 p-6 md:p-8 flex flex-col items-start gap-5"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.25, duration: 0.5 }}
@@ -200,7 +164,7 @@ const ContactMe = () => {
         ) : (
         <motion.form
           onSubmit={onSubmit}
-          className="w-full backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/60 p-6 md:p-8"
+          className="bp-corner relative w-full backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/60 p-6 md:p-8"
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}

@@ -3,7 +3,7 @@ import { useEffect, Suspense, lazy } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import ParticleBackground from "./components/ParticleBackground";
+import { BlueprintBackdrop } from "./components/Blueprint";
 import CommandPalette from "./components/CommandPalette";
 
 const About = lazy(() => import("./pages/About"));
@@ -22,7 +22,8 @@ const RouteFallback = () => (
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isContactPage = location.pathname.replace(/\/$/, "") === "/contact";
+  const path = location.pathname.replace(/\/$/, "");
+  const isContactPage = path === "/contact";
 
   // The site used hash routing until late 2026; keep old /#/projects style
   // links (resumes, LinkedIn, bookmarks) working.
@@ -38,7 +39,7 @@ const App = () => {
 
   return (
     <>
-      <ParticleBackground />
+      <BlueprintBackdrop />
       <CommandPalette />
       <Header />
       <main>

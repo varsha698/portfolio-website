@@ -1,7 +1,7 @@
 // Project data for the Projects page and the counts on the home page.
 //
 // Content is drawn from the Final-Dev-Journal (varsha698/Final-Dev-Journal,
-// updated 2026-10-14). Team projects describe my own contributions; anything
+// updated 2026-11-06). Team projects describe my own contributions; anything
 // the journal could not verify is left out.
 //
 // Fields:
@@ -16,6 +16,7 @@
 //   private               show the "private" badge
 //   caseStudy             route of an in-depth write-up (optional)
 //   featured              also shown in "Featured" on Home and Projects
+//   result                animated before/after figure (src/components/ResultViz.jsx)
 
 const XD = "Xecutive Development LLC";
 
@@ -35,6 +36,13 @@ export const professional = [
     techstackused: "Python, Django, PostgreSQL, Gunicorn, Docker, Caddy, Airtable API",
     techstackicons: ["python", "django", "postgresql", "docker"],
     caseStudy: "/projects/sales-tax",
+    result: {
+      kind: "race",
+      title: "Batch run: parallel engine vs serial",
+      rows: 1021,
+      fast: 11.9,
+      slow: 340,
+    },
     featured: true,
     private: true,
   },
@@ -84,6 +92,13 @@ export const professional = [
     techstackused: "Next.js 16, React 19, Tailwind, Cloudflare (OpenNext), Sentry, GA4, Meta CAPI",
     techstackicons: ["nextjs", "react", "tailwind", "cloudflare"],
     link: "https://www.andrewslawnandsnow.com",
+    result: {
+      kind: "shrink",
+      title: "Billboard carousel images",
+      items: [
+        { label: "carousel images", before: 14.5, after: 1.9, beforeText: "14.5 MB", afterText: "1.9 MB" },
+      ],
+    },
     private: true,
   },
   {
@@ -125,6 +140,14 @@ export const professional = [
       "Filtered Facebook in-app-browser noise that made up ~95% of Sentry error volume",
     ],
     techstackused: "TypeScript, React, Cloudflare Pages + Workers + D1, Sentry",
+    result: {
+      kind: "shrink",
+      title: "First-load cost",
+      items: [
+        { label: "icon font", before: 4000, after: 323, beforeText: "4.0 MB", afterText: "323 KB" },
+        { label: "main JS bundle", before: 627, after: 382, beforeText: "627 KB", afterText: "382 KB" },
+      ],
+    },
     techstackicons: ["typescript", "react", "cloudflare"],
     private: true,
   },
@@ -149,7 +172,8 @@ export const professional = [
     desc: "Hardening and fixes across the company's internal Rails and Next.js apps.",
     features: [
       "Internal app launcher: cleared 3 critical + 3 high advisories, fixed an auth fail-open, and stopped the production env file from being baked into Docker images",
-      "Lead CRM: CVE patch pass (Rails 8.1.3.1), Brakeman bump, a user-delete 500 fix and admin column management",
+      "Lead CRM: admin-only CSV export of leads that honors the active filters and neutralizes spreadsheet formula injection from public form submissions",
+      "Lead CRM: CVE patch passes (Rails 8.1.3.1, net-ssh, crass), Brakeman bumps to keep CI green, a user-delete 500 fix and admin column management",
       "Payroll hub: fixed a weed-and-feed calculation bug and added the full test suite to CI",
       "Mailer and sales portal: new merge tags and an admin dashboard",
     ],
@@ -160,6 +184,23 @@ export const professional = [
 ];
 
 export const personal = [
+  {
+    name: "Resume Studio",
+    role: "Sole author",
+    desc: "Private web app that tailors my resume to a job description using evidence from my developer journal and Claude.",
+    features: [
+      "Pulls the latest developer journal and a chosen baseline resume from GitHub on every run, scanning every branch for resume variants",
+      "Claude tailors the resume and cites the journal entries behind each claim, so every bullet can be checked before it is used",
+      "Durable background jobs: a tailoring run keeps going after the tab closes and the result is saved to come back to",
+      "Exports a two-page Jake-style PDF that is checked for balanced, readable pages, plus LaTeX source",
+      "Password sign-in, signed HttpOnly session cookies, origin checks and request throttling; private data is never sent before sign-in",
+      "Test suite runs against mocked GitHub and Claude, including a server restart that recovers a saved job",
+    ],
+    techstackused: "Next.js 16, React 19, TypeScript, Claude API, Vercel Workflow, Zod, pdf-lib",
+    techstackicons: ["nextjs", "react", "typescript", "claude"],
+    private: true,
+    featured: true,
+  },
   {
     name: "ai-doc-editor",
     role: "Sole author",
@@ -190,7 +231,6 @@ export const personal = [
     techstackused: "Angular 20, Tailwind, Node.js, Express, MongoDB, Groq API, Tesseract.js, ASP.NET Core",
     techstackicons: ["angular", "nodejs", "mongodb", "csharp"],
     code: "https://github.com/varsha698/Quiz-Generator",
-    featured: true,
   },
   {
     name: "dev-journal",

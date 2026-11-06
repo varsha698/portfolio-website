@@ -1,5 +1,6 @@
 import { asset } from "../utils/asset";
 import { motion } from "framer-motion";
+import { SheetHeader } from "../components/Blueprint";
 
 const publications = [
   {
@@ -29,52 +30,13 @@ const Publications = () => {
   return (
     <section
       id="publications"
-      className="min-h-screen flex flex-col items-center justify-center overflow-hidden relative transition-colors duration-300 bg-black"
+      className="min-h-screen flex flex-col items-center justify-center overflow-hidden relative"
       style={{
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
         position: "relative",
         padding: "6rem 2rem",
       }}
     >
-      {/* Background grid */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`h-${i}`}
-            className="absolute w-full h-px"
-            style={{
-              top: `${i * 5}%`,
-              background: "linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`v-${i}`}
-            className="absolute h-full w-px"
-            style={{
-              left: `${i * 5}%`,
-              background: "linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-      </div>
-
-      <motion.h1
-        className="text-4xl md:text-5xl font-bold mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          textShadow: "0 0 15px rgba(255, 153, 102, 0.7), 0 0 30px rgba(255, 153, 102, 0.5)",
-          marginBottom: "2rem",
-          marginTop: "2rem",
-        }}
-      >
-        Publications
-      </motion.h1>
+      <SheetHeader sheet="05" kicker="research" title="Publications" />
 
       {/* Publications List */}
       {publications.length > 0 ? (
@@ -82,7 +44,7 @@ const Publications = () => {
           {publications.map((pub, index) => (
             <motion.div
               key={index}
-              className="relative p-6 backdrop-blur-md rounded-lg border overflow-hidden hover:shadow-lg transition-all duration-300 bg-black/60 border-amber-900/50 hover:shadow-amber-500/30"
+              className="bp-corner relative p-6 backdrop-blur-md rounded-lg border overflow-hidden hover:shadow-lg transition-all duration-300 bg-black/60 border-amber-900/50 hover:shadow-amber-500/30"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}

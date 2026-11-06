@@ -13,6 +13,7 @@ import { useCallback, useEffect, useState, lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import TerminalWidget from "../components/TerminalWidget";
 import GithubActivity from "../components/GithubActivity";
+import SystemMap from "../components/SystemMap";
 import { GITHUB_URL, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 import { projectCount } from "../data/projects";
 
@@ -73,7 +74,7 @@ const Tile = ({ className = "", children, delay = 0 }) => (
     viewport={{ once: true, amount: 0.15 }}
     transition={{ duration: 0.5, delay }}
     className={
-      "relative p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors " +
+      "bp-corner relative p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors " +
       className
     }
   >
@@ -88,122 +89,118 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-black"
-      style={{
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
-      }}
+      className="relative overflow-hidden"
     >
-      {/* Ambient glow */}
-      <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-orange-500 opacity-10 blur-3xl pointer-events-none"></div>
+      {/* HERO — blueprint sheet */}
+      <div className="relative z-10 min-h-screen flex items-center px-4 md:px-8 pt-24 pb-12">
+        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-10 lg:gap-12 items-center">
+          <div className="text-center lg:text-left">
+            <motion.div
+              className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-500/70"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              sheet 01 · software engineer · portfolio
+            </motion.div>
+            <motion.h1
+              className="mt-3 text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              Hey, I&apos;m Varshini
+            </motion.h1>
 
-      {/* HERO */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center items-center px-4 md:px-8 text-center pt-16 pb-8">
-        <motion.h1
-          className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          style={{
-            textShadow:
-              "0 0 15px rgba(255, 153, 102, 0.7), 0 0 30px rgba(255, 153, 102, 0.5)",
-          }}
-        >
-          Hey, I&apos;m Varshini
-        </motion.h1>
+            <motion.p
+              className="mt-4 text-lg md:text-xl text-gray-300 min-h-[1.75rem]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.15 }}
+            >
+              Software engineer — <Typewriter />
+            </motion.p>
 
-        <motion.p
-          className="mt-4 text-lg md:text-xl text-gray-300 max-w-2xl min-h-[1.75rem]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
-        >
-          Software engineer — <Typewriter />
-        </motion.p>
+            <motion.p
+              className="mt-6 text-base md:text-lg text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+            >
+              I build production Rails, React and Python systems for a 7-state
+              lawn and snow business, and run the Proxmox servers they live on
+              (that&apos;s the map). I wrote its multi-state sales-tax engine and
+              co-authored two peer-reviewed papers on digital mental health.
+            </motion.p>
 
-        <motion.p
-          className="mt-6 text-base md:text-lg text-gray-300 max-w-3xl leading-relaxed"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.25 }}
-        >
-          I build production Rails, React and Python systems for a 7-state lawn
-          and snow business, and run the Proxmox servers they live on. I wrote
-          its multi-state sales-tax engine and co-authored two peer-reviewed
-          papers on digital mental health.
-        </motion.p>
+            <motion.div
+              className="mt-8 flex flex-wrap gap-4 justify-center lg:justify-start"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+            >
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-black bg-amber-400 hover:bg-amber-300 transition-all duration-300"
+              >
+                View Projects <FaArrowRight className="text-sm" />
+              </Link>
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-amber-400 border border-amber-400 hover:bg-amber-400/10 transition-all duration-300"
+              >
+                About Me
+              </Link>
+              <a
+                href={RESUME_PATH}
+                download
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-gray-300 border border-gray-600 hover:text-amber-400 hover:border-amber-400/50 transition-all duration-300"
+              >
+                <FaDownload className="text-sm" /> Resume
+              </a>
+            </motion.div>
 
-        <motion.div
-          className="mt-10 flex flex-wrap gap-4 justify-center"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
-        >
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-black bg-amber-400 hover:bg-amber-300 transition-all duration-300"
-            style={{ boxShadow: "0 0 20px rgba(255, 153, 102, 0.35)" }}
+            <motion.div
+              className="mt-6 flex items-center gap-6 justify-center lg:justify-start"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                className="text-gray-400 hover:text-amber-400 text-2xl transition"
+              >
+                <FaGithub />
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-gray-400 hover:text-amber-400 text-2xl transition"
+              >
+                <FaLinkedin />
+              </a>
+              <span className="hidden sm:inline text-xs text-gray-500 font-mono">
+                <kbd className="border border-gray-700 rounded px-1.5 py-0.5 mr-1">
+                  ⌘K
+                </kbd>
+                to search
+              </span>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
           >
-            View Projects <FaArrowRight className="text-sm" />
-          </Link>
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-amber-400 border border-amber-400 hover:bg-amber-400/10 transition-all duration-300"
-          >
-            About Me
-          </Link>
-          <a
-            href={RESUME_PATH}
-            download
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-gray-300 border border-gray-600 hover:text-amber-400 hover:border-amber-400/50 transition-all duration-300"
-          >
-            <FaDownload className="text-sm" /> Resume
-          </a>
-        </motion.div>
-
-        <motion.div
-          className="mt-6 flex items-center gap-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-        >
-          <a
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="text-gray-400 hover:text-amber-400 text-2xl transition"
-          >
-            <FaGithub />
-          </a>
-          <a
-            href={LINKEDIN_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-gray-400 hover:text-amber-400 text-2xl transition"
-          >
-            <FaLinkedin />
-          </a>
-        </motion.div>
-
-        {/* ⌘K hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="mt-8 text-xs text-gray-500 font-mono"
-        >
-          press{" "}
-          <kbd className="border border-gray-700 rounded px-1.5 py-0.5 mx-1">
-            ⌘K
-          </kbd>{" "}
-          /{" "}
-          <kbd className="border border-gray-700 rounded px-1.5 py-0.5 mx-1">
-            ctrl K
-          </kbd>{" "}
-          to search
-        </motion.div>
+            <SystemMap />
+          </motion.div>
+        </div>
       </div>
 
       {/* FEATURED WORK */}
@@ -211,7 +208,6 @@ const Home = () => {
         <div className="flex items-end justify-between mb-6">
           <h2
             className="text-2xl md:text-3xl font-bold text-amber-400"
-            style={{ textShadow: "0 0 10px rgba(255, 153, 102, 0.4)" }}
           >
             Featured work
           </h2>
@@ -253,6 +249,10 @@ const Home = () => {
                 <li className="flex gap-2">
                   <span className="text-amber-400">›</span>
                   Running the company&apos;s Proxmox servers and VMs
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
+                  Building Resume Studio, a journal-backed resume tailor on Claude
                 </li>
                 <li className="flex gap-2">
                   <span className="text-amber-400">›</span>

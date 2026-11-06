@@ -6,6 +6,8 @@ import ProjectModal from "./ProjectModal";
 import FeaturedProjects from "../components/FeaturedProjects";
 import { professional, personal } from "../data/projects";
 import { TechIcon } from "../components/techIcons";
+import ResultViz from "../components/ResultViz";
+import { SheetHeader } from "../components/Blueprint";
 
 const ProjectCard = ({ project, onClick, index }) => (
   <motion.div
@@ -27,7 +29,7 @@ const ProjectCard = ({ project, onClick, index }) => (
     aria-label={`${project.name} — details`}
     className="relative cursor-pointer group rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30"
   >
-    <div className="relative p-6 backdrop-blur-md rounded-lg border overflow-hidden h-full transition-colors duration-300 bg-black/60 border-amber-900/50 group-hover:border-amber-500/50 flex flex-col">
+    <div className="bp-corner relative p-6 backdrop-blur-md rounded-lg border overflow-hidden h-full transition-colors duration-300 bg-black/60 border-amber-900/50 group-hover:border-amber-500/50 flex flex-col">
       {project.screenshot && (
         <div className="mb-4 rounded-md overflow-hidden border border-amber-900/40">
           <img
@@ -58,6 +60,11 @@ const ProjectCard = ({ project, onClick, index }) => (
         </p>
       )}
       <p className="mb-4 text-gray-300 flex-grow">{project.desc}</p>
+      {project.result && (
+        <div className="mb-4">
+          <ResultViz result={project.result} compact />
+        </div>
+      )}
       <div className="flex flex-wrap gap-3 mt-auto">
         {project.techstackicons.map((tech) => (
           <TechIcon key={tech} name={tech} className="w-6 h-6" />
@@ -75,7 +82,6 @@ const SectionHeader = ({ label, sub }) => (
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
       className="text-2xl md:text-3xl font-bold text-amber-400"
-      style={{ textShadow: "0 0 10px rgba(255, 153, 102, 0.4)" }}
     >
       {label}
     </motion.h2>
@@ -93,6 +99,7 @@ ProjectCard.propTypes = {
     private: PropTypes.bool,
     screenshot: PropTypes.string,
     techstackicons: PropTypes.arrayOf(PropTypes.string).isRequired,
+    result: PropTypes.object,
   }).isRequired,
   onClick: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
@@ -109,55 +116,17 @@ const Projects = () => {
   return (
     <section
       id="projects"
-      className="min-h-screen flex flex-col items-center overflow-hidden relative transition-colors duration-300 bg-black"
+      className="min-h-screen flex flex-col items-center overflow-hidden relative"
       style={{
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
         padding: "6rem 2rem",
       }}
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`h-${i}`}
-            className="absolute w-full h-px"
-            style={{
-              top: `${i * 5}%`,
-              background:
-                "linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div
-            key={`v-${i}`}
-            className="absolute h-full w-px"
-            style={{
-              left: `${i * 5}%`,
-              background:
-                "linear-gradient(0deg, transparent, rgba(0, 255, 255, 0.2), transparent)",
-              opacity: "0.3",
-            }}
-          />
-        ))}
-      </div>
-
-      <motion.h1
-        className="text-4xl md:text-5xl font-bold mb-4 text-center text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        style={{
-          textShadow:
-            "0 0 15px rgba(255, 153, 102, 0.7), 0 0 30px rgba(255, 153, 102, 0.5)",
-          marginTop: "2rem",
-        }}
-      >
-        Projects
-      </motion.h1>
-      <p className="text-center text-gray-400 mb-12 max-w-2xl relative z-10">
-        Selected work — click any card for details.
-      </p>
+      <SheetHeader
+        sheet="03"
+        kicker="work"
+        title="Projects"
+        sub="Selected work — click any card for details."
+      />
 
       <div className="relative z-10 w-full">
         <SectionHeader

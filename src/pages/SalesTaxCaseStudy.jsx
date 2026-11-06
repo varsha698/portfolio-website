@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { asset } from "../utils/asset";
 import { TechIcon } from "../components/techIcons";
+import ResultViz from "../components/ResultViz";
+import { professional } from "../data/projects";
 
 // Case study for the multi-state sales-tax filing system. Facts and numbers
 // come from the project's commit history (Final-Dev-Journal). No customer
@@ -11,6 +13,8 @@ import { TechIcon } from "../components/techIcons";
 
 // Drop a sanitized screenshot at this path to show it; the figure hides
 // itself while the file is missing.
+const salesTax = professional.find((p) => p.caseStudy === "/projects/sales-tax");
+
 const SCREENSHOT = asset("/case-studies/sales-tax-dashboard.png");
 
 const RESULTS = [
@@ -148,8 +152,7 @@ const STACK = ["python", "django", "postgresql", "docker", "caddy", "cloudflare"
 
 const SalesTaxCaseStudy = () => (
   <section
-    className="min-h-screen bg-black px-4 md:px-8 pt-28 pb-20"
-    style={{ background: "radial-gradient(circle at top, #0f1523 0%, #000000 70%)" }}
+    className="min-h-screen px-4 md:px-8 pt-28 pb-20"
   >
     <article className="relative z-10 max-w-4xl mx-auto">
       <Link
@@ -159,12 +162,11 @@ const SalesTaxCaseStudy = () => (
         <FaArrowLeft className="text-xs" /> all projects
       </Link>
 
-      <p className="text-xs uppercase tracking-widest text-amber-300/70 mb-2">
-        Case study · Xecutive Development LLC · Primary author
+      <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-amber-500/70 mb-2">
+        sheet 03a · case study · Xecutive Development LLC · primary author
       </p>
       <h1
         className="text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500 mb-4"
-        style={{ textShadow: "0 0 15px rgba(255, 153, 102, 0.35)" }}
       >
         Multi-State Sales Tax Filing System
       </h1>
@@ -226,7 +228,7 @@ const SalesTaxCaseStudy = () => (
       <Section title="Hard problems">
         <div className="grid gap-4">
           {PROBLEMS.map((p) => (
-            <div key={p.title} className="p-5 rounded-lg border border-amber-900/50 bg-black/60">
+            <div key={p.title} className="bp-corner relative p-5 rounded-lg border border-amber-900/50 bg-black/60">
               <h3 className="text-lg font-semibold text-amber-300 mb-2">{p.title}</h3>
               <p className="text-gray-300 text-sm md:text-base">{p.body}</p>
             </div>
@@ -235,6 +237,7 @@ const SalesTaxCaseStudy = () => (
       </Section>
 
       <Section title="Before and after">
+        <ResultViz result={salesTax.result} />
         <div className="overflow-x-auto rounded-lg border border-amber-900/50">
           <table className="w-full text-sm text-left">
             <thead className="bg-amber-900/20 text-amber-300">
