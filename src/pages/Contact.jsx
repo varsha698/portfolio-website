@@ -62,7 +62,7 @@ const ContactMe = () => {
           sheet="06"
           kicker="contact"
           title="Contact Me"
-          sub="Open to software engineering roles, collaboration and interesting problems. The fastest way to reach me is email."
+          sub="Questions about my work, research or projects are welcome. The fastest way to reach me is email."
         />
       </div>
 
@@ -139,8 +139,8 @@ const ContactMe = () => {
           >
             <h2 className="text-2xl font-semibold text-amber-300">Say hello</h2>
             <p className="text-gray-300 leading-relaxed">
-              Hiring, a project idea, or a question about my work or research?
-              Email me and I&apos;ll get back to you, usually within a day. You
+              A project idea, a collaboration, or a question about my work or
+              research? Email me and I&apos;ll get back to you, usually within a day. You
               can also reach me on LinkedIn.
             </p>
             <div className="flex flex-wrap gap-4">

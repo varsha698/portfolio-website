@@ -12,6 +12,13 @@
     <meta name="theme-color" content="#000000" />
     <link rel="canonical" href="https://varshinibhavanam.com/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script>
+      try {
+        if (localStorage.getItem("bp-mode") === "wireframe") {
+          document.documentElement.dataset.mode = "wireframe";
+        }
+      } catch (e) {}
+    </script>
 
     <!-- Open Graph / LinkedIn / Slack -->
     <meta property="og:type" content="website" />

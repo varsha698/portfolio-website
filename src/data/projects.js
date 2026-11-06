@@ -60,6 +60,7 @@ export const professional = [
     ],
     techstackused: "Proxmox VE, Linux, Docker, systemd, Caddy, Cloudflare Tunnel",
     techstackicons: ["proxmox", "linux", "docker", "caddy", "cloudflare"],
+    caseStudy: "/projects/proxmox",
     private: true,
   },
   {

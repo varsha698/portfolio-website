@@ -7,10 +7,11 @@ import ProjectModal from "./ProjectModal";
 import FeaturedProjects from "../components/FeaturedProjects";
 import { professional, personal } from "../data/projects";
 import { TechIcon } from "../components/techIcons";
+import { techLabel } from "../components/techIconRegistry";
 import ResultViz from "../components/ResultViz";
 import { SheetHeader } from "../components/Blueprint";
 
-const ProjectCard = ({ project, onClick, index }) => (
+const ProjectCard = ({ project, onClick, index, mark }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -28,7 +29,10 @@ const ProjectCard = ({ project, onClick, index }) => (
     role="button"
     tabIndex={0}
     aria-label={`${project.name} — details`}
-    className="relative cursor-pointer group rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30"
+    data-mark={mark || undefined}
+    className={`relative cursor-pointer group rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30 ${
+      mark === "lit" ? "ring-2 ring-amber-400 ring-offset-4 ring-offset-black" : ""
+    } ${mark === "dim" ? "opacity-30 hover:opacity-100" : ""}`}
   >
     <div className="bp-corner relative p-6 backdrop-blur-md rounded-lg border overflow-hidden h-full transition-colors duration-300 bg-black/60 border-amber-900/50 group-hover:border-amber-500/50 flex flex-col">
       {project.screenshot && (
@@ -104,6 +108,7 @@ ProjectCard.propTypes = {
   }).isRequired,
   onClick: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
+  mark: PropTypes.oneOf(["lit", "dim"]),
 };
 
 SectionHeader.propTypes = {
@@ -113,7 +118,25 @@ SectionHeader.propTypes = {
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const [highlight, setHighlight] = useState(null);
   const location = useLocation();
+
+  // The parts list on Home links here with a tech key to highlight.
+  useEffect(() => {
+    const key = location.state?.highlight;
+    if (!key) return undefined;
+    setHighlight(key);
+    const t = setTimeout(() => {
+      document.querySelector('[data-mark="lit"]')?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 400);
+    return () => clearTimeout(t);
+  }, [location.state]);
+
+  const markFor = (p) =>
+    highlight ? (p.techstackicons.includes(highlight) ? "lit" : "dim") : undefined;
+  const litCount = highlight
+    ? [...professional, ...personal].filter((p) => p.techstackicons.includes(highlight)).length
+    : 0;
 
   // The ⌘K "Surprise me" command sends a project name in router state.
   useEffect(() => {
@@ -157,6 +180,7 @@ const Projects = () => {
               key={p.name}
               project={p}
               index={i}
+              mark={markFor(p)}
               onClick={() => setSelectedProject(p)}
             />
           ))}
@@ -172,11 +196,31 @@ const Projects = () => {
               key={p.name}
               project={p}
               index={i}
+              mark={markFor(p)}
               onClick={() => setSelectedProject(p)}
             />
           ))}
         </div>
       </div>
+
+      {highlight && (
+        <div
+          role="status"
+          className="fixed bottom-5 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 rounded-md border border-amber-500/60 bg-black/90 px-4 py-2 font-mono text-xs text-amber-200 shadow-lg backdrop-blur-md"
+        >
+          <TechIcon name={highlight} className="w-4 h-4" />
+          <span>
+            {litCount} project{litCount === 1 ? "" : "s"} use {techLabel(highlight)}
+          </span>
+          <button
+            type="button"
+            onClick={() => setHighlight(null)}
+            className="text-amber-400 hover:text-amber-300 underline underline-offset-2"
+          >
+            clear
+          </button>
+        </div>
+      )}
 
       {selectedProject && (
         <ProjectModal
