@@ -5,7 +5,6 @@ import { FaSearch, FaArrowRight } from "react-icons/fa";
 import { EMAIL, GITHUB_URL, GITHUB_USER, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 import { trackResumeDownload } from "../utils/visitTracking";
 import { professional, personal } from "../data/projects";
-import { CROSSHAIR_EVENT } from "./DraftingCrosshair";
 import { toggleDrawingMode } from "../utils/drawingMode";
 
 const ALL_PROJECTS = [...professional, ...personal];
@@ -30,7 +29,6 @@ const commands = [
   },
   { id: "random", label: "Surprise me — open a random project", hint: "/random", type: "random" },
   { id: "wireframe", label: "Toggle wireframe / render view", hint: "/wireframe", type: "mode" },
-  { id: "crosshair", label: "Toggle the drafting crosshair", hint: "/crosshair", type: "event", target: CROSSHAIR_EVENT },
   {
     id: "resume",
     label: "Download Resume (PDF)",
@@ -153,8 +151,7 @@ const CommandPalette = () => {
       navigate("/projects", { state: { open: pick.name, nonce: Date.now() } });
     } else if (cmd.type === "mode") {
       toggleDrawingMode();
-    } else if (cmd.type === "event") {
-      window.dispatchEvent(new Event(cmd.target));
+
     } else if (cmd.type === "download") {
       if (cmd.target === RESUME_PATH) trackResumeDownload();
       const a = document.createElement("a");
