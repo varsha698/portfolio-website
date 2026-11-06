@@ -5,7 +5,6 @@ import { FaBars, FaTimes, FaDownload } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { RESUME_PATH } from "../data/profile";
-import { DrawingModeToggle } from "./DrawingMode";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,7 +28,7 @@ const Header = () => {
   }, []);
 
   return (
-    <header data-wf-solid className={`fixed top-0 w-full px-4 md:px-8 py-4 flex items-center justify-between z-50 transition-all duration-300 ${
+    <header className={`fixed top-0 w-full px-4 md:px-8 py-4 flex items-center justify-between z-50 transition-all duration-300 ${
       scrolled 
         ? "bg-black/80 backdrop-blur-md shadow-[0_4px_20px_rgba(255,153,102,0.15)]" 
         : "bg-black/40 backdrop-blur-sm"
@@ -70,11 +69,10 @@ const Header = () => {
             <span className="absolute inset-0 -z-10 opacity-0 group-hover:opacity-20 bg-amber-400 blur-sm rounded transition-opacity duration-300"></span>
           </NavLink>
         ))}
-        <DrawingModeToggle className="ml-2" />
         <a
           href={RESUME_PATH}
           download="Varshini_Bhavanam_Resume.pdf"
-          className="text-amber-400 hover:text-amber-300 transition text-lg flex items-center gap-1 px-3 py-1 border border-amber-400/50 rounded hover:bg-amber-400/10"
+          className="ml-4 text-amber-400 hover:text-amber-300 transition text-lg flex items-center gap-1 px-3 py-1 border border-amber-400/50 rounded hover:bg-amber-400/10"
           aria-label="Download Resume"
         >
           <FaDownload className="text-sm" />
@@ -87,7 +85,7 @@ const Header = () => {
         {isMenuOpen ? <FaTimes className="relative z-10" /> : <FaBars className="relative z-10" />}
       </button>
 
-      <div data-wf-solid className={`absolute top-full right-4 w-56 mt-2 backdrop-blur-md border rounded-lg shadow-lg md:hidden transition-all duration-300 overflow-hidden bg-gray-900/90 border-amber-900/50 ${
+      <div className={`absolute top-full right-4 w-56 mt-2 backdrop-blur-md border rounded-lg shadow-lg md:hidden transition-all duration-300 overflow-hidden bg-gray-900/90 border-amber-900/50 ${
         isMenuOpen ? "max-h-[32rem] opacity-100" : "max-h-0 opacity-0 pointer-events-none"
       }`}>
         <div className="py-2">
@@ -115,7 +113,6 @@ const Header = () => {
             <FaDownload />
             <span>Resume</span>
           </a>
-          <DrawingModeToggle />
         </div>
       </div>
 
