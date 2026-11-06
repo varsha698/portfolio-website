@@ -256,6 +256,10 @@ const Home = () => {
                 </li>
                 <li className="flex gap-2">
                   <span className="text-amber-400">›</span>
+                  Building Resume Studio, a journal-backed resume tailor on Claude
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-amber-400">›</span>
                   B.S. Computer Science, UMN Duluth — Dec 2025
                 </li>
               </ul>
