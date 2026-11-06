@@ -331,19 +331,6 @@ export const personal = [
     code: "https://github.com/varsha698/Sales-Analytics-Project",
   },
   {
-    name: "Forge — Studio Landing Page",
-    role: "Sole author",
-    desc: "Design prototype for a software-studio landing page with a 3D WebGL hero.",
-    features: [
-      "React Three Fiber glass-blob hero with bloom and chromatic aberration, lazy-loaded with a mobile fallback",
-      "GSAP page-transition wipes, Lenis smooth scrolling and magnetic buttons",
-      "Pinned horizontal showcase section (placeholder content)",
-    ],
-    techstackused: "React 19, Vite, React Three Fiber, three.js, GSAP, Lenis, Tailwind 4",
-    techstackicons: ["react", "vite", "tailwind"],
-    private: true,
-  },
-  {
     name: "Personal Portfolio Website",
     role: "Sole author",
     desc: "This site — React 19, Vite, Tailwind and Framer Motion on Cloudflare Pages.",
