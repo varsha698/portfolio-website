@@ -5,7 +5,6 @@ import { FaSearch, FaArrowRight } from "react-icons/fa";
 import { EMAIL, GITHUB_URL, GITHUB_USER, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 import { trackResumeDownload } from "../utils/visitTracking";
 import { professional, personal } from "../data/projects";
-import { toggleDrawingMode } from "../utils/drawingMode";
 
 const ALL_PROJECTS = [...professional, ...personal];
 
@@ -28,7 +27,6 @@ const commands = [
     target: "/projects/sales-tax#results",
   },
   { id: "random", label: "Surprise me — open a random project", hint: "/random", type: "random" },
-  { id: "wireframe", label: "Toggle wireframe / render view", hint: "/wireframe", type: "mode" },
   {
     id: "resume",
     label: "Download Resume (PDF)",
@@ -149,8 +147,6 @@ const CommandPalette = () => {
     } else if (cmd.type === "random") {
       const pick = ALL_PROJECTS[Math.floor(Math.random() * ALL_PROJECTS.length)];
       navigate("/projects", { state: { open: pick.name, nonce: Date.now() } });
-    } else if (cmd.type === "mode") {
-      toggleDrawingMode();
 
     } else if (cmd.type === "download") {
       if (cmd.target === RESUME_PATH) trackResumeDownload();
@@ -185,7 +181,6 @@ const CommandPalette = () => {
       onClick={close}
     >
       <div
-        data-wf-solid
         onClick={(e) => e.stopPropagation()}
         className="w-full max-w-xl rounded-lg border border-amber-900/60 bg-black/95 shadow-2xl overflow-hidden"
         style={{ boxShadow: "0 0 40px rgba(255, 153, 102, 0.25)" }}
@@ -198,7 +193,7 @@ const CommandPalette = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder="Search — or try /wireframe, /race, /random…"
+            placeholder="Search — or try /race, /random, /stack…"
             className="flex-grow bg-transparent border-none outline-none text-gray-100 placeholder:text-gray-500 font-mono text-sm"
           />
           <kbd className="text-xs text-gray-500 border border-gray-700 rounded px-1.5 py-0.5 font-mono">

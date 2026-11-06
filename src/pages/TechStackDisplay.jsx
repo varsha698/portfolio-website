@@ -77,7 +77,6 @@ const QtyBar = ({ qty, max }) => (
       <span
         key={i}
         className={`inline-block w-1.5 h-3 ${i < qty ? "bg-amber-400" : "border border-amber-900/70"}`}
-        data-fill
       />
     ))}
   </span>
