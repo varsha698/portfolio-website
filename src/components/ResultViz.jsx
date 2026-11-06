@@ -38,8 +38,9 @@ const Lane = ({ label, p, status, hot, compact }) => (
       <span>{label}</span>
       <span className={hot ? "text-amber-300" : ""}>{status}</span>
     </div>
-    <div className={`mt-1 ${compact ? "h-1.5" : "h-2.5"} rounded-sm bg-amber-950/60 overflow-hidden`}>
+    <div className={`mt-1 ${compact ? "h-1.5" : "h-2.5"} rounded-sm bg-amber-950/60 overflow-hidden`} data-track>
       <div
+        data-fill
         className={`h-full ${hot ? "bg-amber-400" : "bg-gray-500"}`}
         style={{ width: `${p * 100}%` }}
       />
@@ -156,8 +157,9 @@ const Shrink = ({ data, compact }) => {
                 <span className="text-amber-300">{it.afterText}</span>
               </span>
             </div>
-            <div className={`mt-1 relative ${compact ? "h-1.5" : "h-2.5"} rounded-sm bg-amber-950/60 overflow-hidden`}>
+            <div className={`mt-1 relative ${compact ? "h-1.5" : "h-2.5"} rounded-sm bg-amber-950/60 overflow-hidden`} data-track>
               <div
+                data-fill
                 className="absolute inset-y-0 left-0 bg-amber-400 transition-[width] duration-[1600ms] ease-out motion-reduce:transition-none"
                 style={{ width: inView ? `${ratio * 100}%` : "100%" }}
               />

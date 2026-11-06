@@ -11,6 +11,7 @@ const SHEETS = {
   "/about": ["02", "About"],
   "/projects": ["03", "Projects"],
   "/projects/sales-tax": ["03a", "Case study · sales tax"],
+  "/projects/proxmox": ["03b", "Case study · servers"],
   "/certificates": ["04", "Certifications"],
   "/publications": ["05", "Publications"],
   "/contact": ["06", "Contact"],

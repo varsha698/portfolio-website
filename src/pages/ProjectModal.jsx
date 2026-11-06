@@ -32,6 +32,7 @@ const ProjectModal = ({ project, onClose }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      data-wf-solid
       className="fixed inset-0 z-50 flex items-start md:items-center justify-center overflow-y-auto p-4 md:p-8"
       onClick={onClose}
       style={{
@@ -43,6 +44,7 @@ const ProjectModal = ({ project, onClose }) => {
       <motion.div
         onClick={(e) => e.stopPropagation()}
         role="dialog"
+        data-wf-solid
         aria-modal="true"
         aria-labelledby="project-modal-title"
         initial={{ scale: 0.96, y: 20, opacity: 0 }}

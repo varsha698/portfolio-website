@@ -10,6 +10,7 @@ import DraftingCrosshair from "./components/DraftingCrosshair";
 const About = lazy(() => import("./pages/About"));
 const Projects = lazy(() => import("./pages/Projects"));
 const SalesTaxCaseStudy = lazy(() => import("./pages/SalesTaxCaseStudy"));
+const ProxmoxCaseStudy = lazy(() => import("./pages/ProxmoxCaseStudy"));
 const Certificates = lazy(() => import("./pages/Certificate"));
 const Publications = lazy(() => import("./pages/Publications"));
 const ContactMe = lazy(() => import("./pages/Contact"));
@@ -51,6 +52,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/sales-tax" element={<SalesTaxCaseStudy />} />
+            <Route path="/projects/proxmox" element={<ProxmoxCaseStudy />} />
             <Route path="/certificates" element={<Certificates />} />
             <Route path="/publications" element={<Publications />} />
             <Route path="/contact" element={<ContactMe />} />

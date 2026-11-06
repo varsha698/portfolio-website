@@ -58,6 +58,8 @@ const NODES = {
     label: "Proxmox VE",
     detail:
       "I installed Proxmox on the company's servers and built the VMs every app here runs on: Docker Compose stacks managed by systemd.",
+    to: "/projects/proxmox",
+    cta: "read the case study",
   },
 };
 
