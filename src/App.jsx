@@ -3,7 +3,7 @@ import { useEffect, Suspense, lazy } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import ParticleBackground from "./components/ParticleBackground";
+import { BlueprintBackdrop } from "./components/Blueprint";
 import CommandPalette from "./components/CommandPalette";
 
 const About = lazy(() => import("./pages/About"));
@@ -24,8 +24,6 @@ const App = () => {
   const navigate = useNavigate();
   const path = location.pathname.replace(/\/$/, "");
   const isContactPage = path === "/contact";
-  // The home hero has its own blueprint backdrop and system map.
-  const isHome = path === "";
 
   // The site used hash routing until late 2026; keep old /#/projects style
   // links (resumes, LinkedIn, bookmarks) working.
@@ -41,7 +39,7 @@ const App = () => {
 
   return (
     <>
-      {!isHome && <ParticleBackground />}
+      <BlueprintBackdrop />
       <CommandPalette />
       <Header />
       <main>

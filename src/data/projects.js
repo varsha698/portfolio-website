@@ -16,6 +16,7 @@
 //   private               show the "private" badge
 //   caseStudy             route of an in-depth write-up (optional)
 //   featured              also shown in "Featured" on Home and Projects
+//   result                animated before/after figure (src/components/ResultViz.jsx)
 
 const XD = "Xecutive Development LLC";
 
@@ -35,6 +36,13 @@ export const professional = [
     techstackused: "Python, Django, PostgreSQL, Gunicorn, Docker, Caddy, Airtable API",
     techstackicons: ["python", "django", "postgresql", "docker"],
     caseStudy: "/projects/sales-tax",
+    result: {
+      kind: "race",
+      title: "Batch run: parallel engine vs serial",
+      rows: 1021,
+      fast: 11.9,
+      slow: 340,
+    },
     featured: true,
     private: true,
   },
@@ -84,6 +92,13 @@ export const professional = [
     techstackused: "Next.js 16, React 19, Tailwind, Cloudflare (OpenNext), Sentry, GA4, Meta CAPI",
     techstackicons: ["nextjs", "react", "tailwind", "cloudflare"],
     link: "https://www.andrewslawnandsnow.com",
+    result: {
+      kind: "shrink",
+      title: "Billboard carousel images",
+      items: [
+        { label: "carousel images", before: 14.5, after: 1.9, beforeText: "14.5 MB", afterText: "1.9 MB" },
+      ],
+    },
     private: true,
   },
   {
@@ -125,6 +140,14 @@ export const professional = [
       "Filtered Facebook in-app-browser noise that made up ~95% of Sentry error volume",
     ],
     techstackused: "TypeScript, React, Cloudflare Pages + Workers + D1, Sentry",
+    result: {
+      kind: "shrink",
+      title: "First-load cost",
+      items: [
+        { label: "icon font", before: 4000, after: 323, beforeText: "4.0 MB", afterText: "323 KB" },
+        { label: "main JS bundle", before: 627, after: 382, beforeText: "627 KB", afterText: "382 KB" },
+      ],
+    },
     techstackicons: ["typescript", "react", "cloudflare"],
     private: true,
   },

@@ -74,7 +74,7 @@ const Tile = ({ className = "", children, delay = 0 }) => (
     viewport={{ once: true, amount: 0.15 }}
     transition={{ duration: 0.5, delay }}
     className={
-      "relative p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors " +
+      "bp-corner relative p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors " +
       className
     }
   >
@@ -89,13 +89,10 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-black"
-      style={{
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
-      }}
+      className="relative overflow-hidden"
     >
       {/* HERO — blueprint sheet */}
-      <div className="blueprint-grid relative z-10 min-h-screen flex items-center px-4 md:px-8 pt-24 pb-12">
+      <div className="relative z-10 min-h-screen flex items-center px-4 md:px-8 pt-24 pb-12">
         <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-10 lg:gap-12 items-center">
           <div className="text-center lg:text-left">
             <motion.div
@@ -211,7 +208,6 @@ const Home = () => {
         <div className="flex items-end justify-between mb-6">
           <h2
             className="text-2xl md:text-3xl font-bold text-amber-400"
-            style={{ textShadow: "0 0 10px rgba(255, 153, 102, 0.4)" }}
           >
             Featured work
           </h2>

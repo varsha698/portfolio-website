@@ -108,26 +108,70 @@ button:hover {
   }
 }
 
-/* Blueprint sheet behind the home hero: fine grid, heavier every 5th line,
-   fading out toward the edges. */
-.blueprint-grid::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(245, 158, 11, 0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.09) 1px, transparent 1px),
-    linear-gradient(rgba(245, 158, 11, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(245, 158, 11, 0.035) 1px, transparent 1px);
-  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
-  background-position: -1px -1px;
-  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 55%, transparent 100%);
-  mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 55%, transparent 100%);
-}
-
 .sysmap-node:focus-visible rect:first-child {
   stroke: #fde68a;
   stroke-width: 2;
+}
+
+/* ── Blueprint system ─────────────────────────────────────── */
+
+/* Fixed sheet grid behind every page (rendered once in App). */
+.blueprint-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #05070b;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(245, 158, 11, 0.07), transparent 60%),
+    linear-gradient(rgba(245, 158, 11, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.08) 1px, transparent 1px),
+    linear-gradient(rgba(245, 158, 11, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: 0 0, -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+}
+
+/* Dimension line under page titles: a rule with end ticks. */
+.dim-rule {
+  position: relative;
+  height: 1px;
+  max-width: 28rem;
+  background: rgba(245, 158, 11, 0.45);
+}
+.dim-rule::before,
+.dim-rule::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  width: 1px;
+  height: 11px;
+  background: rgba(245, 158, 11, 0.7);
+}
+.dim-rule::before { left: 0; }
+.dim-rule::after { right: 0; }
+
+/* Registration marks in two corners of a panel. */
+.bp-corner::before,
+.bp-corner::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  pointer-events: none;
+  border-color: rgba(245, 158, 11, 0.7);
+  border-style: solid;
+  border-width: 0;
+}
+.bp-corner::before {
+  top: 5px;
+  left: 5px;
+  border-top-width: 1px;
+  border-left-width: 1px;
+}
+.bp-corner::after {
+  right: 5px;
+  bottom: 5px;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
 }

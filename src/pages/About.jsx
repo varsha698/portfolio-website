@@ -1,5 +1,6 @@
 import { asset } from "../utils/asset";
 import { motion } from "framer-motion";
+import { SheetHeader } from "../components/Blueprint";
 
 const timeline = [
   {
@@ -50,55 +51,17 @@ const About = () => {
   return (
     <section
       id="about"
-      className="min-h-screen flex flex-col items-center justify-center overflow-hidden relative transition-colors duration-300 bg-black"
-      style={{
-        background: "radial-gradient(circle at center, #0f1523 0%, #000000 100%)",
-      }}
+      className="min-h-screen flex flex-col items-center justify-center overflow-hidden relative"
+      
     >
-      {/* Grid lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
-          <div key={`h-${i}`} className="absolute w-full h-px" style={{
-            top: `${i * 5}%`,
-            background: "linear-gradient(90deg, transparent, rgba(0,255,255,0.2), transparent)",
-            opacity: "0.3",
-          }} />
-        ))}
-        {[...Array(20)].map((_, i) => (
-          <div key={`v-${i}`} className="absolute h-full w-px" style={{
-            left: `${i * 5}%`,
-            background: "linear-gradient(0deg, transparent, rgba(0,255,255,0.2), transparent)",
-            opacity: "0.3",
-          }} />
-        ))}
+      <div className="w-full px-4 pt-28">
+        <SheetHeader
+          sheet="02"
+          kicker="about"
+          title="My Journey"
+          sub="Where I've studied and worked, most recent first."
+        />
       </div>
-
-      {/* Scanline */}
-      <motion.div className="fixed inset-0 pointer-events-none z-50 opacity-10"
-        style={{
-          background: "linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 50%)",
-          backgroundSize: "100% 4px"
-        }}
-        animate={{ backgroundPosition: ["0px 0px", "0px 100px"] }}
-        transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-      />
-
-<motion.h1
-  className="pt-24 text-5xl md:text-6xl font-bold text-center drop-shadow-lg tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-  initial={{ opacity: 0, y: -20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  style={{
-    textShadow: `
-      0 0 10px rgba(255, 153, 102, 0.8),
-      0 0 20px rgba(255, 153, 102, 0.6),
-      0 0 40px rgba(255, 153, 102, 0.5)
-    `,
-    marginBottom: "3rem",
-  }}
->
-  My Journey
-</motion.h1>
 
 
 
@@ -155,7 +118,7 @@ const About = () => {
             {/* Content */}
             <div className={`relative ${index % 2 === 0 ? "md:mr-12 ml-8 md:ml-0" : "md:ml-12 ml-8"} w-4/5 md:w-5/12 mt-4 md:mt-0`}>
               <motion.div
-                className="relative p-6 rounded-lg backdrop-blur-md border overflow-hidden transition-colors duration-300 bg-black/60 border-amber-900/50"
+                className="bp-corner relative p-6 rounded-lg backdrop-blur-md border overflow-hidden transition-colors duration-300 bg-black/60 border-amber-900/50"
                 whileHover={{ scale: 1.03, boxShadow: "0 0 20px rgba(255, 153, 102, 0.2)" }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >

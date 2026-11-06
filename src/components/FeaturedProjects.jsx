@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaBookOpen, FaExternalLinkAlt, FaGithub, FaLock } from "react-icons/fa";
 import { featured } from "../data/projects";
 import { TechIcon } from "./techIcons";
+import ResultViz from "./ResultViz";
 
 const linkClass =
   "inline-flex items-center gap-1.5 text-xs font-mono text-amber-400 hover:text-amber-300 transition";
@@ -17,7 +18,7 @@ const FeaturedCard = ({ project, index }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.15 }}
     transition={{ duration: 0.5, delay: index * 0.05 }}
-    className="relative flex flex-col h-full p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors"
+    className="bp-corner relative flex flex-col h-full p-5 md:p-6 rounded-lg border border-amber-900/50 bg-black/60 backdrop-blur-md hover:border-amber-500/50 transition-colors"
   >
     {project.screenshot && (
       <div className="mb-4 rounded-md overflow-hidden border border-amber-900/40">
@@ -37,6 +38,11 @@ const FeaturedCard = ({ project, index }) => (
       {[project.org || "Personal", project.role].filter(Boolean).join(" · ")}
     </p>
     <p className="text-sm text-gray-300 flex-grow">{project.desc}</p>
+    {project.result && (
+      <div className="mt-4">
+        <ResultViz result={project.result} compact />
+      </div>
+    )}
     <div className="flex flex-wrap gap-3 mt-4">
       {project.techstackicons.map((tech) => (
         <TechIcon key={tech} name={tech} className="w-5 h-5" />
@@ -78,6 +84,7 @@ FeaturedCard.propTypes = {
     caseStudy: PropTypes.string,
     link: PropTypes.string,
     code: PropTypes.string,
+    result: PropTypes.object,
   }).isRequired,
   index: PropTypes.number.isRequired,
 };

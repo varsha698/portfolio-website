@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FaGithub, FaExternalLinkAlt, FaLock, FaCheck, FaBookOpen } from "react-icons/fa";
 import { TechIcon } from "../components/techIcons";
+import ResultViz from "../components/ResultViz";
 
 const ProjectModal = ({ project, onClose }) => {
   const closeRef = useRef(null);
@@ -48,7 +49,7 @@ const ProjectModal = ({ project, onClose }) => {
         animate={{ scale: 1, y: 0, opacity: 1 }}
         exit={{ scale: 0.96, y: 20, opacity: 0 }}
         transition={{ duration: 0.25 }}
-        className="relative w-full max-w-3xl backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/85 my-auto"
+        className="bp-corner relative w-full max-w-3xl backdrop-blur-md rounded-lg border border-amber-900/50 bg-black/85 my-auto"
       >
         {/* Close */}
         <motion.button
@@ -94,7 +95,6 @@ const ProjectModal = ({ project, onClose }) => {
           <h2
             id="project-modal-title"
             className="text-2xl md:text-3xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500"
-            style={{ textShadow: "0 0 15px rgba(255, 153, 102, 0.3)" }}
           >
             {project.name}
           </h2>
@@ -103,6 +103,12 @@ const ProjectModal = ({ project, onClose }) => {
           <p className="text-gray-300 leading-relaxed mb-6">
             {project.longDesc || project.desc}
           </p>
+
+          {project.result && (
+            <div className="mb-6">
+              <ResultViz result={project.result} />
+            </div>
+          )}
 
           {/* Features / Highlights */}
           {project.features && project.features.length > 0 && (
@@ -204,6 +210,7 @@ ProjectModal.propTypes = {
     link: PropTypes.string,
     code: PropTypes.string,
     caseStudy: PropTypes.string,
+    result: PropTypes.object,
   }),
   onClose: PropTypes.func.isRequired,
 };
