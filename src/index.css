@@ -107,3 +107,27 @@ button:hover {
     transform: translateX(100%);
   }
 }
+
+/* Blueprint sheet behind the home hero: fine grid, heavier every 5th line,
+   fading out toward the edges. */
+.blueprint-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(245, 158, 11, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.09) 1px, transparent 1px),
+    linear-gradient(rgba(245, 158, 11, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 158, 11, 0.035) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: -1px -1px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 45%, #000 55%, transparent 100%);
+}
+
+.sysmap-node:focus-visible rect:first-child {
+  stroke: #fde68a;
+  stroke-width: 2;
+}

@@ -22,7 +22,10 @@ const RouteFallback = () => (
 const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isContactPage = location.pathname.replace(/\/$/, "") === "/contact";
+  const path = location.pathname.replace(/\/$/, "");
+  const isContactPage = path === "/contact";
+  // The home hero has its own blueprint backdrop and system map.
+  const isHome = path === "";
 
   // The site used hash routing until late 2026; keep old /#/projects style
   // links (resumes, LinkedIn, bookmarks) working.
@@ -38,7 +41,7 @@ const App = () => {
 
   return (
     <>
-      <ParticleBackground />
+      {!isHome && <ParticleBackground />}
       <CommandPalette />
       <Header />
       <main>
