@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { FaSearch, FaArrowRight } from "react-icons/fa";
 import { EMAIL, GITHUB_URL, GITHUB_USER, LINKEDIN_URL, RESUME_PATH } from "../data/profile";
 import { trackResumeDownload } from "../utils/visitTracking";
+import { professional, personal } from "../data/projects";
+import { CROSSHAIR_EVENT } from "./DraftingCrosshair";
+
+const ALL_PROJECTS = [...professional, ...personal];
 
 // Static command list. Add more items here.
 const commands = [
@@ -14,6 +18,16 @@ const commands = [
   { id: "pubs", label: "Publications", hint: "/publications", type: "nav", target: "/publications" },
   { id: "certs", label: "Certifications", hint: "/certificates", type: "nav", target: "/certificates" },
   { id: "contact", label: "Contact", hint: "/contact", type: "nav", target: "/contact" },
+  { id: "stack", label: "Show me the stack map", hint: "/stack", type: "nav", target: "/" },
+  {
+    id: "race",
+    label: "Replay the sales-tax race",
+    hint: "/race",
+    type: "nav",
+    target: "/projects/sales-tax#results",
+  },
+  { id: "random", label: "Surprise me — open a random project", hint: "/random", type: "random" },
+  { id: "crosshair", label: "Toggle the drafting crosshair", hint: "/crosshair", type: "event", target: CROSSHAIR_EVENT },
   {
     id: "resume",
     label: "Download Resume (PDF)",
@@ -131,6 +145,11 @@ const CommandPalette = () => {
     close();
     if (cmd.type === "nav") {
       navigate(cmd.target);
+    } else if (cmd.type === "random") {
+      const pick = ALL_PROJECTS[Math.floor(Math.random() * ALL_PROJECTS.length)];
+      navigate("/projects", { state: { open: pick.name, nonce: Date.now() } });
+    } else if (cmd.type === "event") {
+      window.dispatchEvent(new Event(cmd.target));
     } else if (cmd.type === "download") {
       if (cmd.target === RESUME_PATH) trackResumeDownload();
       const a = document.createElement("a");
@@ -172,10 +191,11 @@ const CommandPalette = () => {
           <FaSearch className="text-amber-400" />
           <input
             ref={inputRef}
+            autoFocus
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder="Search — jump to a page, open a link, download resume…"
+            placeholder="Search — or try /race, /random, /crosshair…"
             className="flex-grow bg-transparent border-none outline-none text-gray-100 placeholder:text-gray-500 font-mono text-sm"
           />
           <kbd className="text-xs text-gray-500 border border-gray-700 rounded px-1.5 py-0.5 font-mono">

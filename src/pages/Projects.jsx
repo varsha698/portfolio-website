@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { FaLock } from "react-icons/fa";
@@ -112,6 +113,15 @@ SectionHeader.propTypes = {
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
+  const location = useLocation();
+
+  // The ⌘K "Surprise me" command sends a project name in router state.
+  useEffect(() => {
+    const name = location.state?.open;
+    if (!name) return;
+    const p = [...professional, ...personal].find((x) => x.name === name);
+    if (p) setSelectedProject(p);
+  }, [location.state]);
 
   return (
     <section

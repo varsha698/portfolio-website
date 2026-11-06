@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import { BlueprintBackdrop } from "./components/Blueprint";
 import CommandPalette from "./components/CommandPalette";
+import DraftingCrosshair from "./components/DraftingCrosshair";
 
 const About = lazy(() => import("./pages/About"));
 const Projects = lazy(() => import("./pages/Projects"));
@@ -40,6 +41,7 @@ const App = () => {
   return (
     <>
       <BlueprintBackdrop />
+      <DraftingCrosshair />
       <CommandPalette />
       <Header />
       <main>
