@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 // Animated figures for projects, driven by the `result` field in
 // src/data/projects.js. "race" and "shrink" show measured results from the
 // Final-Dev-Journal — don't add numbers that aren't documented there.
-// "evidence" and "rewrite" illustrate how a tool works and are labelled
-// "illustration" on the page.
+// "rewrite" illustrates how a tool works and is labelled "illustration"
+// on the page.
 
 const useInView = (ref) => {
   const [inView, setInView] = useState(false);
@@ -197,76 +197,6 @@ const useCycle = (ref, count, ms) => {
   return [step, inView];
 };
 
-// Reveals `text` a few characters at a time whenever it changes.
-const useTyped = (text, active) => {
-  const [n, setN] = useState(() => (prefersReducedMotion() ? text.length : 0));
-  useEffect(() => {
-    if (prefersReducedMotion()) {
-      setN(text.length);
-      return undefined;
-    }
-    if (!active) return undefined;
-    setN(0);
-    const id = setInterval(
-      () =>
-        setN((v) => {
-          if (v >= text.length) {
-            clearInterval(id);
-            return v;
-          }
-          return v + 2;
-        }),
-      28
-    );
-    return () => clearInterval(id);
-  }, [text, active]);
-  return text.slice(0, n);
-};
-
-// ── Evidence: job requirement → tailored bullet → journal source ──
-const Evidence = ({ data, compact }) => {
-  const ref = useRef(null);
-  const [step, inView] = useCycle(ref, data.pairs.length, 5200);
-  const pair = data.pairs[step];
-  const typed = useTyped(pair.bullet, inView);
-  const done = typed.length >= pair.bullet.length;
-  return (
-    <div ref={ref} className="space-y-2 font-mono text-[11px]" aria-live="off">
-      <div className="text-gray-400">
-        job asks for <span className="text-gray-200">“{pair.ask}”</span>
-      </div>
-      <div
-        className={`rounded-sm border border-amber-900/60 bg-black/60 px-2 py-1.5 font-sans text-gray-200 ${
-          compact ? "text-xs min-h-[3.2rem]" : "text-sm min-h-[2.75rem]"
-        }`}
-      >
-        • {typed}
-        {!done && <span className="inline-block w-[1px] h-3 ml-0.5 bg-amber-400 align-middle" />}
-      </div>
-      <div
-        className={`inline-flex items-center gap-1.5 rounded-sm border border-amber-500/50 px-1.5 py-0.5 text-amber-300 transition-opacity duration-500 ${
-          done ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        ↳ evidence: {pair.source}
-      </div>
-    </div>
-  );
-};
-
-Evidence.propTypes = {
-  data: PropTypes.shape({
-    pairs: PropTypes.arrayOf(
-      PropTypes.shape({
-        ask: PropTypes.string.isRequired,
-        bullet: PropTypes.string.isRequired,
-        source: PropTypes.string.isRequired,
-      })
-    ).isRequired,
-  }).isRequired,
-  compact: PropTypes.bool,
-};
-
 // ── Rewrite: grammar fixes, then an LLM rewrite ──────────────
 // `tokens` is a list of [kind, text] where kind is "keep", "del" or "ins".
 const Rewrite = ({ data, compact }) => {
@@ -315,7 +245,7 @@ Rewrite.propTypes = {
   compact: PropTypes.bool,
 };
 
-const BODIES = { race: Race, shrink: Shrink, evidence: Evidence, rewrite: Rewrite };
+const BODIES = { race: Race, shrink: Shrink, rewrite: Rewrite };
 
 const ResultViz = ({ result, compact = false }) => {
   if (!result) return null;
@@ -335,7 +265,7 @@ const ResultViz = ({ result, compact = false }) => {
 
 ResultViz.propTypes = {
   result: PropTypes.shape({
-    kind: PropTypes.oneOf(["race", "shrink", "evidence", "rewrite"]).isRequired,
+    kind: PropTypes.oneOf(["race", "shrink", "rewrite"]).isRequired,
     title: PropTypes.string,
     illustration: PropTypes.bool,
   }),

@@ -198,29 +198,6 @@ export const personal = [
     ],
     techstackused: "Next.js 16, React 19, TypeScript, Claude API, Vercel Workflow, Zod, pdf-lib",
     techstackicons: ["nextjs", "react", "typescript", "claude"],
-    // Bullets and sources are real entries from my journal.
-    result: {
-      kind: "evidence",
-      title: "Requirement → tailored bullet → evidence",
-      illustration: true,
-      pairs: [
-        {
-          ask: "performance optimization",
-          bullet: "Cut a 1,021-row tax batch from ~340 s to 11.9 s with a parallel engine",
-          source: "journal · sales-tax filing system",
-        },
-        {
-          ask: "React + TypeScript",
-          bullet: "Led the operator portal's frontend redesign and built its English/Spanish i18n",
-          source: "journal · Operator Portal",
-        },
-        {
-          ask: "infrastructure / Linux",
-          bullet: "Installed Proxmox VE and built the VMs that host the company's internal apps",
-          source: "journal · on-prem servers",
-        },
-      ],
-    },
     private: true,
     featured: true,
   },
