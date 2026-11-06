@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 
-// Animated before/after figures for project results. Every number comes from
-// the `result` field in src/data/projects.js, which in turn comes from the
-// Final-Dev-Journal — don't add figures here that aren't documented there.
+// Animated figures for projects, driven by the `result` field in
+// src/data/projects.js. "race" and "shrink" show measured results from the
+// Final-Dev-Journal — don't add numbers that aren't documented there.
+// "rewrite" illustrates how a tool works and is labelled "illustration"
+// on the page.
 
 const useInView = (ref) => {
   const [inView, setInView] = useState(false);
@@ -182,14 +184,78 @@ Shrink.propTypes = {
   compact: PropTypes.bool,
 };
 
+// Cycles through `count` steps every `ms` while on screen; holds step 0 under
+// reduced motion.
+const useCycle = (ref, count, ms) => {
+  const inView = useInView(ref);
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (!inView || prefersReducedMotion() || count < 2) return undefined;
+    const id = setInterval(() => setStep((s) => (s + 1) % count), ms);
+    return () => clearInterval(id);
+  }, [inView, count, ms]);
+  return [step, inView];
+};
+
+// ── Rewrite: grammar fixes, then an LLM rewrite ──────────────
+// `tokens` is a list of [kind, text] where kind is "keep", "del" or "ins".
+const Rewrite = ({ data, compact }) => {
+  const ref = useRef(null);
+  const [step] = useCycle(ref, 3, 2600);
+  const stageLabel = ["draft", "grammar engine", data.model || "local LLM rewrite"][step];
+  return (
+    <div ref={ref} className="space-y-2">
+      <div className="font-mono text-[11px] text-gray-400">
+        stage · <span className="text-amber-300">{stageLabel}</span>
+      </div>
+      <p
+        className={`rounded-sm border border-amber-900/60 bg-black/60 px-2 py-1.5 text-gray-200 ${
+          compact ? "text-xs min-h-[3.2rem]" : "text-sm min-h-[2.75rem]"
+        }`}
+      >
+        {step === 2
+          ? <span className="text-amber-200">{data.rewrite}</span>
+          : data.tokens.map(([kind, text], i) => {
+              if (kind === "keep") return <span key={i}>{text}</span>;
+              if (kind === "del")
+                return step === 0 ? (
+                  <span key={i}>{text}</span>
+                ) : (
+                  <span key={i} className="mr-1 line-through decoration-red-400/70 text-gray-500">
+                    {text}
+                  </span>
+                );
+              return step === 0 ? null : (
+                <span key={i} className="text-amber-300">
+                  {text}
+                </span>
+              );
+            })}
+      </p>
+    </div>
+  );
+};
+
+Rewrite.propTypes = {
+  data: PropTypes.shape({
+    tokens: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.string)).isRequired,
+    rewrite: PropTypes.string.isRequired,
+    model: PropTypes.string,
+  }).isRequired,
+  compact: PropTypes.bool,
+};
+
+const BODIES = { race: Race, shrink: Shrink, rewrite: Rewrite };
+
 const ResultViz = ({ result, compact = false }) => {
   if (!result) return null;
-  const Body = result.kind === "race" ? Race : Shrink;
+  const Body = BODIES[result.kind] || Shrink;
   return (
     <figure className={compact ? "" : "rounded-md border border-amber-900/50 bg-black/50 p-4"}>
       {!compact && result.title && (
-        <figcaption className="mb-3 font-mono text-[11px] uppercase tracking-wider text-amber-500/80">
-          {result.title}
+        <figcaption className="mb-3 flex justify-between gap-2 font-mono text-[11px] uppercase tracking-wider text-amber-500/80">
+          <span>{result.title}</span>
+          {result.illustration && <span className="text-gray-500">illustration</span>}
         </figcaption>
       )}
       <Body data={result} compact={compact} />
@@ -199,8 +265,9 @@ const ResultViz = ({ result, compact = false }) => {
 
 ResultViz.propTypes = {
   result: PropTypes.shape({
-    kind: PropTypes.oneOf(["race", "shrink"]).isRequired,
+    kind: PropTypes.oneOf(["race", "shrink", "rewrite"]).isRequired,
     title: PropTypes.string,
+    illustration: PropTypes.bool,
   }),
   compact: PropTypes.bool,
 };

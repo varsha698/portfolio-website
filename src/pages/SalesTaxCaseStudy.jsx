@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { asset } from "../utils/asset";
 import { TechIcon } from "../components/techIcons";
@@ -59,13 +60,14 @@ const PROBLEMS = [
   },
 ];
 
-const Section = ({ title, children }) => (
+const Section = ({ title, id, children }) => (
   <motion.section
+    id={id}
     initial={{ opacity: 0, y: 12 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.1 }}
     transition={{ duration: 0.5 }}
-    className="mb-14"
+    className="mb-14 scroll-mt-24"
   >
     <h2 className="text-2xl md:text-3xl font-bold text-amber-400 mb-4">{title}</h2>
     <div className="text-gray-300 leading-relaxed space-y-4">{children}</div>
@@ -74,6 +76,7 @@ const Section = ({ title, children }) => (
 
 Section.propTypes = {
   title: PropTypes.string.isRequired,
+  id: PropTypes.string,
   children: PropTypes.node,
 };
 
@@ -150,7 +153,18 @@ const Diagram = () => {
 
 const STACK = ["python", "django", "postgresql", "docker", "caddy", "cloudflare"];
 
-const SalesTaxCaseStudy = () => (
+const SalesTaxCaseStudy = () => {
+  const { hash } = useLocation();
+  // App scrolls to the top on navigation; jump to an anchor after that.
+  useEffect(() => {
+    if (!hash) return undefined;
+    const t = setTimeout(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 150);
+    return () => clearTimeout(t);
+  }, [hash]);
+
+  return (
   <section
     className="min-h-screen px-4 md:px-8 pt-28 pb-20"
   >
@@ -236,7 +250,7 @@ const SalesTaxCaseStudy = () => (
         </div>
       </Section>
 
-      <Section title="Before and after">
+      <Section title="Before and after" id="results">
         <ResultViz result={salesTax.result} />
         <div className="overflow-x-auto rounded-lg border border-amber-900/50">
           <table className="w-full text-sm text-left">
@@ -286,6 +300,7 @@ const SalesTaxCaseStudy = () => (
       </div>
     </article>
   </section>
-);
+  );
+};
 
 export default SalesTaxCaseStudy;

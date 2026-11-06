@@ -214,6 +214,18 @@ export const personal = [
     ],
     techstackused: "Python, FastAPI, PyTorch, Hugging Face PEFT, ChromaDB, PostgreSQL + pgvector, Next.js 15, Tiptap",
     techstackicons: ["python", "fastapi", "pytorch", "nextjs", "postgresql"],
+    result: {
+      kind: "rewrite",
+      title: "Grammar pass, then a local LLM rewrite",
+      illustration: true,
+      model: "LLaMA 3 rewrite (local)",
+      tokens: [
+        ["del", "their"], ["ins", "They're"], ["keep", " going to "],
+        ["del", "recieve"], ["ins", "receive"], ["keep", " the report "],
+        ["del", "tomorow"], ["ins", "tomorrow"], ["keep", "."],
+      ],
+      rewrite: "The report will reach them tomorrow.",
+    },
     code: "https://github.com/varsha698/ai-doc-editor",
     featured: true,
   },
